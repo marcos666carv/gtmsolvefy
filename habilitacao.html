@@ -799,38 +799,38 @@
     }
 
     .habilitação-layers {
-      margin-top: 40px;
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .habilitação-layer {
+      padding: 40px 32px;
+      border-right: 1px solid var(--rule);
       display: flex;
       flex-direction: column;
       gap: 0;
     }
 
-    .habilitação-layer {
-      padding: 40px 0;
-      border-bottom: 1px solid var(--rule);
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 32px;
-      align-items: start;
-    }
-
-    .habilitação-layer:first-child {
-      border-top: 1px solid var(--rule);
+    .habilitação-layer:last-child {
+      border-right: none;
     }
 
     .layer-number {
       font-family: var(--font-display);
-      font-size: 80px;
+      font-size: 72px;
       line-height: 1;
       letter-spacing: -0.04em;
       color: rgba(255,255,255,0.18);
-      padding-top: 4px;
+      margin-bottom: 24px;
     }
 
     .layer-content {}
 
     .layer-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 12px;
@@ -838,10 +838,9 @@
     }
 
     .layer-desc {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--text-muted);
       line-height: 1.75;
-      max-width: 520px;
     }
 
     /* ─── SECTION 7: FOOTER ─────────────────────────────────────── */
@@ -1076,33 +1075,35 @@
           <p class="education-text" style="margin-bottom: 24px;">
             Um programa estruturado de habilitação em três camadas, projetado para garantir que <strong>cada pessoa que representa a Solvefy</strong> — interna ou externamente — execute a mesma narrativa com segurança e precisão.
           </p>
+        </div>
 
-          <div class="habilitação-layers" role="list">
+      </div>
 
-            <div class="habilitação-layer" role="listitem">
-              <div class="layer-number" aria-hidden="true">01</div>
-              <div class="layer-content">
-                <h3 class="layer-title">Letramento de Marca</h3>
-                <p class="layer-desc">Todo colaborador entende a narrativa unificada da Solvefy, a lógica por trás dos 4 produtos e como articular o posicionamento da plataforma em qualquer conversa.</p>
-              </div>
-            </div>
+      <p class="eyebrow fade-up" style="margin-top: 64px; margin-bottom: 16px;">3 passos para a vitória</p>
 
-            <div class="habilitação-layer" role="listitem">
-              <div class="layer-number" aria-hidden="true">02</div>
-              <div class="layer-content">
-                <h3 class="layer-title">Domínio de Produto</h3>
-                <p class="layer-desc">Cada time conhece profundidade suficiente dos 4 produtos para identificar oportunidades de venda cruzada e fazer repasse qualificado para o especialista correto.</p>
-              </div>
-            </div>
+      <div class="habilitação-layers fade-up" role="list">
 
-            <div class="habilitação-layer" role="listitem">
-              <div class="layer-number" aria-hidden="true">03</div>
-              <div class="layer-content">
-                <h3 class="layer-title">Habilitação de Canal</h3>
-                <p class="layer-desc">Revendedores e intermediários conseguem vender Solvefy Cloud de forma independente, com materiais, argumentários e suporte técnico estruturado pelo Sales Engineer.</p>
-              </div>
-            </div>
+        <div class="habilitação-layer" role="listitem">
+          <div class="layer-number" aria-hidden="true">01</div>
+          <div class="layer-content">
+            <h3 class="layer-title">Letramento de Marca</h3>
+            <p class="layer-desc">Todo colaborador entende a narrativa unificada da Solvefy, a lógica por trás dos 4 produtos e como articular o posicionamento da plataforma em qualquer conversa.</p>
+          </div>
+        </div>
 
+        <div class="habilitação-layer" role="listitem">
+          <div class="layer-number" aria-hidden="true">02</div>
+          <div class="layer-content">
+            <h3 class="layer-title">Domínio de Produto</h3>
+            <p class="layer-desc">Cada time conhece profundidade suficiente dos 4 produtos para identificar oportunidades de venda cruzada e fazer repasse qualificado para o especialista correto.</p>
+          </div>
+        </div>
+
+        <div class="habilitação-layer" role="listitem">
+          <div class="layer-number" aria-hidden="true">03</div>
+          <div class="layer-content">
+            <h3 class="layer-title">Habilitação de Canal</h3>
+            <p class="layer-desc">Revendedores e intermediários conseguem vender Solvefy Cloud de forma independente, com materiais, argumentários e suporte técnico estruturado pelo Sales Engineer.</p>
           </div>
         </div>
 
