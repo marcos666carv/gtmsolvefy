@@ -37,6 +37,18 @@
       font-size: 18px;
     }
 
+
+    /* ─── SCROLL SNAP PAGES ────────────────────────────────────── */
+    section, .footer {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .hero { min-height: 100vh; }
+    .opportunity, .framework, .timeline-section,
+    .ai-layer, .education { min-height: 100vh; }
+    .arsenal { min-height: 100vh; }
+    .master-timeline { min-height: 100vh; }
+
     body {
       background-color: var(--bg-dark);
       color: var(--text-primary);
@@ -998,7 +1010,19 @@
       .fade-up { opacity: 1; transform: none; }
       .hero-grid-bg { display: none; }
 
-      body { background: white; color: #0A0A0A; }
+  
+    /* ─── SCROLL SNAP PAGES ────────────────────────────────────── */
+    section, .footer {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .hero { min-height: 100vh; }
+    .opportunity, .framework, .timeline-section,
+    .ai-layer, .education { min-height: 100vh; }
+    .arsenal { min-height: 100vh; }
+    .master-timeline { min-height: 100vh; }
+
+    body { background: white; color: #0A0A0A; }
       .hero, .opportunity, .timeline-section, .education, .footer {
         background: white !important;
         color: #0A0A0A !important;
@@ -1799,6 +1823,66 @@
     }
     .panel-prompt-block strong { color: var(--panel-color, #E8FF47); }
 
+
+    /* ─── PANEL SUBMENU (floating sticky sidebar) ───────────────── */
+    .arsenal-panel.is-visible {
+      display: grid !important;
+      grid-template-columns: 200px 1fr;
+    }
+    .panel-subnav {
+      position: sticky;
+      top: 56px;
+      align-self: start;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      border-right: 1px solid #1E1E1E;
+      padding: 40px 0 40px;
+      background: #0A0A0A;
+      z-index: 10;
+    }
+    .panel-subnav-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #333;
+      padding: 0 20px 16px;
+      border-bottom: 1px solid #1A1A1A;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .panel-subnav-link {
+      display: block;
+      padding: 10px 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      line-height: 1.4;
+    }
+    .panel-subnav-link:hover {
+      color: #AAA;
+      background: rgba(255,255,255,0.02);
+    }
+    .panel-subnav-link.is-active {
+      color: var(--panel-color, #E8FF47);
+      border-left-color: var(--panel-color, #E8FF47);
+      background: rgba(255,255,255,0.03);
+    }
+    .panel-body {
+      padding: 56px 64px;
+      overflow-y: auto;
+      min-height: 0;
+    }
+    @media (max-width: 900px) {
+      .arsenal-panel.is-visible { grid-template-columns: 1fr; }
+      .panel-subnav { display: none; }
+      .panel-body { padding: 40px 24px; }
+    }
+
     /* ─── GANTT TIMELINE ─────────────────────────────────────── */
     .master-timeline { background: #0D0D0D; padding: 120px 0; }
 
@@ -2256,13 +2340,15 @@
 
         <!-- Panel 01: Análise de Risco -->
         <div id="panel-01" class="arsenal-panel" style="--panel-color: #E8FF47;">
+          <div class="panel-subnav" id="subnav-01"><span class="panel-subnav-title">Neste documento</span></div>
+          <div class="panel-body">
           <button class="arsenal-panel-close" onclick="closePanel('01')" aria-label="Fechar painel">&#x2715;</button>
           <p class="arsenal-panel-sub">01 — Risco de Marca / 01-brand-risk-analysis.md</p>
           <h3 class="arsenal-panel-heading">Análise de Risco &amp; Veredicto</h3>
 
           <div class="panel-verdict">VEREDICTO: GO condicionado — 4 condições críticas</div>
 
-          <div class="panel-section">
+          <div id="psec-01" class="panel-section">
             <p class="panel-section-title">Custo da Operação</p>
             <div class="panel-num-row">
               <div class="panel-num-item">
@@ -2276,7 +2362,7 @@
             </div>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-02" class="panel-section">
             <p class="panel-section-title">Matriz de Riscos</p>
             <table class="panel-table">
               <thead><tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Score</th></tr></thead>
@@ -2295,7 +2381,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-03" class="panel-section">
             <p class="panel-section-title">Cenários de Churn</p>
             <table class="panel-table">
               <thead><tr><th>Cenário</th><th>Churn</th><th>ARR em Risco</th></tr></thead>
@@ -2307,7 +2393,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-04" class="panel-section">
             <p class="panel-section-title">Break-even</p>
             <table class="panel-table">
               <thead><tr><th>Cenário</th><th>Prazo</th></tr></thead>
@@ -2320,7 +2406,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-05" class="panel-section">
             <p class="panel-section-title">4 Condições de GO</p>
             <ul class="panel-list">
               <li><strong>Programa de retenção ANTES do anúncio</strong> — top 30 contas comunicadas por CSM antes do go-live</li>
@@ -2337,7 +2423,7 @@
           <p class="arsenal-panel-sub">02 — Mercado / 02-market-strategy.md</p>
           <h3 class="arsenal-panel-heading">Estratégia de Mercado &amp; Posicionamento</h3>
 
-          <div class="panel-section">
+          <div id="psec-06" class="panel-section">
             <p class="panel-section-title">TAM Combinado Brasil 2024</p>
             <table class="panel-table">
               <thead><tr><th>Segmento</th><th>TAM</th><th>CAGR</th></tr></thead>
@@ -2351,7 +2437,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-07" class="panel-section">
             <p class="panel-section-title">Mapa Competitivo</p>
             <table class="panel-table">
               <thead><tr><th>Player</th><th>Vulnerabilidade</th><th>Narrativa Solvefy</th></tr></thead>
@@ -2365,7 +2451,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-08" class="panel-section">
             <p class="panel-section-title">3 Movimentos Estratégicos</p>
             <ul class="panel-list">
               <li><strong>Conquest Campaign Zenvia</strong> — programa migração 0-friction, landing page comparativa, SDRs ativam insatisfeitos. Meta: <span class="panel-highlight">30–50 contas mid-market</span>.</li>
@@ -2383,7 +2469,7 @@
 
           <div class="panel-verdict">North Star: NRR <span class="panel-highlight">105%</span> em 90 dias → <span class="panel-highlight">115%</span> em 6 meses</div>
 
-          <div class="panel-section">
+          <div id="psec-09" class="panel-section">
             <p class="panel-section-title">4 Growth Loops</p>
             <ul class="panel-list">
               <li><strong>Loop de Expansão:</strong> Marketing Platform → CPaaS/Cloud via CS com sinais de expansão</li>
@@ -2393,7 +2479,7 @@
             </ul>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-10" class="panel-section">
             <p class="panel-section-title">Win-back Segmentado</p>
             <div class="panel-cols">
               <div class="panel-col-box" style="border-top-color: #00D4AA;">
@@ -2420,7 +2506,7 @@
             </div>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-11" class="panel-section">
             <p class="panel-section-title">Bundle Pricing</p>
             <table class="panel-table">
               <thead><tr><th>Bundle</th><th>Produtos</th><th>Desconto</th></tr></thead>
@@ -2432,7 +2518,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-12" class="panel-section">
             <p class="panel-section-title">KPIs 90 Dias</p>
             <ul class="panel-list">
               <li>15 novos clientes Marketing Platform</li>
@@ -2451,7 +2537,7 @@
           <p class="arsenal-panel-sub">04 — Conteúdo Social / 04-carousel-content.md</p>
           <h3 class="arsenal-panel-heading">Carrosséis &amp; Conteúdo de Lançamento</h3>
 
-          <div class="panel-section">
+          <div id="psec-13" class="panel-section">
             <p class="panel-section-title">6 Carrosséis Completos — Instagram / LinkedIn</p>
             <table class="panel-table">
               <thead><tr><th>#</th><th>Título</th><th>Data</th><th>Slide 1</th></tr></thead>
@@ -2466,7 +2552,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-14" class="panel-section">
             <p class="panel-section-title">Detalhe dos Carrosséis</p>
             <ul class="panel-list">
               <li><strong>Carrossel 1 — Anúncio:</strong> Disparo Pro + Brasilfone + Solvefy Cloud = um único nome. Slide final: "A partir de 15 de maio, Solvefy." CTA: "Siga nossa página para acompanhar"</li>
@@ -2485,7 +2571,7 @@
           <p class="arsenal-panel-sub">05 — LinkedIn / 05-linkedin-strategy.md</p>
           <h3 class="arsenal-panel-heading">Estratégia LinkedIn &amp; Posts Completos</h3>
 
-          <div class="panel-section">
+          <div id="psec-15" class="panel-section">
             <p class="panel-section-title">Transição das 3 Páginas</p>
             <ul class="panel-list">
               <li><strong>Solvefy LinkedIn</strong> → torna-se a página principal unificada</li>
@@ -2494,7 +2580,7 @@
             </ul>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-16" class="panel-section">
             <p class="panel-section-title">Calendário Maio 2026</p>
             <table class="panel-table">
               <thead><tr><th>Data</th><th>Ação</th></tr></thead>
@@ -2512,7 +2598,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-17" class="panel-section">
             <p class="panel-section-title">7 Posts — Resumo de Conteúdo</p>
             <ul class="panel-list">
               <li><strong>Post 1 (8/mai):</strong> Hook sobre dois times resolvendo o mesmo problema. "Em 7 dias esse atrito acaba."</li>
@@ -2532,12 +2618,12 @@
           <p class="arsenal-panel-sub">06 — Identidade Visual / 06-image-prompts.md</p>
           <h3 class="arsenal-panel-heading">Prompts de Imagem &amp; Art Direction</h3>
 
-          <div class="panel-section">
+          <div id="psec-18" class="panel-section">
             <p class="panel-section-title">Conceito Visual</p>
             <div class="panel-verdict" style="border-left-color: #FF4A6E;">"Estrutura como beleza" — Paleta: #0A0A0A fundo + #E8FF47 lime + #7B61FF violeta + #F5F5F0 off-white. Tipografia: DM Serif Display + Inter. Muito espaço em branco. Grid estruturado.</div>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-19" class="panel-section">
             <p class="panel-section-title">6 Prompts Completos</p>
 
             <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">1 — Hero: 4 Produtos Convergindo</p>
@@ -2559,7 +2645,7 @@
             <div class="panel-prompt-block">"Split image: four separate abstract elements (left) dissolving and merging into one unified geometric form (right). Electric lime and violet. Pure black. Dramatic editorial lighting. <strong>–ar 16:9</strong>"</div>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-20" class="panel-section">
             <p class="panel-section-title">Notas de Art Direction</p>
             <ul class="panel-list">
               <li>Nunca usar stock photos de pessoas em reunião</li>
@@ -2595,7 +2681,7 @@
             </div>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-21" class="panel-section">
             <p class="panel-section-title">Split por Plataforma</p>
             <table class="panel-table">
               <thead><tr><th>Plataforma</th><th>Budget</th><th>%</th><th>Justificativa</th></tr></thead>
@@ -2609,7 +2695,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-22" class="panel-section">
             <p class="panel-section-title">Split por Produto</p>
             <table class="panel-table">
               <thead><tr><th>Produto</th><th>Budget</th><th>%</th></tr></thead>
@@ -2623,7 +2709,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-23" class="panel-section">
             <p class="panel-section-title">Estrutura de Funil</p>
             <ul class="panel-list">
               <li><strong>Topo (Awareness):</strong> Impressões, alcance, brand recall. CPM otimizado.</li>
@@ -2633,7 +2719,7 @@
             </ul>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-24" class="panel-section">
             <p class="panel-section-title">Cronograma de Criativos</p>
             <ul class="panel-list">
               <li><strong>LinkedIn:</strong> 16 sponsored content + 8 conversation ads</li>
@@ -2652,7 +2738,7 @@
           <p class="arsenal-panel-sub">08 — Vendas / 08-sales-strategy.md</p>
           <h3 class="arsenal-panel-heading">Estratégia de Vendas &amp; Enablement</h3>
 
-          <div class="panel-section">
+          <div id="psec-25" class="panel-section">
             <p class="panel-section-title">Sales Motion por Produto</p>
             <table class="panel-table">
               <thead><tr><th>Produto</th><th>Motion</th><th>Entry Point</th><th>Ciclo médio</th></tr></thead>
@@ -2665,7 +2751,7 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-26" class="panel-section">
             <p class="panel-section-title">Discovery — Perguntas Obrigatórias</p>
             <ul class="panel-list">
               <li>"Quantos fornecedores de comunicação você gerencia hoje?"</li>
@@ -2675,7 +2761,7 @@
             </ul>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-27" class="panel-section">
             <p class="panel-section-title">Cross-sell Playbook — 4 Plays</p>
             <ul class="panel-list">
               <li><strong>Play 1 — Martech → CPaaS:</strong> Trigger: volume crescente de Voz. Pitch: "Você está usando voz no Marketing Platform. Para escalar com PABX virtual e roteamento inteligente, precisamos falar de CPaaS."</li>
@@ -2685,7 +2771,7 @@
             </ul>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-28" class="panel-section">
             <p class="panel-section-title">Battlecards</p>
             <table class="panel-table">
               <thead><tr><th>vs.</th><th>Argumento Central</th></tr></thead>
@@ -2697,13 +2783,14 @@
             </table>
           </div>
 
-          <div class="panel-section">
+          <div id="psec-29" class="panel-section">
             <p class="panel-section-title">Prioridade de Collateral</p>
             <ul class="panel-list">
               <li><strong>T1 (até 14/mai):</strong> Deck de lançamento, one-pager por produto, proposta template</li>
               <li><strong>T2 (15–22/mai):</strong> Battlecards impressos, guia de objeções, channel partner kit</li>
               <li><strong>T3 (mai–jun):</strong> Case studies por setor, ROI calculator, demo environment</li>
             </ul>
+          </div>
           </div>
         </div>
 
@@ -2949,6 +3036,47 @@
   <script>
   (function() {
     /* ─── ARSENAL PANEL TOGGLE ──────────────────────────────── */
+
+    /* ─── PANEL SUBMENU BUILDER ─────────────────────────────────── */
+    function buildSubnav(panelId) {
+      var panel   = document.getElementById('panel-' + panelId);
+      var subnav  = document.getElementById('subnav-' + panelId);
+      if (!panel || !subnav) return;
+
+      // Clear existing links (keep title)
+      var existing = subnav.querySelectorAll('.panel-subnav-link');
+      existing.forEach(function(el) { el.remove(); });
+
+      var sections = panel.querySelectorAll('.panel-section');
+      sections.forEach(function(sec, i) {
+        var titleEl = sec.querySelector('.panel-section-title');
+        if (!titleEl) return;
+        var link = document.createElement('a');
+        link.className = 'panel-subnav-link';
+        link.href = '#' + sec.id;
+        link.textContent = titleEl.textContent;
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        subnav.appendChild(link);
+      });
+
+      // Intersection observer for active state
+      var links = subnav.querySelectorAll('.panel-subnav-link');
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function(l) { l.classList.remove('is-active'); });
+            var activeLink = subnav.querySelector('a[href="#' + entry.target.id + '"]');
+            if (activeLink) activeLink.classList.add('is-active');
+          }
+        });
+      }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+
+      panel.querySelectorAll('.panel-section').forEach(function(s) { obs.observe(s); });
+    }
+
     window.togglePanel = function(id) {
       var panels = document.querySelectorAll('.arsenal-panel');
       var cards  = document.querySelectorAll('.arsenal-card');
