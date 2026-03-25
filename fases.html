@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solvefy — As Fases</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #0A0A0A;
+      --bg-card: #141414;
+      --bg-muted: #1A1A1A;
+      --bg-light: #F5F5F0;
+      --text-primary: #F5F5F0;
+      --text-dark: #0A0A0A;
+      --text-muted: #888880;
+      --text-muted-dark: #555550;
+      --accent: #E8FF47;
+      --violet: #7B61FF;
+      --rule: #2A2A2A;
+      --rule-light: #DDDDD8;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'DM Serif Display', 'Georgia', serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 18px;
+    }
+
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── FLOATING NAV ─────────────────────────────────────────── */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 10, 10, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.3s ease;
+    }
+
+    .nav-logo {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercaso;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercaso;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* ─── UTILITIES ────────────────────────────────────────────── */
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    .rule--light {
+      border-top-color: var(--rule-light);
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercaso;
+      color: var(--text-muted);
+    }
+
+    .eyebrow--light {
+      color: var(--text-muted-dark);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercaso;
+      padding: 3px 10px;
+      border-radius: 100px;
+      line-height: 1.6;
+    }
+
+    .badge--marca    { background: #1A1A2E; color: #7B61FF; }
+    .badge--growth   { background: #1A2E1A; color: #4ADE80; }
+    .badge--sales    { background: #2E1A1A; color: #FB7185; }
+    .badge--intel    { background: #1A2430; color: #38BDF8; }
+    .badge--enable   { background: #2A1A1A; color: #FBBF24; }
+
+    /* Light section badge variants */
+    .light .badge--marca    { background: #EDE9FF; color: #5B3FDB; }
+    .light .badge--growth   { background: #DCFCE7; color: #16A34A; }
+    .light .badge--sales    { background: #FFE4E6; color: #BE123C; }
+    .light .badge--intel    { background: #E0F2FE; color: #0369A1; }
+    .light .badge--enable   { background: #FEF3C7; color: #92400E; }
+
+    /* ─── ANIMATION ────────────────────────────────────────────── */
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up--delay-1 { transition-delay: 0.1s; }
+    .fade-up--delay-2 { transition-delay: 0.2s; }
+    .fade-up--delay-3 { transition-delay: 0.3s; }
+    .fade-up--delay-4 { transition-delay: 0.4s; }
+    .fade-up--delay-5 { transition-delay: 0.5s; }
+
+    /* ─── SECTION 1: HERO ──────────────────────────────────────── */
+
+    .hero {
+      min-height: 100vh;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to top, var(--bg-dark), transparent);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercaso;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--text-muted);
+    }
+
+    .hero-year {
+      font-family: var(--font-display);
+      font-size: clamp(115px, 14vw, 230px);
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(41px, 5.5vw, 83px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      max-width: 760px;
+    }
+
+    .hero-headline em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-subhead {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .hero-meta-date {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-tag {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercaso;
+      color: var(--accent);
+      background: rgba(232, 255, 71, 0.1);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    /* ─── SECTION 2: THE OPPORTUNITY ───────────────────────────── */
+
+    .opportunity {
+      background: var(--bg-dark);
+      padding: 120px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .opportunity-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-bottom: 80px;
+      border: 1px solid var(--rule);
+    }
+
+    .stat-block {
+      padding: 56px 48px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .stat-block:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 7vw, 110px);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .stat-label {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 220px;
+    }
+
+    .opportunity-narrative {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .opportunity-narrative p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+
+    .opportunity-narrative p strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .opportunity-quote {
+      border-left: 2px solid var(--accent);
+      padding-left: 24px;
+    }
+
+    .opportunity-quote p {
+      font-size: 17px;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .opportunity-quote cite {
+      display: block;
+      margin-top: 12px;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercaso;
+      color: var(--text-muted);
+    }
+
+    /* ─── SECTION 3: THE FRAMEWORK ──────────────────────────────── */
+
+    .framework {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      padding: 120px 0;
+    }
+
+    .framework .eyebrow {
+      color: var(--text-muted-dark);
+    }
+
+    .framework-header {
+      margin-bottom: 80px;
+    }
+
+    .framework-headline {
+      font-family: var(--font-display);
+      font-size: clamp(41px, 4.5vw, 69px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-dark);
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .framework-subhead {
+      font-size: 18px;
+      color: var(--text-muted-dark);
+      font-weight: 400;
+    }
+
+    .framework-theory {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 80px;
+      align-items: start;
+      padding: 56px 0;
+      border-top: 1px solid var(--rule-light);
+      border-bottom: 1px solid var(--rule-light);
+      margin-bottom: 80px;
+    }
+
+    .framework-theory-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercaso;
+      color: var(--text-muted-dark);
+      margin-bottom: 12px;
+    }
+
+    .framework-theory-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+    }
+
+    .framework-theory-body {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-muted-dark);
+    }
+
+    .framework-theory-body strong {
+      color: var(--text-dark);
+    }
+
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .agent-card {
+      background: white;
+      border: 1px solid var(--rule-light);
+      padding: 28px 24px;
+      position: relative;
+      cursor: default;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.25s ease;
+      overflow: hidden;
+    }
+
+    .agent-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .agent-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .agent-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .agent-card:hover .agent-description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .agent-card-top {
+      margin-bottom: 16px;
+    }
+
+    .agent-name {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .agent-role {
+      font-size: 15px;
+      color: var(--text-muted-dark);
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .agent-question {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text-dark);
+      line-height: 1.5;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule-light);
+      margin-top: 16px;
+    }
+
+    .agent-question::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 23px;
+      color: var(--violet);
+      line-height: 1;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .agent-description {
+      font-size: 14px;
+      color: var(--text-muted-dark);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition-delay: 0.05s;
+    }
+
+    /* ─── SECTION 4: TIMELINE ───────────────────────────────────── */
+
+    .timeline-section {
+      background: var(--bg-dark);
+      padding: 120px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .timeline-header {
+      margin-bottom: 80px;
+    }
+
+    .section-headline {
+      font-family: var(--font-display);
+      font-size: clamp(41px, 4.5vw, 69px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-top: 16px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--rule);
+    }
+
+    .phase {
+      padding: 56px 40px;
+      border-right: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .phase:last-child {
+      border-right: none;
+    }
+
+    .phase-number {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercaso;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .phase-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .phase-period {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    .phase-agents {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .phase-agent-tag {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      background: var(--bg-muted);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .phase-actions {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .phase-actions li {
+      font-size: 16px;
+      color: var(--text-muted);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .phase-actions li::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 14px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .phase-metric {
+      background: var(--bg-muted);
+      padding: 20px 24px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .phase-metric-number {
+      font-family: var(--font-display);
+      font-size: 46px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .phase-metric-label {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ─── SECTION 5: AI LAYER ───────────────────────────────────── */
+
+    .ai-layer {
+      background: var(--accent);
+      padding: 120px 0;
+    }
+
+    .ai-layer-headline {
+      font-family: var(--font-display);
+      font-size: clamp(46px, 6vw, 92px);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: var(--bg-dark);
+      margin-bottom: 80px;
+      max-width: 800px;
+    }
+
+    .ai-columns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .ai-col {
+      padding: 48px 32px;
+      border-right: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .ai-col:last-child {
+      border-right: none;
+    }
+
+    .ai-col-product {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercaso;
+      color: rgba(10, 10, 10, 0.5);
+      margin-bottom: 10px;
+    }
+
+    .ai-col-name {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--bg-dark);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .ai-col-description {
+      font-size: 16px;
+      color: rgba(10, 10, 10, 0.65);
+      line-height: 1.7;
+    }
+
+    .ai-reference {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .ai-reference-bar {
+      width: 2px;
+      height: 48px;
+      background: var(--bg-dark);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .ai-reference-text {
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(10, 10, 10, 0.6);
+      line-height: 1.7;
+    }
+
+    .ai-reference-text strong {
+      color: var(--bg-dark);
+      font-style: normal;
+    }
+
+    /* ─── SECTION 6: EDUCATION ──────────────────────────────────── */
+
+    .education {
+      background: var(--bg-dark);
+      padding: 120px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .education-header {
+      margin-bottom: 80px;
+    }
+
+    .education-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .education-problem-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercaso;
+      color: #FB7185;
+      margin-bottom: 16px;
+    }
+
+    .education-solution-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercaso;
+      color: #4ADE80;
+      margin-bottom: 16px;
+    }
+
+    .education-text {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .education-text strong {
+      color: var(--text-primary);
+    }
+
+    .habilitação-layers {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .habilitação-layer {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .habilitação-layer:first-child {
+      border-top: 1px solid var(--rule);
+    }
+
+    .layer-number {
+      font-family: var(--font-display);
+      font-size: 55px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--rule);
+    }
+
+    .layer-content {}
+
+    .layer-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .layer-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 7: FOOTER ─────────────────────────────────────── */
+
+    .footer {
+      background: var(--bg-dark);
+      padding: 80px 0 60px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 46px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .footer-tagline em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .footer-meta {
+      text-align: right;
+    }
+
+    .footer-meta-line {
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      line-height: 2;
+    }
+
+    .footer-meta-marca {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercaso;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .footer-meta-marca span {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-products {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-product {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercaso;
+      color: var(--text-muted);
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ─── DIVIDERS ──────────────────────────────────────────────── */
+
+    .section-divider {
+      padding: 20px 40px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-divider--light {
+      border-top-color: var(--rule-light);
+    }
+
+    .section-number {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .section-number--light {
+      color: var(--text-muted-dark);
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────── */
+
+    @media (max-width: 1024px) {
+      .container { padding: 0 24px; }
+      .nav { padding: 0 24px; }
+      .nav-links { gap: 20px; }
+      .agents-grid { grid-template-columns: repeat(2, 1fr); }
+      .ai-columns { grid-template-columns: repeat(2, 1fr); }
+      .ai-col:nth-child(2) { border-right: none; }
+      .ai-col:nth-child(3) { border-top: 1px solid rgba(0,0,0,0.12); }
+      .ai-col:nth-child(4) { border-top: 1px solid rgba(0,0,0,0.12); }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+
+      .hero { padding-bottom: 60px; min-height: 100svh; }
+
+      .opportunity-stats { grid-template-columns: 1fr; }
+      .stat-block { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stat-block:last-child { border-bottom: none; }
+
+      .opportunity-narrative { grid-template-columns: 1fr; gap: 40px; }
+
+      .framework-theory { grid-template-columns: 1fr; gap: 32px; }
+
+      .agents-grid { grid-template-columns: 1fr; }
+
+      .timeline { grid-template-columns: 1fr; }
+      .phase { border-right: none; border-bottom: 1px solid var(--rule); }
+      .phase:last-child { border-bottom: none; }
+
+      .ai-columns { grid-template-columns: 1fr; }
+      .ai-col { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.12); }
+      .ai-col:last-child { border-bottom: none; }
+
+      .education-grid { grid-template-columns: 1fr; gap: 48px; }
+
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      .footer-meta { text-align: left; }
+      .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .footer-products { flex-wrap: wrap; gap: 16px; }
+    }
+
+    /* ─── PRINT ─────────────────────────────────────────────────── */
+
+    @media print {
+      .nav { display: none; }
+      .fade-up { opacity: 1; transform: none; }
+      .hero-grid-bg { display: none; }
+
+  
+    body { background: white; color: #0A0A0A; }
+      .hero, .opportunity, .timeline-section, .education, .footer {
+        background: white !important;
+        color: #0A0A0A !important;
+      }
+      .framework { background: #F5F5F0; }
+      .ai-layer { background: #F0F0E8; }
+
+      .hero-year, .stat-number, .phase-metric-number, .ai-layer-headline {
+        color: #0A0A0A !important;
+      }
+
+      .text-muted, .eyebrow, .hero-eyebrow, .stat-label,
+      .opportunity-narrative p, .phase-actions li,
+      .education-text, .footer-meta-line {
+        color: #555 !important;
+      }
+
+      .rule, .rule--light { border-color: #DDD; }
+
+      .agent-card { box-shadow: none; border: 1px solid #DDD; }
+      .phase { border-color: #DDD; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Navegação principal">
+    <a href="index.html" class="nav-logo">Solvefy<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="oportunidade.html">Oportunidade</a></li>
+      <li><a href="agentes.html">Agentes</a></li>
+      <li><a href="fases.html" style="color: var(--text-primary);">Fases</a></li>
+      <li><a href="ia.html">Camada IA</a></li>
+      <li><a href="habilitacao.html">Habilitação</a></li>
+      <li><a href="arsenal.html">Arsenal</a></li>
+      <li><a href="cronograma.html">Cronograma</a></li>
+    </ul>
+  </nav>
+
+
+  <section id="timeline" class="timeline-section" aria-labelledby="timeline-heading">
+
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">03 — AS FASES</span>
+        <span class="section-number" style="font-weight:400;">Do agora ao resultado</span>
+      </div>
+
+      <div class="timeline-header">
+        <p class="eyebrow">Plano de Ativação</p>
+        <h2 class="section-headline fade-up" id="timeline-heading">Três Fases.<br>Uma Virada.</h2>
+      </div>
+
+      <div class="timeline fade-up" role="list">
+
+        <!-- FASE 1 -->
+        <div class="phase" role="listitem" aria-label="Fase 1: Consolidação">
+          <p class="phase-number">Fase 01</p>
+          <h3 class="phase-title">Consolidação</h3>
+          <p class="phase-period">Agora → 14 de Maio</p>
+          <div class="phase-agents" aria-label="Agentes envolvidos">
+            <span class="phase-agent-tag">Brand Guardian</span>
+            <span class="phase-agent-tag">UI Designer</span>
+            <span class="phase-agent-tag">Corp. Training</span>
+          </div>
+          <ul class="phase-actions" aria-label="Ações principais">
+            <li>Design system unificado em produção</li>
+            <li>Narrativa de marca finalizada</li>
+            <li>Equipe interna treinada no novo posicionamento</li>
+            <li>RCS reconfigurado sob a identidade Solvefy</li>
+          </ul>
+          <div class="phase-metric" aria-label="Métrica: 100% equipe alinhada antes do lançamento">
+            <div class="phase-metric-number">100%</div>
+            <p class="phase-metric-label">equipe alinhada antes do lançamento</p>
+          </div>
+        </div>
+
+        <!-- FASE 2 -->
+        <div class="phase" role="listitem" aria-label="Fase 2: Lançamento">
+          <p class="phase-number">Fase 02</p>
+          <h3 class="phase-title">Lançamento</h3>
+          <p class="phase-period">15 de Maio</p>
+          <div class="phase-agents" aria-label="Agentes envolvidos">
+            <span class="phase-agent-tag">Content Creator</span>
+            <span class="phase-agent-tag">Growth Hacker</span>
+            <span class="phase-agent-tag">Outbound Strategist</span>
+          </div>
+          <ul class="phase-actions" aria-label="Ações principais">
+            <li>solvefy.com live com todos os produtos</li>
+            <li>Campanha de lançamento multi-canal ativa</li>
+            <li>Comunicação para base: Disparo Pro + Brasilfone</li>
+            <li>Anchor event: comunicação para toda a equipe</li>
+          </ul>
+          <div class="phase-metric" aria-label="Métrica: +40% alcance estimado vs. marcas separadas">
+            <div class="phase-metric-number">+40%</div>
+            <p class="phase-metric-label">alcance estimado vs. marcas separadas</p>
+          </div>
+        </div>
+
+        <!-- FASE 3 -->
+        <div class="phase" role="listitem" aria-label="Fase 3: Inteligência">
+          <p class="phase-number">Fase 03</p>
+          <h3 class="phase-title">Inteligência</h3>
+          <p class="phase-period">Mai → Q3 2026</p>
+          <div class="phase-agents" aria-label="Agentes envolvidos">
+            <span class="phase-agent-tag">AI Engineer</span>
+            <span class="phase-agent-tag">Account Strategist</span>
+            <span class="phase-agent-tag">Sales Engineer</span>
+          </div>
+          <ul class="phase-actions" aria-label="Ações principais">
+            <li>IA preditiva em Martech (Solvefy Marketing Platform)</li>
+            <li>Venda Cruzada: Martech → CPaaS → Cloud</li>
+            <li>Capacitação de intermediários para Solvefy Cloud</li>
+          </ul>
+          <div class="phase-metric" aria-label="Métrica: 2.4x NRR potencial com stack completa adotada">
+            <div class="phase-metric-number">2.4x</div>
+            <p class="phase-metric-label">NRR potencial com stack completa adotada</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+    <footer class="footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer-inner fade-up">
+        <h2 class="footer-tagline">
+          Solvefy.<br>Uma Plataforma.<br><em>Infraestrutura Infinita.</em>
+        </h2>
+        <div class="footer-meta">
+          <p class="footer-meta-line">Relatório de Inteligência Estratégica</p>
+          <p class="footer-meta-line">Março 2026 — Uso Interno</p>
+          <p class="footer-meta-line">Preparado para o lançamento de 15.05.2026</p>
+          <p class="footer-meta-marca" style="margin-top: 20px;">ativos<span>.capital</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-products" role="list" aria-label="Produtos Solvefy">
+          <span class="footer-product" role="listitem">Marketing Platform</span>
+          <span class="footer-product" role="listitem">Cloud</span>
+          <span class="footer-product" role="listitem">CPaaS</span>
+          <span class="footer-product" role="listitem">ADS</span>
+        </div>
+        <p class="footer-copy">&copy; 2026 Solvefy. Todos os direitos reservados.</p>
+      </div>
+
+    </div>
+  </footer>
+
+    <script>
+    (function () {
+      'use strict';
+
+      var elements = document.querySelectorAll('.fade-up');
+
+      if (!elements.length) return;
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      elements.forEach(function (el) {
+        observer.observe(el);
+      });
+
+      // Hero elements visible immediately
+      var heroElements = document.querySelectorAll('.hero .fade-up');
+      heroElements.forEach(function (el) {
+        el.classList.add('visible');
+      });
+    })();
+  </script>
+
+
+</body>
+</html>
