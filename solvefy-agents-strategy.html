@@ -1,0 +1,3305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solvefy — Strategic Intelligence Report 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #0A0A0A;
+      --bg-card: #141414;
+      --bg-muted: #1A1A1A;
+      --bg-light: #F5F5F0;
+      --text-primary: #F5F5F0;
+      --text-dark: #0A0A0A;
+      --text-muted: #888880;
+      --text-muted-dark: #555550;
+      --accent: #E8FF47;
+      --violet: #7B61FF;
+      --rule: #2A2A2A;
+      --rule-light: #DDDDD8;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'DM Serif Display', 'Georgia', serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 18px;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── FLOATING NAV ─────────────────────────────────────────── */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 10, 10, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.3s ease;
+    }
+
+    .nav-logo {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* ─── UTILITIES ────────────────────────────────────────────── */
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    .rule--light {
+      border-top-color: var(--rule-light);
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .eyebrow--light {
+      color: var(--text-muted-dark);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      line-height: 1.6;
+    }
+
+    .badge--brand    { background: #1A1A2E; color: #7B61FF; }
+    .badge--growth   { background: #1A2E1A; color: #4ADE80; }
+    .badge--sales    { background: #2E1A1A; color: #FB7185; }
+    .badge--intel    { background: #1A2430; color: #38BDF8; }
+    .badge--enable   { background: #2A1A1A; color: #FBBF24; }
+
+    /* Light section badge variants */
+    .light .badge--brand    { background: #EDE9FF; color: #5B3FDB; }
+    .light .badge--growth   { background: #DCFCE7; color: #16A34A; }
+    .light .badge--sales    { background: #FFE4E6; color: #BE123C; }
+    .light .badge--intel    { background: #E0F2FE; color: #0369A1; }
+    .light .badge--enable   { background: #FEF3C7; color: #92400E; }
+
+    /* ─── ANIMATION ────────────────────────────────────────────── */
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up--delay-1 { transition-delay: 0.1s; }
+    .fade-up--delay-2 { transition-delay: 0.2s; }
+    .fade-up--delay-3 { transition-delay: 0.3s; }
+    .fade-up--delay-4 { transition-delay: 0.4s; }
+    .fade-up--delay-5 { transition-delay: 0.5s; }
+
+    /* ─── SECTION 1: HERO ──────────────────────────────────────── */
+
+    .hero {
+      min-height: 100vh;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to top, var(--bg-dark), transparent);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--text-muted);
+    }
+
+    .hero-year {
+      font-family: var(--font-display);
+      font-size: clamp(115px, 14vw, 230px);
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(41px, 5.5vw, 83px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      max-width: 760px;
+    }
+
+    .hero-headline em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-subhead {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .hero-meta-date {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-tag {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(232, 255, 71, 0.1);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    /* ─── SECTION 2: THE OPPORTUNITY ───────────────────────────── */
+
+    .opportunity {
+      background: var(--bg-dark);
+      padding: 120px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .opportunity-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-bottom: 80px;
+      border: 1px solid var(--rule);
+    }
+
+    .stat-block {
+      padding: 56px 48px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .stat-block:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 7vw, 110px);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .stat-label {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 220px;
+    }
+
+    .opportunity-narrative {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .opportunity-narrative p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+
+    .opportunity-narrative p strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .opportunity-quote {
+      border-left: 2px solid var(--accent);
+      padding-left: 24px;
+    }
+
+    .opportunity-quote p {
+      font-size: 17px;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .opportunity-quote cite {
+      display: block;
+      margin-top: 12px;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ─── SECTION 3: THE FRAMEWORK ──────────────────────────────── */
+
+    .framework {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      padding: 120px 0;
+    }
+
+    .framework .eyebrow {
+      color: var(--text-muted-dark);
+    }
+
+    .framework-header {
+      margin-bottom: 80px;
+    }
+
+    .framework-headline {
+      font-family: var(--font-display);
+      font-size: clamp(41px, 4.5vw, 69px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-dark);
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .framework-subhead {
+      font-size: 18px;
+      color: var(--text-muted-dark);
+      font-weight: 400;
+    }
+
+    .framework-theory {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 80px;
+      align-items: start;
+      padding: 56px 0;
+      border-top: 1px solid var(--rule-light);
+      border-bottom: 1px solid var(--rule-light);
+      margin-bottom: 80px;
+    }
+
+    .framework-theory-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted-dark);
+      margin-bottom: 12px;
+    }
+
+    .framework-theory-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+    }
+
+    .framework-theory-body {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-muted-dark);
+    }
+
+    .framework-theory-body strong {
+      color: var(--text-dark);
+    }
+
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .agent-card {
+      background: white;
+      border: 1px solid var(--rule-light);
+      padding: 28px 24px;
+      position: relative;
+      cursor: default;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.25s ease;
+      overflow: hidden;
+    }
+
+    .agent-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .agent-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .agent-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .agent-card:hover .agent-description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .agent-card-top {
+      margin-bottom: 16px;
+    }
+
+    .agent-name {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .agent-role {
+      font-size: 15px;
+      color: var(--text-muted-dark);
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .agent-question {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text-dark);
+      line-height: 1.5;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule-light);
+      margin-top: 16px;
+    }
+
+    .agent-question::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 23px;
+      color: var(--violet);
+      line-height: 1;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .agent-description {
+      font-size: 14px;
+      color: var(--text-muted-dark);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition-delay: 0.05s;
+    }
+
+    /* ─── SECTION 4: TIMELINE ───────────────────────────────────── */
+
+    .timeline-section {
+      background: var(--bg-dark);
+      padding: 120px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .timeline-header {
+      margin-bottom: 80px;
+    }
+
+    .section-headline {
+      font-family: var(--font-display);
+      font-size: clamp(41px, 4.5vw, 69px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-top: 16px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--rule);
+    }
+
+    .phase {
+      padding: 56px 40px;
+      border-right: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .phase:last-child {
+      border-right: none;
+    }
+
+    .phase-number {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .phase-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .phase-period {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    .phase-agents {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .phase-agent-tag {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      background: var(--bg-muted);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .phase-actions {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .phase-actions li {
+      font-size: 16px;
+      color: var(--text-muted);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .phase-actions li::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 14px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .phase-metric {
+      background: var(--bg-muted);
+      padding: 20px 24px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .phase-metric-number {
+      font-family: var(--font-display);
+      font-size: 46px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .phase-metric-label {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ─── SECTION 5: AI LAYER ───────────────────────────────────── */
+
+    .ai-layer {
+      background: var(--accent);
+      padding: 120px 0;
+    }
+
+    .ai-layer-headline {
+      font-family: var(--font-display);
+      font-size: clamp(46px, 6vw, 92px);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: var(--bg-dark);
+      margin-bottom: 80px;
+      max-width: 800px;
+    }
+
+    .ai-columns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .ai-col {
+      padding: 48px 32px;
+      border-right: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .ai-col:last-child {
+      border-right: none;
+    }
+
+    .ai-col-product {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(10, 10, 10, 0.5);
+      margin-bottom: 10px;
+    }
+
+    .ai-col-name {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--bg-dark);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .ai-col-description {
+      font-size: 16px;
+      color: rgba(10, 10, 10, 0.65);
+      line-height: 1.7;
+    }
+
+    .ai-reference {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .ai-reference-bar {
+      width: 2px;
+      height: 48px;
+      background: var(--bg-dark);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .ai-reference-text {
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(10, 10, 10, 0.6);
+      line-height: 1.7;
+    }
+
+    .ai-reference-text strong {
+      color: var(--bg-dark);
+      font-style: normal;
+    }
+
+    /* ─── SECTION 6: EDUCATION ──────────────────────────────────── */
+
+    .education {
+      background: var(--bg-dark);
+      padding: 120px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .education-header {
+      margin-bottom: 80px;
+    }
+
+    .education-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .education-problem-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #FB7185;
+      margin-bottom: 16px;
+    }
+
+    .education-solution-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #4ADE80;
+      margin-bottom: 16px;
+    }
+
+    .education-text {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .education-text strong {
+      color: var(--text-primary);
+    }
+
+    .enablement-layers {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .enablement-layer {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .enablement-layer:first-child {
+      border-top: 1px solid var(--rule);
+    }
+
+    .layer-number {
+      font-family: var(--font-display);
+      font-size: 55px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--rule);
+    }
+
+    .layer-content {}
+
+    .layer-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .layer-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 7: FOOTER ─────────────────────────────────────── */
+
+    .footer {
+      background: var(--bg-dark);
+      padding: 80px 0 60px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 46px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .footer-tagline em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .footer-meta {
+      text-align: right;
+    }
+
+    .footer-meta-line {
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      line-height: 2;
+    }
+
+    .footer-meta-brand {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .footer-meta-brand span {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-products {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-product {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ─── DIVIDERS ──────────────────────────────────────────────── */
+
+    .section-divider {
+      padding: 20px 40px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-divider--light {
+      border-top-color: var(--rule-light);
+    }
+
+    .section-number {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .section-number--light {
+      color: var(--text-muted-dark);
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────── */
+
+    @media (max-width: 1024px) {
+      .container { padding: 0 24px; }
+      .nav { padding: 0 24px; }
+      .nav-links { gap: 20px; }
+      .agents-grid { grid-template-columns: repeat(2, 1fr); }
+      .ai-columns { grid-template-columns: repeat(2, 1fr); }
+      .ai-col:nth-child(2) { border-right: none; }
+      .ai-col:nth-child(3) { border-top: 1px solid rgba(0,0,0,0.12); }
+      .ai-col:nth-child(4) { border-top: 1px solid rgba(0,0,0,0.12); }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+
+      .hero { padding-bottom: 60px; min-height: 100svh; }
+
+      .opportunity-stats { grid-template-columns: 1fr; }
+      .stat-block { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stat-block:last-child { border-bottom: none; }
+
+      .opportunity-narrative { grid-template-columns: 1fr; gap: 40px; }
+
+      .framework-theory { grid-template-columns: 1fr; gap: 32px; }
+
+      .agents-grid { grid-template-columns: 1fr; }
+
+      .timeline { grid-template-columns: 1fr; }
+      .phase { border-right: none; border-bottom: 1px solid var(--rule); }
+      .phase:last-child { border-bottom: none; }
+
+      .ai-columns { grid-template-columns: 1fr; }
+      .ai-col { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.12); }
+      .ai-col:last-child { border-bottom: none; }
+
+      .education-grid { grid-template-columns: 1fr; gap: 48px; }
+
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      .footer-meta { text-align: left; }
+      .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .footer-products { flex-wrap: wrap; gap: 16px; }
+    }
+
+    /* ─── PRINT ─────────────────────────────────────────────────── */
+
+    @media print {
+      .nav { display: none; }
+      .fade-up { opacity: 1; transform: none; }
+      .hero-grid-bg { display: none; }
+
+      body { background: white; color: #0A0A0A; }
+      .hero, .opportunity, .timeline-section, .education, .footer {
+        background: white !important;
+        color: #0A0A0A !important;
+      }
+      .framework { background: #F5F5F0; }
+      .ai-layer { background: #F0F0E8; }
+
+      .hero-year, .stat-number, .phase-metric-number, .ai-layer-headline {
+        color: #0A0A0A !important;
+      }
+
+      .text-muted, .eyebrow, .hero-eyebrow, .stat-label,
+      .opportunity-narrative p, .phase-actions li,
+      .education-text, .footer-meta-line {
+        color: #555 !important;
+      }
+
+      .rule, .rule--light { border-color: #DDD; }
+
+      .agent-card { box-shadow: none; border: 1px solid #DDD; }
+      .phase { border-color: #DDD; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING NAV -->
+  <nav class="nav" role="navigation" aria-label="Navegação principal">
+    <a href="#hero" class="nav-logo">Solvefy<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#opportunity">Oportunidade</a></li>
+      <li><a href="#framework">Agentes</a></li>
+      <li><a href="#timeline">Fases</a></li>
+      <li><a href="#ai-layer">IA</a></li>
+      <li><a href="#education">Treinamento</a></li>
+      <li><a href="#arsenal">Arsenal</a></li>
+      <li><a href="#master-timeline">Timeline</a></li>
+    </ul>
+  </nav>
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 1: HERO                                              -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <section id="hero" class="hero" aria-label="Hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-gradient" aria-hidden="true"></div>
+
+    <div class="container hero-content">
+      <div class="hero-eyebrow fade-up" aria-label="Relatório de inteligência estratégica Solvefy">
+        Solvefy — Relatório de Inteligência Estratégica
+      </div>
+
+      <div class="hero-year fade-up fade-up--delay-1" aria-hidden="true">2026</div>
+
+      <h1 class="hero-headline fade-up fade-up--delay-2">
+        The Unified<br><em>Platform Play</em>
+      </h1>
+
+      <p class="hero-subhead fade-up fade-up--delay-3">
+        Como Agentes de IA Orquestram uma Marca, um Ecossistema de Produtos e um Mercado
+      </p>
+
+      <div class="hero-meta fade-up fade-up--delay-4">
+        <span class="hero-meta-date">15.05.2026</span>
+        <span class="hero-meta-tag">Lançamento Unificado</span>
+        <span class="hero-meta-date" style="margin-left: auto; font-size: 14px;">Março 2026 — Uso Interno</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 2: THE OPPORTUNITY                                   -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <section id="opportunity" class="opportunity" aria-labelledby="opportunity-heading">
+
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">01 — A OPORTUNIDADE</span>
+        <span class="section-number" style="font-weight:400;">Por que unificar agora?</span>
+      </div>
+
+      <div class="opportunity-stats fade-up">
+        <div class="stat-block">
+          <div class="stat-number" aria-label="47 bilhões de dólares">$47B</div>
+          <p class="stat-label">TAM combinado: CPaaS + Martech + Cloud + AdTech no Brasil e LATAM até 2028</p>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number" aria-label="4 para 1">4→1</div>
+          <p class="stat-label">Marcas unificadas sob uma única identidade de plataforma</p>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number" aria-label="15 de maio">Mai 15</div>
+          <p class="stat-label">Data de lançamento. 52 dias para orquestrar a maior virada da empresa</p>
+        </div>
+      </div>
+
+      <div class="opportunity-narrative">
+        <p class="fade-up fade-up--delay-1">
+          Consolidação de plataforma não é uma decisão de branding — é uma decisão de arquitetura competitiva. Quando uma empresa unifica infraestrutura de comunicação com inteligência de marketing, ela cria um fosso que concorrentes especializados não conseguem replicar. <strong>A Solvefy tem hoje os quatro pilares que o mercado vai precisar nos próximos cinco anos:</strong> canal (CPaaS), distribuição (Martech), mídia (ADS) e infraestrutura (Cloud). O lançamento de 15 de maio não é um evento — é a inauguração de uma nova categoria.
+        </p>
+        <div class="opportunity-quote fade-up fade-up--delay-2">
+          <p>
+            "Empresas que consolidam infraestrutura de comunicação com inteligência de marketing alcançam NRR (Net Revenue Retention) 2,4x superior ao mercado. O efeito de rede interno entre produtos é o principal driver de retenção de longo prazo."
+          </p>
+          <cite>Bessemer Venture Partners, State of the Cloud Report — 2024</cite>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 3: THE FRAMEWORK                                     -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <section id="framework" class="framework light" aria-labelledby="framework-heading">
+
+    <div class="container">
+      <div class="section-divider section-divider--light" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number section-number--light">02 — OS AGENTES</span>
+        <span class="section-number section-number--light" style="font-weight:400;">Infraestrutura cognitiva</span>
+      </div>
+
+      <div class="framework-header">
+        <p class="eyebrow eyebrow--light">Modelo Estratégico</p>
+        <h2 class="framework-headline fade-up" id="framework-heading">Agentes como<br>Infraestrutura Estratégica</h2>
+        <p class="framework-subhead fade-up fade-up--delay-1">Não são ferramentas. São papéis executivos sob demanda.</p>
+      </div>
+
+      <div class="framework-theory fade-up">
+        <div>
+          <p class="framework-theory-label">Fundamentação Teórica</p>
+          <h3 class="framework-theory-title">A Organização Aumentada</h3>
+        </div>
+        <div class="framework-theory-body">
+          <p>
+            Brynjolfsson &amp; McAfee, em <em>The Second Machine Age</em>, descrevem a "Augmented Organization": modelos onde <strong>funções cognitivas especializadas são distribuídas por agentes de IA que não substituem trabalhadores, mas preenchem lacunas de fluxo</strong>. Cada agente representa uma camada cognitiva especializada — um papel executivo disponível sob demanda, sem os custos fixos de uma contratação, sem os riscos de um consultor externo.
+          </p>
+          <p style="margin-top: 16px;">
+            Para a Solvefy, isso significa que <strong>8 agentes estratégicos</strong> podem atuar simultaneamente nas frentes de marca, crescimento, vendas, inteligência e habilitação — comprimindo em semanas um trabalho que levaria trimestres com estruturas tradicionais.
+          </p>
+        </div>
+      </div>
+
+      <div class="agents-grid" role="list">
+
+        <!-- BRAND GUARDIAN -->
+        <article class="agent-card fade-up" role="listitem" aria-label="Agente Brand Guardian">
+          <div class="agent-card-top">
+            <span class="badge badge--brand">Brand</span>
+          </div>
+          <h3 class="agent-name">Brand Guardian</h3>
+          <p class="agent-role">Arquitetura e consistência da nova identidade Solvefy</p>
+          <p class="agent-question">Como 4 marcas falam com uma só voz?</p>
+        </article>
+
+        <!-- UI DESIGNER -->
+        <article class="agent-card fade-up fade-up--delay-1" role="listitem" aria-label="Agente UI Designer">
+          <div class="agent-card-top">
+            <span class="badge badge--brand">Brand</span>
+          </div>
+          <h3 class="agent-name">UI Designer</h3>
+          <p class="agent-role">Design system unificado para solvefy.com</p>
+          <p class="agent-question">Qual é a linguagem visual que une CPaaS, Cloud, Martech e ADS?</p>
+        </article>
+
+        <!-- GROWTH HACKER -->
+        <article class="agent-card fade-up fade-up--delay-2" role="listitem" aria-label="Agente Growth Hacker">
+          <div class="agent-card-top">
+            <span class="badge badge--growth">Growth</span>
+          </div>
+          <h3 class="agent-name">Growth Hacker</h3>
+          <p class="agent-role">Estratégia de aquisição pós-lançamento</p>
+          <p class="agent-question">Como transformar o evento de 15/05 em pipeline real?</p>
+        </article>
+
+        <!-- ACCOUNT STRATEGIST -->
+        <article class="agent-card fade-up fade-up--delay-3" role="listitem" aria-label="Agente Account Strategist">
+          <div class="agent-card-top">
+            <span class="badge badge--growth">Growth</span>
+          </div>
+          <h3 class="agent-name">Account Strategist</h3>
+          <p class="agent-role">Retenção e upsell cross-sell entre produtos</p>
+          <p class="agent-question">Como um cliente de Martech vira cliente de Cloud também?</p>
+        </article>
+
+        <!-- OUTBOUND STRATEGIST -->
+        <article class="agent-card fade-up fade-up--delay-1" role="listitem" aria-label="Agente Outbound Strategist">
+          <div class="agent-card-top">
+            <span class="badge badge--sales">Sales</span>
+          </div>
+          <h3 class="agent-name">Outbound Strategist</h3>
+          <p class="agent-role">Prospecção signal-based para novos verticais</p>
+          <p class="agent-question">Quem ainda não nos conhece mas precisa da stack completa?</p>
+        </article>
+
+        <!-- SALES ENGINEER -->
+        <article class="agent-card fade-up fade-up--delay-2" role="listitem" aria-label="Agente Sales Engineer">
+          <div class="agent-card-top">
+            <span class="badge badge--sales">Sales</span>
+          </div>
+          <h3 class="agent-name">Sales Engineer</h3>
+          <p class="agent-role">Capacitação técnica de intermediários (Solvefy Cloud)</p>
+          <p class="agent-question">Como um revendedor não-técnico vende infraestrutura?</p>
+        </article>
+
+        <!-- AI ENGINEER -->
+        <article class="agent-card fade-up fade-up--delay-3" role="listitem" aria-label="Agente AI Engineer">
+          <div class="agent-card-top">
+            <span class="badge badge--intel">Intelligence</span>
+          </div>
+          <h3 class="agent-name">AI Engineer</h3>
+          <p class="agent-role">Camada de IA preditiva (roadmap Martech)</p>
+          <p class="agent-question">Qual o próximo passo inteligente de cada campanha?</p>
+        </article>
+
+        <!-- CORPORATE TRAINING -->
+        <article class="agent-card fade-up fade-up--delay-4" role="listitem" aria-label="Agente Corporate Training Designer">
+          <div class="agent-card-top">
+            <span class="badge badge--enable">Enablement</span>
+          </div>
+          <h3 class="agent-name">Corporate Training Designer</h3>
+          <p class="agent-role">Treinamento interno para a nova marca e produtos</p>
+          <p class="agent-question">Como garantir que toda a equipe execute a mesma narrativa?</p>
+        </article>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 4: TIMELINE                                          -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <section id="timeline" class="timeline-section" aria-labelledby="timeline-heading">
+
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">03 — AS FASES</span>
+        <span class="section-number" style="font-weight:400;">Do agora ao resultado</span>
+      </div>
+
+      <div class="timeline-header">
+        <p class="eyebrow">Plano de Ativação</p>
+        <h2 class="section-headline fade-up" id="timeline-heading">Três Fases.<br>Uma Virada.</h2>
+      </div>
+
+      <div class="timeline fade-up" role="list">
+
+        <!-- FASE 1 -->
+        <div class="phase" role="listitem" aria-label="Fase 1: Consolidação">
+          <p class="phase-number">Fase 01</p>
+          <h3 class="phase-title">Consolidação</h3>
+          <p class="phase-period">Agora → 14 de Maio</p>
+          <div class="phase-agents" aria-label="Agentes envolvidos">
+            <span class="phase-agent-tag">Brand Guardian</span>
+            <span class="phase-agent-tag">UI Designer</span>
+            <span class="phase-agent-tag">Corp. Training</span>
+          </div>
+          <ul class="phase-actions" aria-label="Ações principais">
+            <li>Design system unificado em produção</li>
+            <li>Narrativa de marca finalizada</li>
+            <li>Equipe interna treinada no novo posicionamento</li>
+            <li>RCS reconfigurado sob a identidade Solvefy</li>
+          </ul>
+          <div class="phase-metric" aria-label="Métrica: 100% equipe alinhada antes do lançamento">
+            <div class="phase-metric-number">100%</div>
+            <p class="phase-metric-label">equipe alinhada antes do lançamento</p>
+          </div>
+        </div>
+
+        <!-- FASE 2 -->
+        <div class="phase" role="listitem" aria-label="Fase 2: Lançamento">
+          <p class="phase-number">Fase 02</p>
+          <h3 class="phase-title">Lançamento</h3>
+          <p class="phase-period">15 de Maio</p>
+          <div class="phase-agents" aria-label="Agentes envolvidos">
+            <span class="phase-agent-tag">Content Creator</span>
+            <span class="phase-agent-tag">Growth Hacker</span>
+            <span class="phase-agent-tag">Outbound Strategist</span>
+          </div>
+          <ul class="phase-actions" aria-label="Ações principais">
+            <li>solvefy.com live com todos os produtos</li>
+            <li>Campanha de lançamento multi-canal ativa</li>
+            <li>Comunicação para base: Disparo Pro + Brasilfone</li>
+            <li>Anchor event: comunicação para toda a equipe</li>
+          </ul>
+          <div class="phase-metric" aria-label="Métrica: +40% alcance estimado vs. marcas separadas">
+            <div class="phase-metric-number">+40%</div>
+            <p class="phase-metric-label">alcance estimado vs. marcas separadas</p>
+          </div>
+        </div>
+
+        <!-- FASE 3 -->
+        <div class="phase" role="listitem" aria-label="Fase 3: Inteligência">
+          <p class="phase-number">Fase 03</p>
+          <h3 class="phase-title">Inteligência</h3>
+          <p class="phase-period">Mai → Q3 2026</p>
+          <div class="phase-agents" aria-label="Agentes envolvidos">
+            <span class="phase-agent-tag">AI Engineer</span>
+            <span class="phase-agent-tag">Account Strategist</span>
+            <span class="phase-agent-tag">Sales Engineer</span>
+          </div>
+          <ul class="phase-actions" aria-label="Ações principais">
+            <li>IA preditiva em Martech (Solvefy Marketing Platform)</li>
+            <li>Cross-sell: Martech → CPaaS → Cloud</li>
+            <li>Capacitação de intermediários para Solvefy Cloud</li>
+          </ul>
+          <div class="phase-metric" aria-label="Métrica: 2.4x NRR potencial com stack completa adotada">
+            <div class="phase-metric-number">2.4x</div>
+            <p class="phase-metric-label">NRR potencial com stack completa adotada</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 5: AI AS INTELLIGENCE LAYER                         -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <section id="ai-layer" class="ai-layer" aria-labelledby="ai-heading">
+
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px; border-top-color: rgba(0,0,0,0.15);">
+        <span class="section-number" style="color: rgba(10,10,10,0.45);">04 — CAMADA DE IA</span>
+        <span class="section-number" style="font-weight:400; color: rgba(10,10,10,0.45);">Transversal a todos os produtos</span>
+      </div>
+
+      <h2 class="ai-layer-headline fade-up" id="ai-heading">
+        IA não é feature.<br>É o sistema nervoso<br>da plataforma.
+      </h2>
+
+      <div class="ai-columns fade-up" role="list">
+
+        <div class="ai-col" role="listitem">
+          <p class="ai-col-product">Solvefy</p>
+          <h3 class="ai-col-name">Marketing Platform</h3>
+          <p class="ai-col-description">Predição de melhores canais, horários e segmentos para cada campanha. IA que aprende com cada disparo e melhora autonomamente a performance ao longo do tempo.</p>
+        </div>
+
+        <div class="ai-col" role="listitem">
+          <p class="ai-col-product">Solvefy</p>
+          <h3 class="ai-col-name">CPaaS</h3>
+          <p class="ai-col-description">Análise de sentimento em tempo real em interações de voz. Roteamento inteligente baseado em intenção detectada. Transcrição e síntese automática de ligações.</p>
+        </div>
+
+        <div class="ai-col" role="listitem">
+          <p class="ai-col-product">Solvefy</p>
+          <h3 class="ai-col-name">ADS</h3>
+          <p class="ai-col-description">Orquestração dinâmica de mídia baseada em performance real-time. Realocação automática de budget entre canais conforme sinal de conversão. Frequência inteligente.</p>
+        </div>
+
+        <div class="ai-col" role="listitem">
+          <p class="ai-col-product">Solvefy</p>
+          <h3 class="ai-col-name">Cloud</h3>
+          <p class="ai-col-description">Detecção de anomalias de segurança antes de impacto. Auto-scaling preditivo com antecipação de picos. Otimização contínua de custo de infraestrutura.</p>
+        </div>
+
+      </div>
+
+      <div class="ai-reference fade-up">
+        <div class="ai-reference-bar" aria-hidden="true"></div>
+        <p class="ai-reference-text">
+          <strong>"Plataformas com IA embarcada como camada transversal alcançam payback 35% mais rápido na aquisição de clientes. O diferencial não está no modelo — está na integração nativa com o produto."</strong> — a16z Infrastructure Report, 2025
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 6: EDUCATION AS PRODUCT                             -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <section id="education" class="education" aria-labelledby="education-heading">
+
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">05 — HABILITAÇÃO</span>
+        <span class="section-number" style="font-weight:400;">O produto começa por dentro</span>
+      </div>
+
+      <div class="education-header">
+        <p class="eyebrow">Enablement Estratégico</p>
+        <h2 class="section-headline fade-up" id="education-heading">Treinamento não é overhead.<br>É produto.</h2>
+      </div>
+
+      <div class="education-grid fade-up">
+
+        <div>
+          <p class="education-problem-label">O Problema</p>
+          <p class="education-text">
+            Quando uma marca se unifica, o maior risco não está no mercado externo — <strong>está dentro da empresa</strong>. Vendedores pitchando a narrativa antiga. Times de suporte usando a identidade desatualizada. Intermediários e revendedores confusos sobre o portfólio expandido.
+          </p>
+          <p class="education-text" style="margin-top: 20px;">
+            A desalinhamento interno cria uma experiência fragmentada para o cliente no exato momento em que a empresa deveria transmitir coesão. <strong>Uma marca unificada que não foi internalizada não é uma marca unificada — é uma marca confusa com novo logo.</strong>
+          </p>
+          <p class="education-text" style="margin-top: 20px;">
+            O agente Corporate Training Designer existe precisamente para eliminar esse risco — criando programas de habilitação que transformam a mudança de marca em uma mudança de comportamento real, mensurável e duradoura.
+          </p>
+        </div>
+
+        <div>
+          <p class="education-solution-label">A Solução</p>
+          <p class="education-text" style="margin-bottom: 24px;">
+            Um programa estruturado de habilitação em três camadas, projetado para garantir que <strong>cada pessoa que representa a Solvefy</strong> — interna ou externamente — execute a mesma narrativa com segurança e precisão.
+          </p>
+
+          <div class="enablement-layers" role="list">
+
+            <div class="enablement-layer" role="listitem">
+              <div class="layer-number" aria-hidden="true">01</div>
+              <div class="layer-content">
+                <h3 class="layer-title">Brand Literacy</h3>
+                <p class="layer-desc">Todo colaborador entende a narrativa unificada da Solvefy, a lógica por trás dos 4 produtos e como articular o posicionamento da plataforma em qualquer conversa.</p>
+              </div>
+            </div>
+
+            <div class="enablement-layer" role="listitem">
+              <div class="layer-number" aria-hidden="true">02</div>
+              <div class="layer-content">
+                <h3 class="layer-title">Product Fluency</h3>
+                <p class="layer-desc">Cada time conhece profundidade suficiente dos 4 produtos para identificar oportunidades de cross-sell e fazer warm-handoff para o especialista correto.</p>
+              </div>
+            </div>
+
+            <div class="enablement-layer" role="listitem">
+              <div class="layer-number" aria-hidden="true">03</div>
+              <div class="layer-content">
+                <h3 class="layer-title">Channel Enablement</h3>
+                <p class="layer-desc">Revendedores e intermediários conseguem vender Solvefy Cloud de forma independente, com materiais, argumentários e suporte técnico estruturado pelo Sales Engineer.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+<!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 6: ARSENAL COMPLETO                                  -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <style>
+    /* ─── ARSENAL ─────────────────────────────────────────────── */
+    .arsenal { background: var(--dark); padding: 120px 0; }
+    .arsenal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+    @media (max-width: 768px) { .arsenal-grid { grid-template-columns: 1fr; } }
+    .arsenal-card {
+      background: #111;
+      padding: 40px;
+      position: relative;
+      transition: background 0.25s;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .arsenal-card:hover { background: #161616; }
+    .arsenal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--card-color, var(--accent));
+    }
+    .arsenal-expand-icon {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--card-color, var(--accent));
+      line-height: 1;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .arsenal-card:hover .arsenal-expand-icon {
+      border-color: var(--card-color, var(--accent));
+      background: rgba(255,255,255,0.04);
+    }
+    .arsenal-card.is-open .arsenal-expand-icon {
+      transform: rotate(45deg);
+      border-color: var(--card-color, var(--accent));
+    }
+    .arsenal-card-num {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: var(--card-color, var(--accent));
+      margin-bottom: 20px;
+      display: block;
+      text-transform: uppercase;
+    }
+    .arsenal-card-title {
+      font-family: var(--font-serif);
+      font-size: clamp(23px, 2.5vw, 30px);
+      font-weight: 400;
+      color: var(--cream);
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+    .arsenal-card-file {
+      font-size: 13px;
+      color: #555;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+    .arsenal-stats {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .arsenal-stat { }
+    .arsenal-stat-value {
+      font-family: var(--font-serif);
+      font-size: clamp(25px, 3vw, 34px);
+      color: var(--card-color, var(--accent));
+      line-height: 1;
+      display: block;
+    }
+    .arsenal-stat-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+    .arsenal-card-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #999;
+    }
+    .arsenal-card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .arsenal-tag {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid #333;
+      color: #777;
+      border-radius: 2px;
+    }
+
+    /* ─── ARSENAL PANELS ─────────────────────────────────────── */
+    .arsenal-panels-area {
+      margin-top: 2px;
+    }
+    .arsenal-panel {
+      display: none;
+      background: #0E0E0E;
+      border-top: 3px solid var(--panel-color, #E8FF47);
+      padding: 56px 64px;
+      position: relative;
+      animation: panelSlideIn 0.3s ease;
+    }
+    @keyframes panelSlideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) { .arsenal-panel { padding: 40px 24px; } }
+    .arsenal-panel.is-visible { display: block; }
+    .arsenal-panel-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      background: none;
+      border: 1px solid #333;
+      color: #888;
+      font-size: 22px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+    }
+    .arsenal-panel-close:hover { border-color: #666; color: #ccc; }
+    .arsenal-panel-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 8px;
+      line-height: 1.2;
+      padding-right: 60px;
+    }
+    .arsenal-panel-sub {
+      font-size: 14px;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+    .panel-section {
+      margin-bottom: 40px;
+    }
+    .panel-section-title {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--panel-color, #E8FF47);
+      margin-bottom: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+    }
+    .panel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+    .panel-table th {
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+      padding: 10px 14px;
+      border-bottom: 1px solid #1E1E1E;
+      font-weight: 500;
+    }
+    .panel-table td {
+      padding: 11px 14px;
+      color: #AAA;
+      border-bottom: 1px solid #161616;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+    .panel-table tr:nth-child(even) td { background: #111; }
+    .panel-table tr:hover td { background: #141414; }
+    .panel-table td:first-child { color: #CCC; }
+    .panel-highlight {
+      color: var(--panel-color, #E8FF47);
+      font-weight: 600;
+    }
+    .panel-verdict {
+      background: #111;
+      border-left: 3px solid var(--panel-color, #E8FF47);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 17px;
+      color: var(--cream);
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+    .panel-list {
+      list-style: none;
+      padding: 0;
+    }
+    .panel-list li {
+      padding: 10px 0 10px 24px;
+      position: relative;
+      color: #AAA;
+      font-size: 15px;
+      line-height: 1.6;
+      border-bottom: 1px solid #161616;
+    }
+    .panel-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 18px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--panel-color, #E8FF47);
+    }
+    .panel-list li strong { color: #DDD; font-weight: 500; }
+    .panel-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 900px) { .panel-cols { grid-template-columns: 1fr; } }
+    .panel-col-box {
+      background: #111;
+      padding: 24px;
+      border-top: 2px solid var(--panel-color, #E8FF47);
+    }
+    .panel-col-box-title {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--panel-color, #E8FF47);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .panel-col-box p {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .panel-col-box .panel-rate {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .panel-num-row {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .panel-num-item { }
+    .panel-num-val {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--panel-color, #E8FF47);
+      line-height: 1;
+      display: block;
+    }
+    .panel-num-label {
+      font-size: 12px;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+    .panel-tag-critical {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(239,68,68,0.15);
+      color: #ef4444;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .panel-tag-high {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(249,115,22,0.15);
+      color: #fb923c;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .panel-tag-med {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(234,179,8,0.15);
+      color: #eab308;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .panel-prompt-block {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      font-family: 'Inter', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #AAA;
+    }
+    .panel-prompt-block strong { color: var(--panel-color, #E8FF47); }
+
+    /* ─── GANTT TIMELINE ─────────────────────────────────────── */
+    .master-timeline { background: #0D0D0D; padding: 120px 0; }
+
+    .gantt-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+      margin-bottom: 24px;
+    }
+    .gantt-zoom-btn {
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      color: #AAA;
+      width: 34px;
+      height: 34px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+      user-select: none;
+    }
+    .gantt-zoom-btn:hover { background: #222; color: #DDD; border-color: #444; }
+    .gantt-zoom-label {
+      font-size: 13px;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 80px;
+      text-align: center;
+    }
+    .gantt-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .gantt-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #888;
+      letter-spacing: 0.06em;
+    }
+    .gantt-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .gantt-wrapper {
+      display: flex;
+      border: 1px solid #1E1E1E;
+      border-radius: 4px;
+      overflow: hidden;
+      --gcw: 180px;
+    }
+
+    /* sticky left sidebar */
+    .gantt-sidebar {
+      flex-shrink: 0;
+      width: 140px;
+      background: #0D0D0D;
+      border-right: 1px solid #1E1E1E;
+      z-index: 2;
+    }
+    .gantt-sidebar-header {
+      height: 60px;
+      border-bottom: 1px solid #1E1E1E;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #444;
+    }
+    .gantt-sidebar-row {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid #1A1A1A;
+      gap: 10px;
+    }
+    .gantt-row-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .gantt-row-label {
+      font-size: 13px;
+      color: #999;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* scrollable grid area */
+    .gantt-scroll {
+      flex: 1;
+      overflow-x: auto;
+      overflow-y: visible;
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #2A2A2A #111;
+    }
+    .gantt-scroll::-webkit-scrollbar { height: 6px; }
+    .gantt-scroll::-webkit-scrollbar-track { background: #111; }
+    .gantt-scroll::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .gantt-scroll.is-dragging { cursor: grabbing; user-select: none; }
+
+    .gantt-inner {
+      display: inline-flex;
+      flex-direction: column;
+      min-width: max-content;
+    }
+
+    /* column header row */
+    .gantt-header-row {
+      display: flex;
+      height: 60px;
+      border-bottom: 1px solid #1E1E1E;
+      position: sticky;
+      top: 0;
+      background: #0D0D0D;
+      z-index: 1;
+    }
+    .gantt-col-header {
+      width: var(--gcw);
+      min-width: var(--gcw);
+      flex-shrink: 0;
+      border-right: 1px solid #1A1A1A;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .gantt-col-header.is-milestone {
+      background: rgba(232,255,71,0.06);
+      border-right-color: rgba(232,255,71,0.2);
+    }
+    .gantt-col-header.is-launch {
+      background: rgba(232,255,71,0.12);
+      border-right: 2px solid rgba(232,255,71,0.6);
+    }
+    .gantt-col-date {
+      font-size: 13px;
+      color: #777;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .gantt-col-sub {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.06em;
+      margin-top: 3px;
+    }
+    .gantt-col-header.is-milestone .gantt-col-date { color: var(--accent); }
+    .gantt-col-header.is-launch .gantt-col-date { color: var(--accent); font-weight: 700; }
+    .gantt-col-header.is-launch .gantt-col-sub { color: rgba(232,255,71,0.7); }
+
+    /* data rows */
+    .gantt-data-row {
+      display: flex;
+      height: 64px;
+      border-bottom: 1px solid #161616;
+    }
+    .gantt-data-row:hover { background: rgba(255,255,255,0.01); }
+    .gantt-cell {
+      width: var(--gcw);
+      min-width: var(--gcw);
+      flex-shrink: 0;
+      border-right: 1px solid #161616;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+    }
+    .gantt-cell.is-launch-col {
+      border-right: 2px solid rgba(232,255,71,0.3);
+      background: rgba(232,255,71,0.02);
+    }
+    .gantt-task {
+      font-size: 12px;
+      line-height: 1.35;
+      padding: 5px 9px;
+      border-radius: 3px;
+      border-left: 3px solid var(--row-color, #E8FF47);
+      background: rgba(255,255,255,0.05);
+      color: #CCC;
+      width: 100%;
+      transition: background 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gantt-cell:hover .gantt-task {
+      background: rgba(255,255,255,0.09);
+      color: #EEE;
+      white-space: normal;
+      overflow: visible;
+      z-index: 5;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    .gantt-task.is-launch-task {
+      background: rgba(232,255,71,0.12);
+      color: var(--accent);
+      font-weight: 600;
+    }
+  </style>
+
+  <section id="arsenal" class="arsenal" aria-labelledby="arsenal-heading">
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">06 — ARSENAL</span>
+        <span class="section-number" style="font-weight:400;">8 documentos. Operação completa.</span>
+      </div>
+
+      <div class="education-header">
+        <p class="eyebrow">Deliverables Produzidos</p>
+        <h2 class="section-headline fade-up" id="arsenal-heading">O que foi criado.<br>O que está pronto para usar.</h2>
+      </div>
+
+      <div class="arsenal-grid fade-up">
+
+        <div class="arsenal-card" style="--card-color: #E8FF47;" onclick="togglePanel('01')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">01 — Risco de Marca</span>
+          <h3 class="arsenal-card-title">Análise de Risco &amp; Veredicto</h3>
+          <p class="arsenal-card-file">01-brand-risk-analysis.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">10</span>
+              <span class="arsenal-stat-label">riscos mapeados</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">R$400k</span>
+              <span class="arsenal-stat-label">budget transição</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">2 meses</span>
+              <span class="arsenal-stat-label">break-even</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Matriz completa de riscos com probabilidade e impacto. Análise financeira da transição. Veredicto: GO condicionado a 4 critérios de sucesso. ARR em risco: R$1M–1,76M sem programa de retenção.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Brand</span>
+            <span class="arsenal-tag">Financeiro</span>
+            <span class="arsenal-tag">Risco</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #7B61FF;" onclick="togglePanel('02')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">02 — Mercado</span>
+          <h3 class="arsenal-card-title">Estratégia de Mercado &amp; Posicionamento</h3>
+          <p class="arsenal-card-file">02-market-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">$3–4B</span>
+              <span class="arsenal-stat-label">TAM Brasil</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">19%</span>
+              <span class="arsenal-stat-label">CAGR projetado</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3</span>
+              <span class="arsenal-stat-label">movimentos estratégicos</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Análise competitiva de Zenvia, Infobip, Sinch e Twilio com vulnerabilidades e narrativas de diferenciação. ICP por tier. 3 movimentos: Conquest Zenvia, liderança RCS (12–18 meses), partner program.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Mercado</span>
+            <span class="arsenal-tag">Competitivo</span>
+            <span class="arsenal-tag">Posicionamento</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #00D4AA;" onclick="togglePanel('03')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">03 — Crescimento</span>
+          <h3 class="arsenal-card-title">Estratégia de Crescimento &amp; NRR</h3>
+          <p class="arsenal-card-file">03-growth-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">105%</span>
+              <span class="arsenal-stat-label">NRR alvo em 90d</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3 grupos</span>
+              <span class="arsenal-stat-label">win-back A/B/C</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">5</span>
+              <span class="arsenal-stat-label">experimentos mai/jun</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">4 growth loops: expansão de portfólio, parceiros, SEO/conteúdo, PLG assistido. Win-back segmentado por valor em 3 grupos com scripts prontos. Cross-sell engine com sinais de expansão e bundle pricing (8/12/18%).</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Growth</span>
+            <span class="arsenal-tag">Retenção</span>
+            <span class="arsenal-tag">Cross-sell</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #FF9B3A;" onclick="togglePanel('04')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">04 — Conteúdo Social</span>
+          <h3 class="arsenal-card-title">Carrosséis &amp; Conteúdo de Lançamento</h3>
+          <p class="arsenal-card-file">04-carousel-content.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">6</span>
+              <span class="arsenal-stat-label">carrosséis completos</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">30+</span>
+              <span class="arsenal-stat-label">slides com copy</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">2 semanas</span>
+              <span class="arsenal-stat-label">de calendário</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">6 carrosséis prontos: Anúncio, Full Stack, Por Que Unificar, O Que Muda Para Você, IA Diferenciador, Stories Instagram. Cada slide com headline + body + direção visual + CTA. Sequência de publicação: 12 mai (teaser) → 15 mai (lançamento).</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Social</span>
+            <span class="arsenal-tag">Instagram</span>
+            <span class="arsenal-tag">LinkedIn</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #0A84FF;" onclick="togglePanel('05')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">05 — LinkedIn</span>
+          <h3 class="arsenal-card-title">Estratégia LinkedIn &amp; Posts Completos</h3>
+          <p class="arsenal-card-file">05-linkedin-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">7</span>
+              <span class="arsenal-stat-label">posts completos</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3</span>
+              <span class="arsenal-stat-label">páginas transição</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">4 fases</span>
+              <span class="arsenal-stat-label">narrativa maio</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Plano de transição das 3 páginas (Solvefy, Disparo Pro, Brasilfone). 7 posts prontos: teaser 8/mai, lançamento 15/mai, voz CEO, 2 spotlights de produto, case de cliente (template), thought leadership "11 fornecedores". Calendário completo de maio.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">LinkedIn</span>
+            <span class="arsenal-tag">Orgânico</span>
+            <span class="arsenal-tag">Thought Leadership</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #FF4A6E;" onclick="togglePanel('06')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">06 — Identidade Visual</span>
+          <h3 class="arsenal-card-title">Prompts de Imagem &amp; Art Direction</h3>
+          <p class="arsenal-card-file">06-image-prompts.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">6</span>
+              <span class="arsenal-stat-label">prompts Midjourney</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">1</span>
+              <span class="arsenal-stat-label">conceito visual hero</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">300+</span>
+              <span class="arsenal-stat-label">palavras de direção</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">1 prompt hero (4 fluxos de luz convergindo). 5 prompts de suporte por produto. Conceito visual completo "estrutura como beleza". Notas de art direction: tipografia, grid, do's &amp; don'ts. Pronto para passar ao designer ou gerar direto com IA generativa.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Visual</span>
+            <span class="arsenal-tag">AI Generativa</span>
+            <span class="arsenal-tag">Brand Identity</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #E8FF47;" onclick="togglePanel('07')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">07 — Mídia Paga</span>
+          <h3 class="arsenal-card-title">Campanha PPC &amp; Media Plan</h3>
+          <p class="arsenal-card-file">07-ppc-campaign.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">R$180k</span>
+              <span class="arsenal-stat-label">budget 47 dias</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">498</span>
+              <span class="arsenal-stat-label">leads projetados</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">R$2,5M</span>
+              <span class="arsenal-stat-label">pipeline gerado</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Budget de R$180k por 47 dias (15 mai – 30 jun). Split: 45% LinkedIn, 30% Google Search, 10% Display/YouTube, 10% Meta, 5% Microsoft. Pipeline projetado R$1,67M–2,56M. Break-even 2,8x–4,3x sobre investimento. 60+ assets mapeados.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">LinkedIn Ads</span>
+            <span class="arsenal-tag">Google Search</span>
+            <span class="arsenal-tag">Meta</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #7B61FF;" onclick="togglePanel('08')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">08 — Vendas</span>
+          <h3 class="arsenal-card-title">Estratégia de Vendas &amp; Enablement</h3>
+          <p class="arsenal-card-file">08-sales-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">4</span>
+              <span class="arsenal-stat-label">sales motions</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3</span>
+              <span class="arsenal-stat-label">battlecards</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">4</span>
+              <span class="arsenal-stat-label">cross-sell plays</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Sales motion por produto (SLG, PLG, Channel-led, Consultivo). Scripts de discovery e demo para cada produto. Cross-sell playbook: Martech→CPaaS, Martech→ADS, Cloud Bundle, Full Stack. Battlecards vs Zenvia, Infobip, Sinch com framework FIA. Channel enablement completo para Solvefy Cloud.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Sales</span>
+            <span class="arsenal-tag">Battlecards</span>
+            <span class="arsenal-tag">Channel</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ARSENAL PANELS (full-width, below grid) -->
+      <div class="arsenal-panels-area">
+
+        <!-- Panel 01: Análise de Risco -->
+        <div id="panel-01" class="arsenal-panel" style="--panel-color: #E8FF47;">
+          <button class="arsenal-panel-close" onclick="closePanel('01')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">01 — Risco de Marca / 01-brand-risk-analysis.md</p>
+          <h3 class="arsenal-panel-heading">Análise de Risco &amp; Veredicto</h3>
+
+          <div class="panel-verdict">VEREDICTO: GO condicionado — 4 condições críticas</div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Custo da Operação</p>
+            <div class="panel-num-row">
+              <div class="panel-num-item">
+                <span class="panel-num-val">R$281–523k</span>
+                <span class="panel-num-label">intervalo total estimado</span>
+              </div>
+              <div class="panel-num-item">
+                <span class="panel-num-val">R$400k</span>
+                <span class="panel-num-label">ponto médio</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Matriz de Riscos</p>
+            <table class="panel-table">
+              <thead><tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Score</th></tr></thead>
+              <tbody>
+                <tr><td>Churn acelerado Disparo Pro</td><td>65–75%</td><td>Alto</td><td><span class="panel-tag-critical">Crítico</span></td></tr>
+                <tr><td>Confusão sobre qual produto é qual</td><td>70%</td><td>Médio</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Perda de SEO / autoridade digital</td><td>85%</td><td>Médio-Alto</td><td><span class="panel-tag-critical">Crítico</span></td></tr>
+                <tr><td>Parceiros e intermediários desorientados</td><td>60%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Inconsistência interna entre equipes</td><td>55%</td><td>Médio</td><td><span class="panel-tag-med">Médio-Alto</span></td></tr>
+                <tr><td>Cloud sem PMF contamina guarda-chuva</td><td>40%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>CPaaS sem credencial de voz</td><td>60%</td><td>Médio</td><td><span class="panel-tag-med">Médio-Alto</span></td></tr>
+                <tr><td>"Faz tudo" percebido como "faz nada bem"</td><td>45%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Timeline comprimida (52 dias)</td><td>70%</td><td>Médio</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Concorrentes abordam base durante transição</td><td>55%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Cenários de Churn</p>
+            <table class="panel-table">
+              <thead><tr><th>Cenário</th><th>Churn</th><th>ARR em Risco</th></tr></thead>
+              <tbody>
+                <tr><td>Sem programa de retenção</td><td>12% midpoint</td><td><strong class="panel-highlight">R$1M–1,76M</strong></td></tr>
+                <tr><td>Com programa ativo</td><td>4,5%</td><td>R$378k–661k</td></tr>
+                <tr><td>Delta protegido pelo programa</td><td>—</td><td><strong class="panel-highlight">R$630k–1,1M</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Break-even</p>
+            <table class="panel-table">
+              <thead><tr><th>Cenário</th><th>Prazo</th></tr></thead>
+              <tbody>
+                <tr><td>Conservador</td><td>~7,3 meses</td></tr>
+                <tr><td>Base</td><td>~3,2 meses</td></tr>
+                <tr><td>Otimista</td><td>~1,7 meses</td></tr>
+                <tr><td>Ajustado com retenção ativa</td><td><strong class="panel-highlight">~2,0 meses (Q3 2026)</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">4 Condições de GO</p>
+            <ul class="panel-list">
+              <li><strong>Programa de retenção ANTES do anúncio</strong> — top 30 contas comunicadas por CSM antes do go-live</li>
+              <li><strong>Lançamento faseado</strong> — cliente → parceiro → mercado</li>
+              <li><strong>Cloud fora de materiais gerais</strong> até ter 3 clientes pagantes</li>
+              <li><strong>Não mudar produto ou preço</strong> junto com o rebranding</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 02: Estratégia de Mercado -->
+        <div id="panel-02" class="arsenal-panel" style="--panel-color: #7B61FF;">
+          <button class="arsenal-panel-close" onclick="closePanel('02')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">02 — Mercado / 02-market-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia de Mercado &amp; Posicionamento</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">TAM Combinado Brasil 2024</p>
+            <table class="panel-table">
+              <thead><tr><th>Segmento</th><th>TAM</th><th>CAGR</th></tr></thead>
+              <tbody>
+                <tr><td>CPaaS (voz, SMS, RCS)</td><td>USD 560–750M</td><td>22–25%</td></tr>
+                <tr><td>Email/SMS Marketing Platform</td><td>USD 400–600M</td><td>13–15%</td></tr>
+                <tr><td>IaaS / Cloud gerenciado local</td><td>USD 1,4–1,8B</td><td>20–25%</td></tr>
+                <tr><td>Mídia digital / ADS</td><td>USD 800M–1,2B</td><td>12–18%</td></tr>
+                <tr><td><strong>TAM Combinado Solvefy</strong></td><td><strong class="panel-highlight">USD 3,2–4,3B</strong></td><td><strong class="panel-highlight">~19% CAGR</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Mapa Competitivo</p>
+            <table class="panel-table">
+              <thead><tr><th>Player</th><th>Vulnerabilidade</th><th>Narrativa Solvefy</th></tr></thead>
+              <tbody>
+                <tr><td>Zenvia</td><td>Crise financeira, ação -85%, produto fragmentado</td><td>"Construído unificado desde o início"</td></tr>
+                <tr><td>Infobip</td><td>Pricing premium, sem foco em PME local</td><td>"Poder enterprise. Realidade brasileira."</td></tr>
+                <tr><td>Sinch</td><td>Sem presença local, produto em inglês</td><td>"Sinch está no Brasil. Solvefy é do Brasil."</td></tr>
+                <tr><td>Twilio</td><td>Pricing em USD, requer dev-team</td><td>"Onboarding 30 dias, contrato em real"</td></tr>
+                <tr><td>AWS/Azure</td><td>Complexidade, USD, sem CPaaS integrado</td><td>"Cloud que fala o idioma do seu negócio"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">3 Movimentos Estratégicos</p>
+            <ul class="panel-list">
+              <li><strong>Conquest Campaign Zenvia</strong> — programa migração 0-friction, landing page comparativa, SDRs ativam insatisfeitos. Meta: <span class="panel-highlight">30–50 contas mid-market</span>.</li>
+              <li><strong>Liderança RCS</strong> — janela 12–18 meses. Cases, benchmarks CTR, parceria operadoras, webinar mensal, dominar SEO "RCS marketing Brasil".</li>
+              <li><strong>Partner Program</strong> — 3 tiers, margem 20–35% vs. padrão 10–15%. 50 parceiros = <span class="panel-highlight">250–750 novos clientes/ano</span>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 03: Estratégia de Crescimento -->
+        <div id="panel-03" class="arsenal-panel" style="--panel-color: #00D4AA;">
+          <button class="arsenal-panel-close" onclick="closePanel('03')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">03 — Crescimento / 03-growth-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia de Crescimento &amp; NRR</h3>
+
+          <div class="panel-verdict">North Star: NRR <span class="panel-highlight">105%</span> em 90 dias → <span class="panel-highlight">115%</span> em 6 meses</div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">4 Growth Loops</p>
+            <ul class="panel-list">
+              <li><strong>Loop de Expansão:</strong> Marketing Platform → CPaaS/Cloud via CS com sinais de expansão</li>
+              <li><strong>Loop de Parceiros:</strong> Channel-led para Cloud/CPaaS — 5–10 parceiros de qualidade antes de escalar</li>
+              <li><strong>Loop SEO/Conteúdo:</strong> resultado em Q3/Q4 — keywords: "disparador SMS B2B", "RCS empresarial Brasil"</li>
+              <li><strong>PLG Assistido (Marketing Platform):</strong> trial 14 dias + CS humano no momento crítico de ativação</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Win-back Segmentado</p>
+            <div class="panel-cols">
+              <div class="panel-col-box" style="border-top-color: #00D4AA;">
+                <p class="panel-col-box-title">Grupo A (25–35%)</p>
+                <p>Saíram por preço, uso alto, 3–18 meses atrás</p>
+                <p class="panel-rate">12–18%</p>
+                <p>taxa de retorno esperada</p>
+                <p style="margin-top: 8px; font-size: 13px; color: #666;">D1: E-mail CEO com 40% desconto — D5: WhatsApp executivo — D12: Case do mesmo setor</p>
+              </div>
+              <div class="panel-col-box" style="border-top-color: #00D4AA;">
+                <p class="panel-col-box-title">Grupo B (30–40%)</p>
+                <p>Saíram por suporte ruim, adoção parcial</p>
+                <p class="panel-rate">6–10%</p>
+                <p>taxa de retorno esperada</p>
+                <p style="margin-top: 8px; font-size: 13px; color: #666;">D1: "Solvefy não é mais a mesma plataforma" — D7: LinkedIn InMail — D14: framing urgência</p>
+              </div>
+              <div class="panel-col-box" style="border-top-color: #555;">
+                <p class="panel-col-box-title" style="color: #777;">Grupo C (25–35%)</p>
+                <p>Mudança estratégica, uso baixo</p>
+                <p class="panel-rate" style="color: #555;">—</p>
+                <p>sem follow-up humano</p>
+                <p style="margin-top: 8px; font-size: 13px; color: #444;">1 e-mail no dia do lançamento. Sem follow-up.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Bundle Pricing</p>
+            <table class="panel-table">
+              <thead><tr><th>Bundle</th><th>Produtos</th><th>Desconto</th></tr></thead>
+              <tbody>
+                <tr><td>Starter</td><td>Marketing Platform + CPaaS</td><td><span class="panel-highlight">8%</span></td></tr>
+                <tr><td>Growth</td><td>Marketing Platform + CPaaS + ADS</td><td><span class="panel-highlight">12%</span></td></tr>
+                <tr><td>Enterprise</td><td>Todos os 4 produtos</td><td><span class="panel-highlight">18%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">KPIs 90 Dias</p>
+            <ul class="panel-list">
+              <li>15 novos clientes Marketing Platform</li>
+              <li>5 clientes Cloud (validação ICP)</li>
+              <li>8 contratos CPaaS (3 via cross-sell)</li>
+              <li>3 pilotos ADS</li>
+              <li>Win-back: <strong>10% da base churned elegível</strong></li>
+              <li>8–12 contratos cross-sell da base existente</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 04: Carrosséis -->
+        <div id="panel-04" class="arsenal-panel" style="--panel-color: #FF9B3A;">
+          <button class="arsenal-panel-close" onclick="closePanel('04')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">04 — Conteúdo Social / 04-carousel-content.md</p>
+          <h3 class="arsenal-panel-heading">Carrosséis &amp; Conteúdo de Lançamento</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">6 Carrosséis Completos — Instagram / LinkedIn</p>
+            <table class="panel-table">
+              <thead><tr><th>#</th><th>Título</th><th>Data</th><th>Slide 1</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Anúncio da Unificação</td><td>12 mai — Pré-lançamento</td><td>"Uma decisão que levou 3 anos para tomar."</td></tr>
+                <tr><td>2</td><td>Full Stack — Os 4 Produtos</td><td>15 mai — Launch Day</td><td>"Quatro produtos. Uma conta. Resultado."</td></tr>
+                <tr><td>3</td><td>Por Que Unificar?</td><td>17 mai</td><td>"O problema que o mercado normalizou."</td></tr>
+                <tr><td>4</td><td>O Que Muda Para Você</td><td>19 mai</td><td>Por público — clientes Disparo Pro / Brasilfone / novos</td></tr>
+                <tr><td>5</td><td>IA Diferenciador</td><td>21 mai</td><td>"IA não é feature. É camada de infraestrutura."</td></tr>
+                <tr><td>6</td><td>Stories — Contagem Regressiva</td><td>8–14 mai</td><td>Stories diários: "7 dias"... até "Amanhã"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Detalhe dos Carrosséis</p>
+            <ul class="panel-list">
+              <li><strong>Carrossel 1 — Anúncio:</strong> Disparo Pro + Brasilfone + Solvefy Cloud = um único nome. Slide final: "A partir de 15 de maio, Solvefy." CTA: "Siga nossa página para acompanhar"</li>
+              <li><strong>Carrossel 2 — Full Stack:</strong> Slides 2–5: um produto por slide — benefício central + dado. Slide 6: "Um contrato. Um time. Uma plataforma."</li>
+              <li><strong>Carrossel 3 — Por Que:</strong> Custo invisível de múltiplos vendors. "72% dos compradores B2B preferem consolidar" (Gartner 2024). Antes vs. Depois Solvefy.</li>
+              <li><strong>Carrossel 4 — O Que Muda:</strong> "O produto não muda. O acesso ao resto fica muito mais simples."</li>
+              <li><strong>Carrossel 5 — IA:</strong> IA em cada produto — o que resolve, que dado usa. "Plataformas com IA embarcada têm payback 35% mais rápido" — a16z 2025</li>
+              <li><strong>Stories:</strong> Identidade visual: fundo escuro, tipo grande, contagem regressiva em lime (#E8FF47)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 05: LinkedIn -->
+        <div id="panel-05" class="arsenal-panel" style="--panel-color: #0A84FF;">
+          <button class="arsenal-panel-close" onclick="closePanel('05')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">05 — LinkedIn / 05-linkedin-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia LinkedIn &amp; Posts Completos</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Transição das 3 Páginas</p>
+            <ul class="panel-list">
+              <li><strong>Solvefy LinkedIn</strong> → torna-se a página principal unificada</li>
+              <li><strong>Disparo Pro</strong> → renomear "Disparo Pro | Agora Solvefy Marketing Platform" — manter 90 dias</li>
+              <li><strong>Brasilfone</strong> → renomear "Brasilfone | Agora Solvefy CPaaS" — manter 90 dias</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Calendário Maio 2026</p>
+            <table class="panel-table">
+              <thead><tr><th>Data</th><th>Ação</th></tr></thead>
+              <tbody>
+                <tr><td>1 mai</td><td>Teaser inicial (contagem regressiva discreta)</td></tr>
+                <tr><td>8 mai</td><td><strong>POST 1</strong> — TEASER: "Há 3 anos, dois times resolviam o mesmo problema sem saber um do outro."</td></tr>
+                <tr><td>12 mai</td><td>Freeze páginas antigas</td></tr>
+                <tr><td>14 mai</td><td>Posts encerramento páginas antigas + atualização bio</td></tr>
+                <tr><td>15 mai</td><td><strong class="panel-highlight">POST 2 — LANÇAMENTO + POST 3 — VOZ DO CEO</strong></td></tr>
+                <tr><td>19 mai</td><td>POST 4 — Spotlight Marketing Platform</td></tr>
+                <tr><td>21 mai</td><td>POST 5 — Spotlight CPaaS</td></tr>
+                <tr><td>26 mai</td><td>POST 6 — Case de Cliente (template preenchível)</td></tr>
+                <tr><td>28 mai</td><td>POST 7 — Thought Leadership: "11 fornecedores. Onze."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">7 Posts — Resumo de Conteúdo</p>
+            <ul class="panel-list">
+              <li><strong>Post 1 (8/mai):</strong> Hook sobre dois times resolvendo o mesmo problema. "Em 7 dias esse atrito acaba."</li>
+              <li><strong>Post 2 (15/mai):</strong> Anúncio oficial. "Disparo Pro. Brasilfone. Um único nome: Solvefy." 4 produtos descritos.</li>
+              <li><strong>Post 3 (15–16/mai):</strong> CEO — "A primeira vez que precisamos fazer isso foi numa reunião onde o cliente perguntou: vocês são uma empresa só ou são três?"</li>
+              <li><strong>Post 4 (19/mai):</strong> Cliente com 4 fornecedores. Em 60 dias consolidou tudo. SMS 97% abertura, RCS CTR 3-5x.</li>
+              <li><strong>Post 5 (21/mai):</strong> Cliente perdeu 3h de atendimento por telefonia que não escalava. CPaaS resolve.</li>
+              <li><strong>Post 6 (26/mai):</strong> Template: [Problema aparente] vs [Problema raiz]. Antes/Depois com 3 métricas.</li>
+              <li><strong>Post 7 (28/mai):</strong> "Conversei com CTO que gerencia 11 fornecedores. Onze. O custo que não aparece em nenhuma linha de budget."</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 06: Prompts de Imagem -->
+        <div id="panel-06" class="arsenal-panel" style="--panel-color: #FF4A6E;">
+          <button class="arsenal-panel-close" onclick="closePanel('06')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">06 — Identidade Visual / 06-image-prompts.md</p>
+          <h3 class="arsenal-panel-heading">Prompts de Imagem &amp; Art Direction</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Conceito Visual</p>
+            <div class="panel-verdict" style="border-left-color: #FF4A6E;">"Estrutura como beleza" — Paleta: #0A0A0A fundo + #E8FF47 lime + #7B61FF violeta + #F5F5F0 off-white. Tipografia: DM Serif Display + Inter. Muito espaço em branco. Grid estruturado.</div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">6 Prompts Completos</p>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">1 — Hero: 4 Produtos Convergindo</p>
+            <div class="panel-prompt-block">"Four geometric light streams in electric lime (#E8FF47), deep violet (#7B61FF), teal and white, converging into a central unified point on absolute black background. Mathematical precision. Long exposure light painting aesthetic. Center logo placement. 8K ultra-detailed. <strong>–ar 16:9 –style raw</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">2 — Marketing Platform</p>
+            <div class="panel-prompt-block">"Abstract visualization of SMS, RCS, voice and email channels as synchronized data streams. Dark background. Electric lime accent lines. Clean geometric forms. Advertising photography style. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">3 — CPaaS</p>
+            <div class="panel-prompt-block">"Corporate telephony as architectural structure. Dark concrete texture background. Violet light traces connecting nodes. Technical precision aesthetic. B2B editorial photography. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">4 — Solvefy Cloud</p>
+            <div class="panel-prompt-block">"Server infrastructure transformed into pure geometry. Floating data centers. Deep black space. Electric lime highlights. Minimalist tech photography. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">5 — Solvefy ADS</p>
+            <div class="panel-prompt-block">"Multi-channel media orchestration. Dashboard elements as abstract art. Dark background. Multiple colored streams merging. Editorial tech photography. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">6 — Brand Announcement</p>
+            <div class="panel-prompt-block">"Split image: four separate abstract elements (left) dissolving and merging into one unified geometric form (right). Electric lime and violet. Pure black. Dramatic editorial lighting. <strong>–ar 16:9</strong>"</div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Notas de Art Direction</p>
+            <ul class="panel-list">
+              <li>Nunca usar stock photos de pessoas em reunião</li>
+              <li>Nunca usar ícones flat coloridos em fundo branco</li>
+              <li>Sempre: geometria abstrata, luz como elemento estrutural, muito espaço negativo</li>
+              <li>Grid mínimo de 12 colunas. Tipografia grande como elemento visual.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 07: Campanha PPC -->
+        <div id="panel-07" class="arsenal-panel" style="--panel-color: #E8FF47;">
+          <button class="arsenal-panel-close" onclick="closePanel('07')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">07 — Mídia Paga / 07-ppc-campaign.md</p>
+          <h3 class="arsenal-panel-heading">Campanha PPC &amp; Media Plan</h3>
+
+          <div class="panel-num-row">
+            <div class="panel-num-item">
+              <span class="panel-num-val">R$180k</span>
+              <span class="panel-num-label">budget 47 dias</span>
+            </div>
+            <div class="panel-num-item">
+              <span class="panel-num-val">338–498</span>
+              <span class="panel-num-label">leads projetados</span>
+            </div>
+            <div class="panel-num-item">
+              <span class="panel-num-val">R$1,67–2,56M</span>
+              <span class="panel-num-label">pipeline gerado</span>
+            </div>
+            <div class="panel-num-item">
+              <span class="panel-num-val">2,8–4,3x</span>
+              <span class="panel-num-label">break-even</span>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Split por Plataforma</p>
+            <table class="panel-table">
+              <thead><tr><th>Plataforma</th><th>Budget</th><th>%</th><th>Justificativa</th></tr></thead>
+              <tbody>
+                <tr><td>LinkedIn Ads</td><td><span class="panel-highlight">R$81.000</span></td><td>45%</td><td>ICP B2B mais preciso</td></tr>
+                <tr><td>Google Search</td><td>R$54.000</td><td>30%</td><td>Captura demanda ativa</td></tr>
+                <tr><td>Google Display + YouTube</td><td>R$18.000</td><td>10%</td><td>Brand awareness</td></tr>
+                <tr><td>Meta</td><td>R$18.000</td><td>10%</td><td>Remarketing + lookalike</td></tr>
+                <tr><td>Microsoft Ads</td><td>R$9.000</td><td>5%</td><td>Audiência corporativa IT</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Split por Produto</p>
+            <table class="panel-table">
+              <thead><tr><th>Produto</th><th>Budget</th><th>%</th></tr></thead>
+              <tbody>
+                <tr><td>Marketing Platform</td><td>R$54.000</td><td>30%</td></tr>
+                <tr><td>Cloud</td><td>R$45.000</td><td>25%</td></tr>
+                <tr><td>CPaaS</td><td>R$36.000</td><td>20%</td></tr>
+                <tr><td>ADS</td><td>R$27.000</td><td>15%</td></tr>
+                <tr><td>Brand Institucional</td><td>R$18.000</td><td>10%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Estrutura de Funil</p>
+            <ul class="panel-list">
+              <li><strong>Topo (Awareness):</strong> Impressões, alcance, brand recall. CPM otimizado.</li>
+              <li><strong>Meio (Consideração):</strong> Cliques, visitas página produto. CPC otimizado.</li>
+              <li><strong>Fundo (Conversão):</strong> Lead form, demo request. tCPA / Max Conversions.</li>
+              <li>Regra: <strong>campanhas awareness NUNCA compartilham budget com conversão</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Cronograma de Criativos</p>
+            <ul class="panel-list">
+              <li><strong>LinkedIn:</strong> 16 sponsored content + 8 conversation ads</li>
+              <li><strong>Google Search:</strong> 12 RSA + 24 extensões</li>
+              <li><strong>Meta:</strong> 10 carrossel + 6 vídeos</li>
+              <li><strong>YouTube:</strong> 4 bumper ads (6s) + 2 TrueView (15-30s)</li>
+              <li><strong>Display:</strong> 8 banner sets (5 tamanhos cada)</li>
+              <li>Deadline produção: <span class="panel-highlight">7 de maio</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 08: Estratégia de Vendas -->
+        <div id="panel-08" class="arsenal-panel" style="--panel-color: #7B61FF;">
+          <button class="arsenal-panel-close" onclick="closePanel('08')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">08 — Vendas / 08-sales-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia de Vendas &amp; Enablement</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Sales Motion por Produto</p>
+            <table class="panel-table">
+              <thead><tr><th>Produto</th><th>Motion</th><th>Entry Point</th><th>Ciclo médio</th></tr></thead>
+              <tbody>
+                <tr><td>Marketing Platform</td><td>SLG + PLG assistido</td><td>Trial 14d ou demo</td><td>3–6 semanas</td></tr>
+                <tr><td>Cloud</td><td>Channel-led + direct</td><td>Indicação parceiro</td><td>4–8 semanas</td></tr>
+                <tr><td>CPaaS</td><td>SLG enterprise</td><td>Demo + POC</td><td>6–12 semanas</td></tr>
+                <tr><td>ADS</td><td>SLG consultivo</td><td>Demo somente</td><td>4–8 semanas</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Discovery — Perguntas Obrigatórias</p>
+            <ul class="panel-list">
+              <li>"Quantos fornecedores de comunicação você gerencia hoje?"</li>
+              <li>"Quando algo falha entre sistemas, quem assume o SLA?"</li>
+              <li>"Qual o custo real (não de licença) de manter isso funcionando junto?"</li>
+              <li>"Se você pudesse consolidar tudo em um contrato, o que seria o bloqueio?"</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Cross-sell Playbook — 4 Plays</p>
+            <ul class="panel-list">
+              <li><strong>Play 1 — Martech → CPaaS:</strong> Trigger: volume crescente de Voz. Pitch: "Você está usando voz no Marketing Platform. Para escalar com PABX virtual e roteamento inteligente, precisamos falar de CPaaS."</li>
+              <li><strong>Play 2 — Martech → ADS:</strong> Trigger: cliente menciona gasto Google/Meta. Pitch: "Com ADS, você orquestra esse investimento junto com seus disparos diretos em um único funil."</li>
+              <li><strong>Play 3 — Cloud Bundle:</strong> Trigger: cliente mid-market de TI ou ISP. Pitch: "Sua infraestrutura + seus canais de comunicação, mesmo contrato, billing em BRL, SLA ponta a ponta assumido por nós."</li>
+              <li><strong>Play 4 — Full Stack:</strong> Trigger: NPS alto + 2 produtos ativos. Pitch: "Com Enterprise Bundle você tem <span class="panel-highlight">18% de desconto</span> e acesso ao portfólio completo."</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Battlecards</p>
+            <table class="panel-table">
+              <thead><tr><th>vs.</th><th>Argumento Central</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Zenvia</strong></td><td>"Zenvia está em crise financeira. Quem assume o SLA quando o fornecedor está lutando para sobreviver? Solvefy foi construída unificada. Sem dívida técnica de M&amp;A."</td></tr>
+                <tr><td><strong>Infobip</strong></td><td>"Infobip cobre 190 países. Quanto do seu budget vai para suporte localizado, compliance LGPD, contrato em BRL? Solvefy é a capacidade técnica do Infobip para o mercado brasileiro."</td></tr>
+                <tr><td><strong>Sinch</strong></td><td>"Sinch está no Brasil. Solvefy é do Brasil. Diferença: time de produto pensa em reais, em ANATEL, em fuso horário, em português."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Prioridade de Collateral</p>
+            <ul class="panel-list">
+              <li><strong>T1 (até 14/mai):</strong> Deck de lançamento, one-pager por produto, proposta template</li>
+              <li><strong>T2 (15–22/mai):</strong> Battlecards impressos, guia de objeções, channel partner kit</li>
+              <li><strong>T3 (mai–jun):</strong> Case studies por setor, ROI calculator, demo environment</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /.arsenal-panels-area -->
+    </div>
+  </section>
+
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 7: MASTER TIMELINE — GANTT                          -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <style>
+    /* ─── GANTT REFERENCE STYLE ─────────────────────────────────── */
+    .master-timeline {
+      background: #111;
+      padding: 80px 0 0;
+      border-top: 1px solid #1A1A1A;
+    }
+    .gantt-top { padding: 0 40px 40px; max-width: 1280px; margin: 0 auto; }
+    .gantt-controls {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: 40px; margin-bottom: 0;
+    }
+    .gantt-zoom-btn {
+      background: #1A1A1A; border: 1px solid #2A2A2A;
+      color: #AAA; width: 32px; height: 32px; border-radius: 4px;
+      cursor: pointer; font-size: 17px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; user-select: none; font-family: 'Inter',sans-serif;
+    }
+    .gantt-zoom-btn:hover { background: #222; border-color: #444; color: #DDD; }
+    .gantt-zoom-label {
+      font-size: 12px; color: #555; letter-spacing: 0.1em;
+      text-transform: uppercase; min-width: 70px; text-align: center;
+    }
+    .gantt-hint-drag {
+      font-size: 11px; color: #333; letter-spacing: 0.08em;
+      margin-left: auto;
+    }
+    .gantt-legend {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .gantt-legend-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: #666;
+    }
+    .gantt-legend-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* ─── GANTT TABLE WRAPPER ────────────────────────────────────── */
+    .gantt-outer {
+      overflow-x: auto;
+      overflow-y: visible;
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #2A2A2A #111;
+      margin-top: 32px;
+    }
+    .gantt-outer:active { cursor: grabbing; }
+    .gantt-outer::-webkit-scrollbar { height: 5px; }
+    .gantt-outer::-webkit-scrollbar-track { background: #111; }
+    .gantt-outer::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .gantt-outer.is-dragging { cursor: grabbing; user-select: none; }
+
+    .gantt-tbl {
+      display: inline-block;
+      min-width: max-content;
+      border-bottom: 1px solid #1E1E1E;
+    }
+
+    /* Each row is a CSS grid: label col + N data cols */
+    .g-row {
+      display: grid;
+      grid-template-columns: 210px repeat(var(--gcols, 14), var(--gcw, 130px));
+      border-bottom: 1px solid #1A1A1A;
+    }
+    .g-row:nth-child(even) .g-cell { background: rgba(255,255,255,0.005); }
+
+    /* Month header row */
+    .g-row-months {
+      border-bottom: 1px solid #1E1E1E;
+    }
+    .g-month {
+      display: flex; align-items: center; justify-content: center;
+      border-right: 1px solid #1E1E1E;
+      padding: 10px 0;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #666;
+    }
+    .g-month-corner { border-right: 1px solid #1E1E1E; }
+    .g-month:last-child { border-right: none; }
+
+    /* Week header row */
+    .g-row-weeks {
+      border-bottom: 2px solid #1E1E1E;
+      background: #0D0D0D;
+    }
+    .g-week {
+      border-right: 1px solid #1A1A1A;
+      padding: 8px 0 6px;
+      text-align: center;
+    }
+    .g-week-corner {
+      display: flex; align-items: center; padding: 0 16px;
+      border-right: 1px solid #1E1E1E;
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #444;
+    }
+    .g-week-num {
+      display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #555;
+    }
+    .g-week-date {
+      display: block; font-size: 10px; color: #333; margin-top: 2px;
+      letter-spacing: 0.04em;
+    }
+    .g-week.is-launch {
+      background: rgba(232,255,71,0.06);
+      border-right: 2px solid rgba(232,255,71,0.4);
+    }
+    .g-week.is-launch .g-week-num { color: #E8FF47; }
+    .g-week.is-launch .g-week-date { color: rgba(232,255,71,0.6); }
+
+    /* Data rows */
+    .g-label {
+      display: flex; align-items: center;
+      padding: 0 0 0 16px;
+      border-right: 1px solid #1E1E1E;
+      min-height: 56px;
+      position: sticky; left: 0; z-index: 4;
+      background: #111;
+    }
+    .g-row:nth-child(even) .g-label { background: rgba(17,17,17,1); }
+    .g-row.g-launch-row .g-label { background: rgba(232,255,71,0.04); }
+    .g-label-text {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #777; line-height: 1.3;
+    }
+    .g-label-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      margin-right: 10px; flex-shrink: 0;
+    }
+
+    /* Cells */
+    .g-cell {
+      border-right: 1px solid #1A1A1A;
+      min-height: 56px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .g-cell.is-launch-col {
+      border-right: 2px solid rgba(232,255,71,0.25);
+      background: rgba(232,255,71,0.025);
+    }
+
+    /* BAR: spans multiple cells via grid-column */
+    .g-bar {
+      grid-row: 1;
+      height: 26px;
+      border-radius: 100px;
+      margin: 0 6px;
+      display: flex; align-items: center; padding: 0 12px;
+      font-size: 11px; font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: opacity 0.15s;
+    }
+    .g-bar:hover { opacity: 0.85; }
+
+    /* MILESTONE BADGE */
+    .g-milestone {
+      grid-row: 1;
+      display: flex; align-items: center; justify-content: center;
+      height: 56px;
+    }
+    .g-badge {
+      background: #E8FF47;
+      color: #000; border-radius: 100px;
+      padding: 5px 13px; font-size: 12px; font-weight: 700;
+      white-space: nowrap; letter-spacing: 0.02em;
+    }
+    .g-badge.g-badge-launch {
+      background: #E8FF47;
+      font-size: 13px; padding: 6px 16px;
+      box-shadow: 0 0 20px rgba(232,255,71,0.3);
+    }
+    .g-badge.g-badge-review {
+      background: transparent;
+      border: 2px solid #E8FF47;
+      color: #E8FF47;
+    }
+
+    /* Special launch row */
+    .g-launch-row { background: rgba(232,255,71,0.03); }
+    .g-launch-row .g-cell { background: transparent; }
+    .g-launch-row .g-label-text { color: #E8FF47; font-size: 13px; }
+
+    /* Row that uses grid for bars */
+    .g-data-inner {
+      display: contents;
+    }
+  </style>
+
+  <section id="master-timeline" class="master-timeline" aria-labelledby="tl-heading">
+
+    <div class="gantt-top">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">07 — CRONOGRAMA</span>
+        <span class="section-number" style="font-weight:400;">Mar 24 → Ago 2026</span>
+      </div>
+      <div class="education-header">
+        <p class="eyebrow">Master Timeline</p>
+        <h2 class="section-headline fade-up" id="tl-heading">Todas as frentes.<br>Cada semana.</h2>
+      </div>
+
+      <div class="gantt-controls fade-up">
+        <button class="gantt-zoom-btn" id="gZoomOutBtn" aria-label="Diminuir zoom">&#8722;</button>
+        <span class="gantt-zoom-label" id="gZoomLbl">Médio</span>
+        <button class="gantt-zoom-btn" id="gZoomInBtn" aria-label="Aumentar zoom">+</button>
+        <span class="gantt-hint-drag">&#8592; arraste para navegar &#8594;</span>
+      </div>
+
+      <div class="gantt-legend fade-up">
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#E8FF47;"></div>Brand &amp; Identidade</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#7B61FF;"></div>Tech &amp; Produto</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#00D4AA;"></div>Conteúdo &amp; Social</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#FF9B3A;"></div>Vendas &amp; CRM</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#0A84FF;"></div>Mídia Paga</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#FF4A6E;"></div>Habilitação Interna</div>
+      </div>
+    </div>
+
+    <div class="gantt-outer" id="ganttOuter">
+      <div class="gantt-tbl" id="ganttTbl">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+  (function() {
+    /* ─── ARSENAL PANEL TOGGLE ──────────────────────────────── */
+    window.togglePanel = function(id) {
+      var panels = document.querySelectorAll('.arsenal-panel');
+      var cards  = document.querySelectorAll('.arsenal-card');
+      var target = document.getElementById('panel-' + id);
+      var isOpen = target && target.classList.contains('is-visible');
+
+      panels.forEach(function(p) { p.classList.remove('is-visible'); });
+      cards.forEach(function(c)  { c.classList.remove('is-open'); });
+
+      if (!isOpen && target) {
+        target.classList.add('is-visible');
+        var idx = parseInt(id, 10) - 1;
+        if (cards[idx]) cards[idx].classList.add('is-open');
+        setTimeout(function() {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 60);
+      }
+    };
+    window.closePanel = function(id) {
+      var t = document.getElementById('panel-' + id);
+      var cards = document.querySelectorAll('.arsenal-card');
+      var idx = parseInt(id, 10) - 1;
+      if (t) t.classList.remove('is-visible');
+      if (cards[idx]) cards[idx].classList.remove('is-open');
+    };
+
+    /* ─── GANTT DATA ─────────────────────────────────────────── */
+
+    /* 14 columns */
+    var COLS = 14;
+    var WEEKS = [
+      { num:'S01', date:'24 Mar', month:0, launch:false },
+      { num:'S02', date:'31 Mar', month:1, launch:false },
+      { num:'S03', date:'7 Abr',  month:1, launch:false },
+      { num:'S04', date:'14 Abr', month:1, launch:false },
+      { num:'S05', date:'21 Abr', month:1, launch:false },
+      { num:'S06', date:'28 Abr', month:1, launch:false },
+      { num:'S07', date:'5 Mai',  month:2, launch:false },
+      { num:'S08', date:'12 Mai', month:2, launch:true  },
+      { num:'S09', date:'19 Mai', month:2, launch:false },
+      { num:'S10', date:'26 Mai', month:2, launch:false },
+      { num:'S11', date:'2 Jun',  month:3, launch:false },
+      { num:'S12', date:'16 Jun', month:3, launch:false },
+      { num:'S13', date:'7 Jul',  month:4, launch:false },
+      { num:'S14', date:'15 Ago', month:5, launch:false }
+    ];
+
+    /* month groups: { label, start (1-based), span } */
+    var MONTHS = [
+      { label:'MARÇO',    start:1,  span:1 },
+      { label:'ABRIL',    start:2,  span:5 },
+      { label:'MAIO',     start:7,  span:4 },
+      { label:'JUNHO',    start:11, span:2 },
+      { label:'JUL / AGO', start:13, span:2 }
+    ];
+
+    /* activity rows */
+    /* bar: { s, e, label, color, textColor }  — s,e = 1-based col */
+    /* milestone: { col, badge, large }         */
+    var ACTIVITIES = [
+      {
+        label:'IDENTIDADE VISUAL', dot:'#E8FF47',
+        bars: [{ s:1, e:4, label:'Guia de identidade + brandbook', color:'rgba(232,255,71,0.15)', textColor:'#C8E040' }],
+        milestones: [{ col:8, badge:'15/05' }]
+      },
+      {
+        label:'ARQUITETURA DIGITAL', dot:'#7B61FF',
+        bars: [{ s:1, e:6, label:'Dev solvefy.com + migração SEO', color:'rgba(123,97,255,0.2)', textColor:'#A090FF' }],
+        milestones: [{ col:6, badge:'07/05' }, { col:8, badge:'Go-live' }]
+      },
+      {
+        label:'ASSETS VISUAIS', dot:'#00D4AA',
+        bars: [{ s:3, e:7, label:'Produção de assets + carrosséis', color:'rgba(0,212,170,0.15)', textColor:'#00C49A' }],
+        milestones: [{ col:7, badge:'08/05' }]
+      },
+      {
+        label:'TREINAMENTO INTERNO', dot:'#FF4A6E',
+        bars: [{ s:4, e:7, label:'Brand Literacy · Product Fluency · Channel', color:'rgba(255,74,110,0.15)', textColor:'#FF6080' }],
+        milestones: [{ col:8, badge:'15/05' }]
+      },
+      {
+        label:'SETUP MÍDIA PAGA', dot:'#0A84FF',
+        bars: [{ s:2, e:6, label:'Setup + produção 60+ criativos', color:'rgba(10,132,255,0.15)', textColor:'#4AABFF' }],
+        milestones: [{ col:8, badge:'Ativar' }]
+      },
+      {
+        label:'PRÉ-LANÇAMENTO', dot:'#00D4AA',
+        bars: [{ s:6, e:8, label:'Countdown LinkedIn + posts teaser', color:'rgba(0,212,170,0.12)', textColor:'#00C49A' }],
+        milestones: [{ col:7, badge:'08/05' }]
+      },
+      {
+        label:'WIN-BACK CAMPAIGN', dot:'#FF9B3A',
+        bars: [{ s:5, e:9, label:'Grupos A / B / C reativação', color:'rgba(255,155,58,0.15)', textColor:'#FFA040' }],
+        milestones: []
+      },
+      {
+        label:'✦  LANÇAMENTO SOLVEFY', dot:'#E8FF47', launch:true,
+        bars: [],
+        milestones: [{ col:8, badge:'15/05/2026', large:true }]
+      },
+      {
+        label:'CAMPANHAS PPC', dot:'#0A84FF',
+        bars: [{ s:8, e:12, label:'LinkedIn · Google · Meta · Microsoft', color:'rgba(10,132,255,0.18)', textColor:'#4AABFF' }],
+        milestones: [{ col:12, badge:'30/06' }]
+      },
+      {
+        label:'CONQUEST ZENVIA', dot:'#FF9B3A',
+        bars: [{ s:9, e:12, label:'SDR + migração 0-friction + landing page', color:'rgba(255,155,58,0.15)', textColor:'#FFA040' }],
+        milestones: [{ col:12, badge:'50 contas' }]
+      },
+      {
+        label:'POSTS & CONTEÚDO', dot:'#00D4AA',
+        bars: [
+          { s:8, e:10, label:'Posts lançamento + spotlights + case', color:'rgba(0,212,170,0.12)', textColor:'#00C49A' },
+          { s:11, e:13, label:'Webinar RCS · thought leadership', color:'rgba(0,212,170,0.08)', textColor:'#009A7A' }
+        ],
+        milestones: []
+      },
+      {
+        label:'PARTNER PROGRAM', dot:'#FF9B3A',
+        bars: [{ s:11, e:14, label:'3 tiers · certificação · canal de revenda', color:'rgba(255,155,58,0.12)', textColor:'#CC7A20' }],
+        milestones: []
+      },
+      {
+        label:'SEO ORGÂNICO', dot:'#7B61FF',
+        bars: [{ s:10, e:14, label:'Content sprint RCS · linkbuilding · monitoramento', color:'rgba(123,97,255,0.12)', textColor:'#9080E0' }],
+        milestones: []
+      },
+      {
+        label:'REVISÃO ESTRATÉGICA', dot:'#E8FF47',
+        bars: [],
+        milestones: [{ col:14, badge:'15/08', review:true }]
+      }
+    ];
+
+    /* ─── RENDER ─────────────────────────────────────────────── */
+    function buildGantt() {
+      var tbl = document.getElementById('ganttTbl');
+      if (!tbl) return;
+      tbl.innerHTML = '';
+      tbl.style.setProperty('--gcols', COLS);
+
+      /* — month header row — */
+      var mRow = document.createElement('div');
+      mRow.className = 'g-row g-row-months';
+      /* corner cell */
+      var corner = document.createElement('div');
+      corner.className = 'g-month g-month-corner';
+      mRow.appendChild(corner);
+      MONTHS.forEach(function(m) {
+        var cell = document.createElement('div');
+        cell.className = 'g-month';
+        cell.style.gridColumn = 'span ' + m.span;
+        cell.textContent = m.label;
+        mRow.appendChild(cell);
+      });
+      tbl.appendChild(mRow);
+
+      /* — week header row — */
+      var wRow = document.createElement('div');
+      wRow.className = 'g-row g-row-weeks';
+      var wCorner = document.createElement('div');
+      wCorner.className = 'g-week-corner';
+      wCorner.textContent = 'Frente / Semana';
+      wRow.appendChild(wCorner);
+      WEEKS.forEach(function(w) {
+        var cell = document.createElement('div');
+        cell.className = 'g-week' + (w.launch ? ' is-launch' : '');
+        cell.innerHTML = '<span class="g-week-num">' + w.num + '</span><span class="g-week-date">' + w.date + '</span>';
+        wRow.appendChild(cell);
+      });
+      tbl.appendChild(wRow);
+
+      /* — activity rows — */
+      ACTIVITIES.forEach(function(act) {
+        var row = document.createElement('div');
+        row.className = 'g-row' + (act.launch ? ' g-launch-row' : '');
+
+        /* label cell */
+        var lbl = document.createElement('div');
+        lbl.className = 'g-label';
+        lbl.innerHTML = '<div class="g-label-dot" style="background:' + act.dot + '"></div><span class="g-label-text">' + act.label + '</span>';
+        row.appendChild(lbl);
+
+        /* build maps for this row: col → {bar_start_end | milestone} */
+        /* Use CSS grid for inner content */
+        var inner = document.createElement('div');
+        inner.style.gridColumn = '2 / ' + (COLS + 2);
+        inner.style.display = 'grid';
+        inner.style.gridTemplateColumns = 'repeat(' + COLS + ', var(--gcw, 130px))';
+        inner.style.alignItems = 'center';
+        inner.style.minHeight = '56px';
+        inner.style.position = 'relative';
+
+        /* background cells (for grid lines + launch highlight) */
+        for (var ci = 0; ci < COLS; ci++) {
+          var bgCell = document.createElement('div');
+          bgCell.className = 'g-cell' + (WEEKS[ci].launch ? ' is-launch-col' : '');
+          bgCell.style.gridColumn = (ci + 1) + ' / ' + (ci + 2);
+          bgCell.style.gridRow = '1';
+          bgCell.style.height = '100%';
+          bgCell.style.position = 'relative';
+          inner.appendChild(bgCell);
+        }
+
+        /* bars */
+        act.bars.forEach(function(b) {
+          var bar = document.createElement('div');
+          bar.className = 'g-bar';
+          bar.style.gridColumn = b.s + ' / ' + (b.e + 1);
+          bar.style.gridRow = '1';
+          bar.style.background = b.color;
+          bar.style.color = b.textColor;
+          bar.style.zIndex = '2';
+          bar.style.position = 'relative';
+          bar.textContent = b.label;
+          bar.title = b.label;
+          inner.appendChild(bar);
+        });
+
+        /* milestones */
+        act.milestones.forEach(function(m) {
+          var ms = document.createElement('div');
+          ms.className = 'g-milestone';
+          ms.style.gridColumn = m.col + ' / ' + (m.col + 1);
+          ms.style.gridRow = '1';
+          ms.style.zIndex = '3';
+          ms.style.position = 'relative';
+          var badge = document.createElement('div');
+          badge.className = 'g-badge' + (m.large ? ' g-badge-launch' : '') + (m.review ? ' g-badge-review' : '');
+          badge.textContent = m.badge;
+          ms.appendChild(badge);
+          inner.appendChild(ms);
+        });
+
+        row.appendChild(inner);
+        tbl.appendChild(row);
+      });
+    }
+
+    /* ─── ZOOM ────────────────────────────────────────────────── */
+    var ZOOMS  = [80, 105, 130, 160, 200, 250];
+    var ZLBLS  = ['Mínimo','Compacto','Médio','Amplo','Grande','Máximo'];
+    var zi = 2;
+
+    function applyZoom() {
+      var tbl = document.getElementById('ganttTbl');
+      if (tbl) tbl.style.setProperty('--gcw', ZOOMS[zi] + 'px');
+      var lbl = document.getElementById('gZoomLbl');
+      if (lbl) lbl.textContent = ZLBLS[zi];
+    }
+
+    var btnIn  = document.getElementById('gZoomInBtn');
+    var btnOut = document.getElementById('gZoomOutBtn');
+    if (btnIn)  btnIn.addEventListener('click',  function() { if (zi < ZOOMS.length-1) { zi++; applyZoom(); } });
+    if (btnOut) btnOut.addEventListener('click', function() { if (zi > 0) { zi--; applyZoom(); } });
+
+    /* ─── DRAG TO SCROLL ──────────────────────────────────────── */
+    var outer = document.getElementById('ganttOuter');
+    if (outer) {
+      var drag = false, sx = 0, sl = 0;
+      outer.addEventListener('mousedown', function(e) {
+        drag = true; sx = e.pageX - outer.offsetLeft; sl = outer.scrollLeft;
+        outer.classList.add('is-dragging');
+      });
+      document.addEventListener('mouseup', function() {
+        drag = false;
+        if (outer) outer.classList.remove('is-dragging');
+      });
+      outer.addEventListener('mousemove', function(e) {
+        if (!drag) return;
+        e.preventDefault();
+        outer.scrollLeft = sl - (e.pageX - outer.offsetLeft - sx) * 1.4;
+      });
+      outer.addEventListener('mouseleave', function() {
+        drag = false; outer.classList.remove('is-dragging');
+      });
+    }
+
+    /* ─── INIT ────────────────────────────────────────────────── */
+    buildGantt();
+    applyZoom();
+  })();
+  </script>
+
+
+
+    <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- FOOTER                                                       -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer-inner fade-up">
+        <h2 class="footer-tagline">
+          Solvefy.<br>One Platform.<br><em>Infinite Infrastructure.</em>
+        </h2>
+        <div class="footer-meta">
+          <p class="footer-meta-line">Relatório de Inteligência Estratégica</p>
+          <p class="footer-meta-line">Março 2026 — Uso Interno</p>
+          <p class="footer-meta-line">Preparado para o lançamento de 15.05.2026</p>
+          <p class="footer-meta-brand" style="margin-top: 20px;">ativos<span>.capital</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-products" role="list" aria-label="Produtos Solvefy">
+          <span class="footer-product" role="listitem">Marketing Platform</span>
+          <span class="footer-product" role="listitem">Cloud</span>
+          <span class="footer-product" role="listitem">CPaaS</span>
+          <span class="footer-product" role="listitem">ADS</span>
+        </div>
+        <p class="footer-copy">&copy; 2026 Solvefy. Todos os direitos reservados.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- SCROLL ANIMATION -->
+  <script>
+    (function () {
+      'use strict';
+
+      var elements = document.querySelectorAll('.fade-up');
+
+      if (!elements.length) return;
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      elements.forEach(function (el) {
+        observer.observe(el);
+      });
+
+      // Hero elements visible immediately
+      var heroElements = document.querySelectorAll('.hero .fade-up');
+      heroElements.forEach(function (el) {
+        el.classList.add('visible');
+      });
+    })();
+  </script>
+
+</body>
+</html>

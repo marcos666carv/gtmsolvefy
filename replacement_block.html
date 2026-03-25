@@ -1,0 +1,1531 @@
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 6: ARSENAL COMPLETO                                  -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <style>
+    /* ─── ARSENAL ─────────────────────────────────────────────── */
+    .arsenal { background: var(--dark); padding: 120px 0; }
+    .arsenal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+    @media (max-width: 768px) { .arsenal-grid { grid-template-columns: 1fr; } }
+    .arsenal-card {
+      background: #111;
+      padding: 40px;
+      position: relative;
+      transition: background 0.25s;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .arsenal-card:hover { background: #161616; }
+    .arsenal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--card-color, var(--accent));
+    }
+    .arsenal-expand-icon {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--card-color, var(--accent));
+      line-height: 1;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .arsenal-card:hover .arsenal-expand-icon {
+      border-color: var(--card-color, var(--accent));
+      background: rgba(255,255,255,0.04);
+    }
+    .arsenal-card.is-open .arsenal-expand-icon {
+      transform: rotate(45deg);
+      border-color: var(--card-color, var(--accent));
+    }
+    .arsenal-card-num {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: var(--card-color, var(--accent));
+      margin-bottom: 20px;
+      display: block;
+      text-transform: uppercase;
+    }
+    .arsenal-card-title {
+      font-family: var(--font-serif);
+      font-size: clamp(23px, 2.5vw, 30px);
+      font-weight: 400;
+      color: var(--cream);
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+    .arsenal-card-file {
+      font-size: 13px;
+      color: #555;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+    }
+    .arsenal-stats {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .arsenal-stat { }
+    .arsenal-stat-value {
+      font-family: var(--font-serif);
+      font-size: clamp(25px, 3vw, 34px);
+      color: var(--card-color, var(--accent));
+      line-height: 1;
+      display: block;
+    }
+    .arsenal-stat-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+    .arsenal-card-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #999;
+    }
+    .arsenal-card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .arsenal-tag {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid #333;
+      color: #777;
+      border-radius: 2px;
+    }
+
+    /* ─── ARSENAL PANELS ─────────────────────────────────────── */
+    .arsenal-panels-area {
+      margin-top: 2px;
+    }
+    .arsenal-panel {
+      display: none;
+      background: #0E0E0E;
+      border-top: 3px solid var(--panel-color, #E8FF47);
+      padding: 56px 64px;
+      position: relative;
+      animation: panelSlideIn 0.3s ease;
+    }
+    @keyframes panelSlideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) { .arsenal-panel { padding: 40px 24px; } }
+    .arsenal-panel.is-visible { display: block; }
+    .arsenal-panel-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      background: none;
+      border: 1px solid #333;
+      color: #888;
+      font-size: 22px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+    }
+    .arsenal-panel-close:hover { border-color: #666; color: #ccc; }
+    .arsenal-panel-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 8px;
+      line-height: 1.2;
+      padding-right: 60px;
+    }
+    .arsenal-panel-sub {
+      font-size: 14px;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+    .panel-section {
+      margin-bottom: 40px;
+    }
+    .panel-section-title {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--panel-color, #E8FF47);
+      margin-bottom: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+    }
+    .panel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+    .panel-table th {
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+      padding: 10px 14px;
+      border-bottom: 1px solid #1E1E1E;
+      font-weight: 500;
+    }
+    .panel-table td {
+      padding: 11px 14px;
+      color: #AAA;
+      border-bottom: 1px solid #161616;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+    .panel-table tr:nth-child(even) td { background: #111; }
+    .panel-table tr:hover td { background: #141414; }
+    .panel-table td:first-child { color: #CCC; }
+    .panel-highlight {
+      color: var(--panel-color, #E8FF47);
+      font-weight: 600;
+    }
+    .panel-verdict {
+      background: #111;
+      border-left: 3px solid var(--panel-color, #E8FF47);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 17px;
+      color: var(--cream);
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+    .panel-list {
+      list-style: none;
+      padding: 0;
+    }
+    .panel-list li {
+      padding: 10px 0 10px 24px;
+      position: relative;
+      color: #AAA;
+      font-size: 15px;
+      line-height: 1.6;
+      border-bottom: 1px solid #161616;
+    }
+    .panel-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 18px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--panel-color, #E8FF47);
+    }
+    .panel-list li strong { color: #DDD; font-weight: 500; }
+    .panel-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 900px) { .panel-cols { grid-template-columns: 1fr; } }
+    .panel-col-box {
+      background: #111;
+      padding: 24px;
+      border-top: 2px solid var(--panel-color, #E8FF47);
+    }
+    .panel-col-box-title {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--panel-color, #E8FF47);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .panel-col-box p {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .panel-col-box .panel-rate {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .panel-num-row {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .panel-num-item { }
+    .panel-num-val {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--panel-color, #E8FF47);
+      line-height: 1;
+      display: block;
+    }
+    .panel-num-label {
+      font-size: 12px;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+    .panel-tag-critical {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(239,68,68,0.15);
+      color: #ef4444;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .panel-tag-high {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(249,115,22,0.15);
+      color: #fb923c;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .panel-tag-med {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(234,179,8,0.15);
+      color: #eab308;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .panel-prompt-block {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      font-family: 'Inter', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #AAA;
+    }
+    .panel-prompt-block strong { color: var(--panel-color, #E8FF47); }
+
+    /* ─── GANTT TIMELINE ─────────────────────────────────────── */
+    .master-timeline { background: #0D0D0D; padding: 120px 0; }
+
+    .gantt-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+      margin-bottom: 24px;
+    }
+    .gantt-zoom-btn {
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      color: #AAA;
+      width: 34px;
+      height: 34px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+      user-select: none;
+    }
+    .gantt-zoom-btn:hover { background: #222; color: #DDD; border-color: #444; }
+    .gantt-zoom-label {
+      font-size: 13px;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 80px;
+      text-align: center;
+    }
+    .gantt-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .gantt-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #888;
+      letter-spacing: 0.06em;
+    }
+    .gantt-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .gantt-wrapper {
+      display: flex;
+      border: 1px solid #1E1E1E;
+      border-radius: 4px;
+      overflow: hidden;
+      --gcw: 180px;
+    }
+
+    /* sticky left sidebar */
+    .gantt-sidebar {
+      flex-shrink: 0;
+      width: 140px;
+      background: #0D0D0D;
+      border-right: 1px solid #1E1E1E;
+      z-index: 2;
+    }
+    .gantt-sidebar-header {
+      height: 60px;
+      border-bottom: 1px solid #1E1E1E;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #444;
+    }
+    .gantt-sidebar-row {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid #1A1A1A;
+      gap: 10px;
+    }
+    .gantt-row-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .gantt-row-label {
+      font-size: 13px;
+      color: #999;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* scrollable grid area */
+    .gantt-scroll {
+      flex: 1;
+      overflow-x: auto;
+      overflow-y: visible;
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #2A2A2A #111;
+    }
+    .gantt-scroll::-webkit-scrollbar { height: 6px; }
+    .gantt-scroll::-webkit-scrollbar-track { background: #111; }
+    .gantt-scroll::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .gantt-scroll.is-dragging { cursor: grabbing; user-select: none; }
+
+    .gantt-inner {
+      display: inline-flex;
+      flex-direction: column;
+      min-width: max-content;
+    }
+
+    /* column header row */
+    .gantt-header-row {
+      display: flex;
+      height: 60px;
+      border-bottom: 1px solid #1E1E1E;
+      position: sticky;
+      top: 0;
+      background: #0D0D0D;
+      z-index: 1;
+    }
+    .gantt-col-header {
+      width: var(--gcw);
+      min-width: var(--gcw);
+      flex-shrink: 0;
+      border-right: 1px solid #1A1A1A;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .gantt-col-header.is-milestone {
+      background: rgba(232,255,71,0.06);
+      border-right-color: rgba(232,255,71,0.2);
+    }
+    .gantt-col-header.is-launch {
+      background: rgba(232,255,71,0.12);
+      border-right: 2px solid rgba(232,255,71,0.6);
+    }
+    .gantt-col-date {
+      font-size: 13px;
+      color: #777;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .gantt-col-sub {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.06em;
+      margin-top: 3px;
+    }
+    .gantt-col-header.is-milestone .gantt-col-date { color: var(--accent); }
+    .gantt-col-header.is-launch .gantt-col-date { color: var(--accent); font-weight: 700; }
+    .gantt-col-header.is-launch .gantt-col-sub { color: rgba(232,255,71,0.7); }
+
+    /* data rows */
+    .gantt-data-row {
+      display: flex;
+      height: 64px;
+      border-bottom: 1px solid #161616;
+    }
+    .gantt-data-row:hover { background: rgba(255,255,255,0.01); }
+    .gantt-cell {
+      width: var(--gcw);
+      min-width: var(--gcw);
+      flex-shrink: 0;
+      border-right: 1px solid #161616;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+    }
+    .gantt-cell.is-launch-col {
+      border-right: 2px solid rgba(232,255,71,0.3);
+      background: rgba(232,255,71,0.02);
+    }
+    .gantt-task {
+      font-size: 12px;
+      line-height: 1.35;
+      padding: 5px 9px;
+      border-radius: 3px;
+      border-left: 3px solid var(--row-color, #E8FF47);
+      background: rgba(255,255,255,0.05);
+      color: #CCC;
+      width: 100%;
+      transition: background 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gantt-cell:hover .gantt-task {
+      background: rgba(255,255,255,0.09);
+      color: #EEE;
+      white-space: normal;
+      overflow: visible;
+      z-index: 5;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    .gantt-task.is-launch-task {
+      background: rgba(232,255,71,0.12);
+      color: var(--accent);
+      font-weight: 600;
+    }
+  </style>
+
+  <section id="arsenal" class="arsenal" aria-labelledby="arsenal-heading">
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">06 — ARSENAL</span>
+        <span class="section-number" style="font-weight:400;">8 documentos. Operação completa.</span>
+      </div>
+
+      <div class="education-header">
+        <p class="eyebrow">Deliverables Produzidos</p>
+        <h2 class="section-headline fade-up" id="arsenal-heading">O que foi criado.<br>O que está pronto para usar.</h2>
+      </div>
+
+      <div class="arsenal-grid fade-up">
+
+        <div class="arsenal-card" style="--card-color: #E8FF47;" onclick="togglePanel('01')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">01 — Risco de Marca</span>
+          <h3 class="arsenal-card-title">Análise de Risco &amp; Veredicto</h3>
+          <p class="arsenal-card-file">01-brand-risk-analysis.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">10</span>
+              <span class="arsenal-stat-label">riscos mapeados</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">R$400k</span>
+              <span class="arsenal-stat-label">budget transição</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">2 meses</span>
+              <span class="arsenal-stat-label">break-even</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Matriz completa de riscos com probabilidade e impacto. Análise financeira da transição. Veredicto: GO condicionado a 4 critérios de sucesso. ARR em risco: R$1M–1,76M sem programa de retenção.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Brand</span>
+            <span class="arsenal-tag">Financeiro</span>
+            <span class="arsenal-tag">Risco</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #7B61FF;" onclick="togglePanel('02')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">02 — Mercado</span>
+          <h3 class="arsenal-card-title">Estratégia de Mercado &amp; Posicionamento</h3>
+          <p class="arsenal-card-file">02-market-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">$3–4B</span>
+              <span class="arsenal-stat-label">TAM Brasil</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">19%</span>
+              <span class="arsenal-stat-label">CAGR projetado</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3</span>
+              <span class="arsenal-stat-label">movimentos estratégicos</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Análise competitiva de Zenvia, Infobip, Sinch e Twilio com vulnerabilidades e narrativas de diferenciação. ICP por tier. 3 movimentos: Conquest Zenvia, liderança RCS (12–18 meses), partner program.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Mercado</span>
+            <span class="arsenal-tag">Competitivo</span>
+            <span class="arsenal-tag">Posicionamento</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #00D4AA;" onclick="togglePanel('03')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">03 — Crescimento</span>
+          <h3 class="arsenal-card-title">Estratégia de Crescimento &amp; NRR</h3>
+          <p class="arsenal-card-file">03-growth-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">105%</span>
+              <span class="arsenal-stat-label">NRR alvo em 90d</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3 grupos</span>
+              <span class="arsenal-stat-label">win-back A/B/C</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">5</span>
+              <span class="arsenal-stat-label">experimentos mai/jun</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">4 growth loops: expansão de portfólio, parceiros, SEO/conteúdo, PLG assistido. Win-back segmentado por valor em 3 grupos com scripts prontos. Cross-sell engine com sinais de expansão e bundle pricing (8/12/18%).</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Growth</span>
+            <span class="arsenal-tag">Retenção</span>
+            <span class="arsenal-tag">Cross-sell</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #FF9B3A;" onclick="togglePanel('04')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">04 — Conteúdo Social</span>
+          <h3 class="arsenal-card-title">Carrosséis &amp; Conteúdo de Lançamento</h3>
+          <p class="arsenal-card-file">04-carousel-content.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">6</span>
+              <span class="arsenal-stat-label">carrosséis completos</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">30+</span>
+              <span class="arsenal-stat-label">slides com copy</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">2 semanas</span>
+              <span class="arsenal-stat-label">de calendário</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">6 carrosséis prontos: Anúncio, Full Stack, Por Que Unificar, O Que Muda Para Você, IA Diferenciador, Stories Instagram. Cada slide com headline + body + direção visual + CTA. Sequência de publicação: 12 mai (teaser) → 15 mai (lançamento).</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Social</span>
+            <span class="arsenal-tag">Instagram</span>
+            <span class="arsenal-tag">LinkedIn</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #0A84FF;" onclick="togglePanel('05')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">05 — LinkedIn</span>
+          <h3 class="arsenal-card-title">Estratégia LinkedIn &amp; Posts Completos</h3>
+          <p class="arsenal-card-file">05-linkedin-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">7</span>
+              <span class="arsenal-stat-label">posts completos</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3</span>
+              <span class="arsenal-stat-label">páginas transição</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">4 fases</span>
+              <span class="arsenal-stat-label">narrativa maio</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Plano de transição das 3 páginas (Solvefy, Disparo Pro, Brasilfone). 7 posts prontos: teaser 8/mai, lançamento 15/mai, voz CEO, 2 spotlights de produto, case de cliente (template), thought leadership "11 fornecedores". Calendário completo de maio.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">LinkedIn</span>
+            <span class="arsenal-tag">Orgânico</span>
+            <span class="arsenal-tag">Thought Leadership</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #FF4A6E;" onclick="togglePanel('06')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">06 — Identidade Visual</span>
+          <h3 class="arsenal-card-title">Prompts de Imagem &amp; Art Direction</h3>
+          <p class="arsenal-card-file">06-image-prompts.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">6</span>
+              <span class="arsenal-stat-label">prompts Midjourney</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">1</span>
+              <span class="arsenal-stat-label">conceito visual hero</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">300+</span>
+              <span class="arsenal-stat-label">palavras de direção</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">1 prompt hero (4 fluxos de luz convergindo). 5 prompts de suporte por produto. Conceito visual completo "estrutura como beleza". Notas de art direction: tipografia, grid, do's &amp; don'ts. Pronto para passar ao designer ou gerar direto com IA generativa.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Visual</span>
+            <span class="arsenal-tag">AI Generativa</span>
+            <span class="arsenal-tag">Brand Identity</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #E8FF47;" onclick="togglePanel('07')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">07 — Mídia Paga</span>
+          <h3 class="arsenal-card-title">Campanha PPC &amp; Media Plan</h3>
+          <p class="arsenal-card-file">07-ppc-campaign.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">R$180k</span>
+              <span class="arsenal-stat-label">budget 47 dias</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">498</span>
+              <span class="arsenal-stat-label">leads projetados</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">R$2,5M</span>
+              <span class="arsenal-stat-label">pipeline gerado</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Budget de R$180k por 47 dias (15 mai – 30 jun). Split: 45% LinkedIn, 30% Google Search, 10% Display/YouTube, 10% Meta, 5% Microsoft. Pipeline projetado R$1,67M–2,56M. Break-even 2,8x–4,3x sobre investimento. 60+ assets mapeados.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">LinkedIn Ads</span>
+            <span class="arsenal-tag">Google Search</span>
+            <span class="arsenal-tag">Meta</span>
+          </div>
+        </div>
+
+        <div class="arsenal-card" style="--card-color: #7B61FF;" onclick="togglePanel('08')">
+          <span class="arsenal-expand-icon">+</span>
+          <span class="arsenal-card-num">08 — Vendas</span>
+          <h3 class="arsenal-card-title">Estratégia de Vendas &amp; Enablement</h3>
+          <p class="arsenal-card-file">08-sales-strategy.md</p>
+          <div class="arsenal-stats">
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">4</span>
+              <span class="arsenal-stat-label">sales motions</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">3</span>
+              <span class="arsenal-stat-label">battlecards</span>
+            </div>
+            <div class="arsenal-stat">
+              <span class="arsenal-stat-value">4</span>
+              <span class="arsenal-stat-label">cross-sell plays</span>
+            </div>
+          </div>
+          <p class="arsenal-card-desc">Sales motion por produto (SLG, PLG, Channel-led, Consultivo). Scripts de discovery e demo para cada produto. Cross-sell playbook: Martech→CPaaS, Martech→ADS, Cloud Bundle, Full Stack. Battlecards vs Zenvia, Infobip, Sinch com framework FIA. Channel enablement completo para Solvefy Cloud.</p>
+          <div class="arsenal-card-tags">
+            <span class="arsenal-tag">Sales</span>
+            <span class="arsenal-tag">Battlecards</span>
+            <span class="arsenal-tag">Channel</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ARSENAL PANELS (full-width, below grid) -->
+      <div class="arsenal-panels-area">
+
+        <!-- Panel 01: Análise de Risco -->
+        <div id="panel-01" class="arsenal-panel" style="--panel-color: #E8FF47;">
+          <button class="arsenal-panel-close" onclick="closePanel('01')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">01 — Risco de Marca / 01-brand-risk-analysis.md</p>
+          <h3 class="arsenal-panel-heading">Análise de Risco &amp; Veredicto</h3>
+
+          <div class="panel-verdict">VEREDICTO: GO condicionado — 4 condições críticas</div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Custo da Operação</p>
+            <div class="panel-num-row">
+              <div class="panel-num-item">
+                <span class="panel-num-val">R$281–523k</span>
+                <span class="panel-num-label">intervalo total estimado</span>
+              </div>
+              <div class="panel-num-item">
+                <span class="panel-num-val">R$400k</span>
+                <span class="panel-num-label">ponto médio</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Matriz de Riscos</p>
+            <table class="panel-table">
+              <thead><tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Score</th></tr></thead>
+              <tbody>
+                <tr><td>Churn acelerado Disparo Pro</td><td>65–75%</td><td>Alto</td><td><span class="panel-tag-critical">Crítico</span></td></tr>
+                <tr><td>Confusão sobre qual produto é qual</td><td>70%</td><td>Médio</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Perda de SEO / autoridade digital</td><td>85%</td><td>Médio-Alto</td><td><span class="panel-tag-critical">Crítico</span></td></tr>
+                <tr><td>Parceiros e intermediários desorientados</td><td>60%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Inconsistência interna entre equipes</td><td>55%</td><td>Médio</td><td><span class="panel-tag-med">Médio-Alto</span></td></tr>
+                <tr><td>Cloud sem PMF contamina guarda-chuva</td><td>40%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>CPaaS sem credencial de voz</td><td>60%</td><td>Médio</td><td><span class="panel-tag-med">Médio-Alto</span></td></tr>
+                <tr><td>"Faz tudo" percebido como "faz nada bem"</td><td>45%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Timeline comprimida (52 dias)</td><td>70%</td><td>Médio</td><td><span class="panel-tag-high">Alto</span></td></tr>
+                <tr><td>Concorrentes abordam base durante transição</td><td>55%</td><td>Alto</td><td><span class="panel-tag-high">Alto</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Cenários de Churn</p>
+            <table class="panel-table">
+              <thead><tr><th>Cenário</th><th>Churn</th><th>ARR em Risco</th></tr></thead>
+              <tbody>
+                <tr><td>Sem programa de retenção</td><td>12% midpoint</td><td><strong class="panel-highlight">R$1M–1,76M</strong></td></tr>
+                <tr><td>Com programa ativo</td><td>4,5%</td><td>R$378k–661k</td></tr>
+                <tr><td>Delta protegido pelo programa</td><td>—</td><td><strong class="panel-highlight">R$630k–1,1M</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Break-even</p>
+            <table class="panel-table">
+              <thead><tr><th>Cenário</th><th>Prazo</th></tr></thead>
+              <tbody>
+                <tr><td>Conservador</td><td>~7,3 meses</td></tr>
+                <tr><td>Base</td><td>~3,2 meses</td></tr>
+                <tr><td>Otimista</td><td>~1,7 meses</td></tr>
+                <tr><td>Ajustado com retenção ativa</td><td><strong class="panel-highlight">~2,0 meses (Q3 2026)</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">4 Condições de GO</p>
+            <ul class="panel-list">
+              <li><strong>Programa de retenção ANTES do anúncio</strong> — top 30 contas comunicadas por CSM antes do go-live</li>
+              <li><strong>Lançamento faseado</strong> — cliente → parceiro → mercado</li>
+              <li><strong>Cloud fora de materiais gerais</strong> até ter 3 clientes pagantes</li>
+              <li><strong>Não mudar produto ou preço</strong> junto com o rebranding</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 02: Estratégia de Mercado -->
+        <div id="panel-02" class="arsenal-panel" style="--panel-color: #7B61FF;">
+          <button class="arsenal-panel-close" onclick="closePanel('02')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">02 — Mercado / 02-market-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia de Mercado &amp; Posicionamento</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">TAM Combinado Brasil 2024</p>
+            <table class="panel-table">
+              <thead><tr><th>Segmento</th><th>TAM</th><th>CAGR</th></tr></thead>
+              <tbody>
+                <tr><td>CPaaS (voz, SMS, RCS)</td><td>USD 560–750M</td><td>22–25%</td></tr>
+                <tr><td>Email/SMS Marketing Platform</td><td>USD 400–600M</td><td>13–15%</td></tr>
+                <tr><td>IaaS / Cloud gerenciado local</td><td>USD 1,4–1,8B</td><td>20–25%</td></tr>
+                <tr><td>Mídia digital / ADS</td><td>USD 800M–1,2B</td><td>12–18%</td></tr>
+                <tr><td><strong>TAM Combinado Solvefy</strong></td><td><strong class="panel-highlight">USD 3,2–4,3B</strong></td><td><strong class="panel-highlight">~19% CAGR</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Mapa Competitivo</p>
+            <table class="panel-table">
+              <thead><tr><th>Player</th><th>Vulnerabilidade</th><th>Narrativa Solvefy</th></tr></thead>
+              <tbody>
+                <tr><td>Zenvia</td><td>Crise financeira, ação -85%, produto fragmentado</td><td>"Construído unificado desde o início"</td></tr>
+                <tr><td>Infobip</td><td>Pricing premium, sem foco em PME local</td><td>"Poder enterprise. Realidade brasileira."</td></tr>
+                <tr><td>Sinch</td><td>Sem presença local, produto em inglês</td><td>"Sinch está no Brasil. Solvefy é do Brasil."</td></tr>
+                <tr><td>Twilio</td><td>Pricing em USD, requer dev-team</td><td>"Onboarding 30 dias, contrato em real"</td></tr>
+                <tr><td>AWS/Azure</td><td>Complexidade, USD, sem CPaaS integrado</td><td>"Cloud que fala o idioma do seu negócio"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">3 Movimentos Estratégicos</p>
+            <ul class="panel-list">
+              <li><strong>Conquest Campaign Zenvia</strong> — programa migração 0-friction, landing page comparativa, SDRs ativam insatisfeitos. Meta: <span class="panel-highlight">30–50 contas mid-market</span>.</li>
+              <li><strong>Liderança RCS</strong> — janela 12–18 meses. Cases, benchmarks CTR, parceria operadoras, webinar mensal, dominar SEO "RCS marketing Brasil".</li>
+              <li><strong>Partner Program</strong> — 3 tiers, margem 20–35% vs. padrão 10–15%. 50 parceiros = <span class="panel-highlight">250–750 novos clientes/ano</span>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 03: Estratégia de Crescimento -->
+        <div id="panel-03" class="arsenal-panel" style="--panel-color: #00D4AA;">
+          <button class="arsenal-panel-close" onclick="closePanel('03')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">03 — Crescimento / 03-growth-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia de Crescimento &amp; NRR</h3>
+
+          <div class="panel-verdict">North Star: NRR <span class="panel-highlight">105%</span> em 90 dias → <span class="panel-highlight">115%</span> em 6 meses</div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">4 Growth Loops</p>
+            <ul class="panel-list">
+              <li><strong>Loop de Expansão:</strong> Marketing Platform → CPaaS/Cloud via CS com sinais de expansão</li>
+              <li><strong>Loop de Parceiros:</strong> Channel-led para Cloud/CPaaS — 5–10 parceiros de qualidade antes de escalar</li>
+              <li><strong>Loop SEO/Conteúdo:</strong> resultado em Q3/Q4 — keywords: "disparador SMS B2B", "RCS empresarial Brasil"</li>
+              <li><strong>PLG Assistido (Marketing Platform):</strong> trial 14 dias + CS humano no momento crítico de ativação</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Win-back Segmentado</p>
+            <div class="panel-cols">
+              <div class="panel-col-box" style="border-top-color: #00D4AA;">
+                <p class="panel-col-box-title">Grupo A (25–35%)</p>
+                <p>Saíram por preço, uso alto, 3–18 meses atrás</p>
+                <p class="panel-rate">12–18%</p>
+                <p>taxa de retorno esperada</p>
+                <p style="margin-top: 8px; font-size: 13px; color: #666;">D1: E-mail CEO com 40% desconto — D5: WhatsApp executivo — D12: Case do mesmo setor</p>
+              </div>
+              <div class="panel-col-box" style="border-top-color: #00D4AA;">
+                <p class="panel-col-box-title">Grupo B (30–40%)</p>
+                <p>Saíram por suporte ruim, adoção parcial</p>
+                <p class="panel-rate">6–10%</p>
+                <p>taxa de retorno esperada</p>
+                <p style="margin-top: 8px; font-size: 13px; color: #666;">D1: "Solvefy não é mais a mesma plataforma" — D7: LinkedIn InMail — D14: framing urgência</p>
+              </div>
+              <div class="panel-col-box" style="border-top-color: #555;">
+                <p class="panel-col-box-title" style="color: #777;">Grupo C (25–35%)</p>
+                <p>Mudança estratégica, uso baixo</p>
+                <p class="panel-rate" style="color: #555;">—</p>
+                <p>sem follow-up humano</p>
+                <p style="margin-top: 8px; font-size: 13px; color: #444;">1 e-mail no dia do lançamento. Sem follow-up.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Bundle Pricing</p>
+            <table class="panel-table">
+              <thead><tr><th>Bundle</th><th>Produtos</th><th>Desconto</th></tr></thead>
+              <tbody>
+                <tr><td>Starter</td><td>Marketing Platform + CPaaS</td><td><span class="panel-highlight">8%</span></td></tr>
+                <tr><td>Growth</td><td>Marketing Platform + CPaaS + ADS</td><td><span class="panel-highlight">12%</span></td></tr>
+                <tr><td>Enterprise</td><td>Todos os 4 produtos</td><td><span class="panel-highlight">18%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">KPIs 90 Dias</p>
+            <ul class="panel-list">
+              <li>15 novos clientes Marketing Platform</li>
+              <li>5 clientes Cloud (validação ICP)</li>
+              <li>8 contratos CPaaS (3 via cross-sell)</li>
+              <li>3 pilotos ADS</li>
+              <li>Win-back: <strong>10% da base churned elegível</strong></li>
+              <li>8–12 contratos cross-sell da base existente</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 04: Carrosséis -->
+        <div id="panel-04" class="arsenal-panel" style="--panel-color: #FF9B3A;">
+          <button class="arsenal-panel-close" onclick="closePanel('04')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">04 — Conteúdo Social / 04-carousel-content.md</p>
+          <h3 class="arsenal-panel-heading">Carrosséis &amp; Conteúdo de Lançamento</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">6 Carrosséis Completos — Instagram / LinkedIn</p>
+            <table class="panel-table">
+              <thead><tr><th>#</th><th>Título</th><th>Data</th><th>Slide 1</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Anúncio da Unificação</td><td>12 mai — Pré-lançamento</td><td>"Uma decisão que levou 3 anos para tomar."</td></tr>
+                <tr><td>2</td><td>Full Stack — Os 4 Produtos</td><td>15 mai — Launch Day</td><td>"Quatro produtos. Uma conta. Resultado."</td></tr>
+                <tr><td>3</td><td>Por Que Unificar?</td><td>17 mai</td><td>"O problema que o mercado normalizou."</td></tr>
+                <tr><td>4</td><td>O Que Muda Para Você</td><td>19 mai</td><td>Por público — clientes Disparo Pro / Brasilfone / novos</td></tr>
+                <tr><td>5</td><td>IA Diferenciador</td><td>21 mai</td><td>"IA não é feature. É camada de infraestrutura."</td></tr>
+                <tr><td>6</td><td>Stories — Contagem Regressiva</td><td>8–14 mai</td><td>Stories diários: "7 dias"... até "Amanhã"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Detalhe dos Carrosséis</p>
+            <ul class="panel-list">
+              <li><strong>Carrossel 1 — Anúncio:</strong> Disparo Pro + Brasilfone + Solvefy Cloud = um único nome. Slide final: "A partir de 15 de maio, Solvefy." CTA: "Siga nossa página para acompanhar"</li>
+              <li><strong>Carrossel 2 — Full Stack:</strong> Slides 2–5: um produto por slide — benefício central + dado. Slide 6: "Um contrato. Um time. Uma plataforma."</li>
+              <li><strong>Carrossel 3 — Por Que:</strong> Custo invisível de múltiplos vendors. "72% dos compradores B2B preferem consolidar" (Gartner 2024). Antes vs. Depois Solvefy.</li>
+              <li><strong>Carrossel 4 — O Que Muda:</strong> "O produto não muda. O acesso ao resto fica muito mais simples."</li>
+              <li><strong>Carrossel 5 — IA:</strong> IA em cada produto — o que resolve, que dado usa. "Plataformas com IA embarcada têm payback 35% mais rápido" — a16z 2025</li>
+              <li><strong>Stories:</strong> Identidade visual: fundo escuro, tipo grande, contagem regressiva em lime (#E8FF47)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 05: LinkedIn -->
+        <div id="panel-05" class="arsenal-panel" style="--panel-color: #0A84FF;">
+          <button class="arsenal-panel-close" onclick="closePanel('05')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">05 — LinkedIn / 05-linkedin-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia LinkedIn &amp; Posts Completos</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Transição das 3 Páginas</p>
+            <ul class="panel-list">
+              <li><strong>Solvefy LinkedIn</strong> → torna-se a página principal unificada</li>
+              <li><strong>Disparo Pro</strong> → renomear "Disparo Pro | Agora Solvefy Marketing Platform" — manter 90 dias</li>
+              <li><strong>Brasilfone</strong> → renomear "Brasilfone | Agora Solvefy CPaaS" — manter 90 dias</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Calendário Maio 2026</p>
+            <table class="panel-table">
+              <thead><tr><th>Data</th><th>Ação</th></tr></thead>
+              <tbody>
+                <tr><td>1 mai</td><td>Teaser inicial (contagem regressiva discreta)</td></tr>
+                <tr><td>8 mai</td><td><strong>POST 1</strong> — TEASER: "Há 3 anos, dois times resolviam o mesmo problema sem saber um do outro."</td></tr>
+                <tr><td>12 mai</td><td>Freeze páginas antigas</td></tr>
+                <tr><td>14 mai</td><td>Posts encerramento páginas antigas + atualização bio</td></tr>
+                <tr><td>15 mai</td><td><strong class="panel-highlight">POST 2 — LANÇAMENTO + POST 3 — VOZ DO CEO</strong></td></tr>
+                <tr><td>19 mai</td><td>POST 4 — Spotlight Marketing Platform</td></tr>
+                <tr><td>21 mai</td><td>POST 5 — Spotlight CPaaS</td></tr>
+                <tr><td>26 mai</td><td>POST 6 — Case de Cliente (template preenchível)</td></tr>
+                <tr><td>28 mai</td><td>POST 7 — Thought Leadership: "11 fornecedores. Onze."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">7 Posts — Resumo de Conteúdo</p>
+            <ul class="panel-list">
+              <li><strong>Post 1 (8/mai):</strong> Hook sobre dois times resolvendo o mesmo problema. "Em 7 dias esse atrito acaba."</li>
+              <li><strong>Post 2 (15/mai):</strong> Anúncio oficial. "Disparo Pro. Brasilfone. Um único nome: Solvefy." 4 produtos descritos.</li>
+              <li><strong>Post 3 (15–16/mai):</strong> CEO — "A primeira vez que precisamos fazer isso foi numa reunião onde o cliente perguntou: vocês são uma empresa só ou são três?"</li>
+              <li><strong>Post 4 (19/mai):</strong> Cliente com 4 fornecedores. Em 60 dias consolidou tudo. SMS 97% abertura, RCS CTR 3-5x.</li>
+              <li><strong>Post 5 (21/mai):</strong> Cliente perdeu 3h de atendimento por telefonia que não escalava. CPaaS resolve.</li>
+              <li><strong>Post 6 (26/mai):</strong> Template: [Problema aparente] vs [Problema raiz]. Antes/Depois com 3 métricas.</li>
+              <li><strong>Post 7 (28/mai):</strong> "Conversei com CTO que gerencia 11 fornecedores. Onze. O custo que não aparece em nenhuma linha de budget."</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 06: Prompts de Imagem -->
+        <div id="panel-06" class="arsenal-panel" style="--panel-color: #FF4A6E;">
+          <button class="arsenal-panel-close" onclick="closePanel('06')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">06 — Identidade Visual / 06-image-prompts.md</p>
+          <h3 class="arsenal-panel-heading">Prompts de Imagem &amp; Art Direction</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Conceito Visual</p>
+            <div class="panel-verdict" style="border-left-color: #FF4A6E;">"Estrutura como beleza" — Paleta: #0A0A0A fundo + #E8FF47 lime + #7B61FF violeta + #F5F5F0 off-white. Tipografia: DM Serif Display + Inter. Muito espaço em branco. Grid estruturado.</div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">6 Prompts Completos</p>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">1 — Hero: 4 Produtos Convergindo</p>
+            <div class="panel-prompt-block">"Four geometric light streams in electric lime (#E8FF47), deep violet (#7B61FF), teal and white, converging into a central unified point on absolute black background. Mathematical precision. Long exposure light painting aesthetic. Center logo placement. 8K ultra-detailed. <strong>–ar 16:9 –style raw</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">2 — Marketing Platform</p>
+            <div class="panel-prompt-block">"Abstract visualization of SMS, RCS, voice and email channels as synchronized data streams. Dark background. Electric lime accent lines. Clean geometric forms. Advertising photography style. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">3 — CPaaS</p>
+            <div class="panel-prompt-block">"Corporate telephony as architectural structure. Dark concrete texture background. Violet light traces connecting nodes. Technical precision aesthetic. B2B editorial photography. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">4 — Solvefy Cloud</p>
+            <div class="panel-prompt-block">"Server infrastructure transformed into pure geometry. Floating data centers. Deep black space. Electric lime highlights. Minimalist tech photography. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">5 — Solvefy ADS</p>
+            <div class="panel-prompt-block">"Multi-channel media orchestration. Dashboard elements as abstract art. Dark background. Multiple colored streams merging. Editorial tech photography. <strong>–ar 4:5</strong>"</div>
+
+            <p style="font-size: 12px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">6 — Brand Announcement</p>
+            <div class="panel-prompt-block">"Split image: four separate abstract elements (left) dissolving and merging into one unified geometric form (right). Electric lime and violet. Pure black. Dramatic editorial lighting. <strong>–ar 16:9</strong>"</div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Notas de Art Direction</p>
+            <ul class="panel-list">
+              <li>Nunca usar stock photos de pessoas em reunião</li>
+              <li>Nunca usar ícones flat coloridos em fundo branco</li>
+              <li>Sempre: geometria abstrata, luz como elemento estrutural, muito espaço negativo</li>
+              <li>Grid mínimo de 12 colunas. Tipografia grande como elemento visual.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 07: Campanha PPC -->
+        <div id="panel-07" class="arsenal-panel" style="--panel-color: #E8FF47;">
+          <button class="arsenal-panel-close" onclick="closePanel('07')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">07 — Mídia Paga / 07-ppc-campaign.md</p>
+          <h3 class="arsenal-panel-heading">Campanha PPC &amp; Media Plan</h3>
+
+          <div class="panel-num-row">
+            <div class="panel-num-item">
+              <span class="panel-num-val">R$180k</span>
+              <span class="panel-num-label">budget 47 dias</span>
+            </div>
+            <div class="panel-num-item">
+              <span class="panel-num-val">338–498</span>
+              <span class="panel-num-label">leads projetados</span>
+            </div>
+            <div class="panel-num-item">
+              <span class="panel-num-val">R$1,67–2,56M</span>
+              <span class="panel-num-label">pipeline gerado</span>
+            </div>
+            <div class="panel-num-item">
+              <span class="panel-num-val">2,8–4,3x</span>
+              <span class="panel-num-label">break-even</span>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Split por Plataforma</p>
+            <table class="panel-table">
+              <thead><tr><th>Plataforma</th><th>Budget</th><th>%</th><th>Justificativa</th></tr></thead>
+              <tbody>
+                <tr><td>LinkedIn Ads</td><td><span class="panel-highlight">R$81.000</span></td><td>45%</td><td>ICP B2B mais preciso</td></tr>
+                <tr><td>Google Search</td><td>R$54.000</td><td>30%</td><td>Captura demanda ativa</td></tr>
+                <tr><td>Google Display + YouTube</td><td>R$18.000</td><td>10%</td><td>Brand awareness</td></tr>
+                <tr><td>Meta</td><td>R$18.000</td><td>10%</td><td>Remarketing + lookalike</td></tr>
+                <tr><td>Microsoft Ads</td><td>R$9.000</td><td>5%</td><td>Audiência corporativa IT</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Split por Produto</p>
+            <table class="panel-table">
+              <thead><tr><th>Produto</th><th>Budget</th><th>%</th></tr></thead>
+              <tbody>
+                <tr><td>Marketing Platform</td><td>R$54.000</td><td>30%</td></tr>
+                <tr><td>Cloud</td><td>R$45.000</td><td>25%</td></tr>
+                <tr><td>CPaaS</td><td>R$36.000</td><td>20%</td></tr>
+                <tr><td>ADS</td><td>R$27.000</td><td>15%</td></tr>
+                <tr><td>Brand Institucional</td><td>R$18.000</td><td>10%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Estrutura de Funil</p>
+            <ul class="panel-list">
+              <li><strong>Topo (Awareness):</strong> Impressões, alcance, brand recall. CPM otimizado.</li>
+              <li><strong>Meio (Consideração):</strong> Cliques, visitas página produto. CPC otimizado.</li>
+              <li><strong>Fundo (Conversão):</strong> Lead form, demo request. tCPA / Max Conversions.</li>
+              <li>Regra: <strong>campanhas awareness NUNCA compartilham budget com conversão</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Cronograma de Criativos</p>
+            <ul class="panel-list">
+              <li><strong>LinkedIn:</strong> 16 sponsored content + 8 conversation ads</li>
+              <li><strong>Google Search:</strong> 12 RSA + 24 extensões</li>
+              <li><strong>Meta:</strong> 10 carrossel + 6 vídeos</li>
+              <li><strong>YouTube:</strong> 4 bumper ads (6s) + 2 TrueView (15-30s)</li>
+              <li><strong>Display:</strong> 8 banner sets (5 tamanhos cada)</li>
+              <li>Deadline produção: <span class="panel-highlight">7 de maio</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Panel 08: Estratégia de Vendas -->
+        <div id="panel-08" class="arsenal-panel" style="--panel-color: #7B61FF;">
+          <button class="arsenal-panel-close" onclick="closePanel('08')" aria-label="Fechar painel">&#x2715;</button>
+          <p class="arsenal-panel-sub">08 — Vendas / 08-sales-strategy.md</p>
+          <h3 class="arsenal-panel-heading">Estratégia de Vendas &amp; Enablement</h3>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Sales Motion por Produto</p>
+            <table class="panel-table">
+              <thead><tr><th>Produto</th><th>Motion</th><th>Entry Point</th><th>Ciclo médio</th></tr></thead>
+              <tbody>
+                <tr><td>Marketing Platform</td><td>SLG + PLG assistido</td><td>Trial 14d ou demo</td><td>3–6 semanas</td></tr>
+                <tr><td>Cloud</td><td>Channel-led + direct</td><td>Indicação parceiro</td><td>4–8 semanas</td></tr>
+                <tr><td>CPaaS</td><td>SLG enterprise</td><td>Demo + POC</td><td>6–12 semanas</td></tr>
+                <tr><td>ADS</td><td>SLG consultivo</td><td>Demo somente</td><td>4–8 semanas</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Discovery — Perguntas Obrigatórias</p>
+            <ul class="panel-list">
+              <li>"Quantos fornecedores de comunicação você gerencia hoje?"</li>
+              <li>"Quando algo falha entre sistemas, quem assume o SLA?"</li>
+              <li>"Qual o custo real (não de licença) de manter isso funcionando junto?"</li>
+              <li>"Se você pudesse consolidar tudo em um contrato, o que seria o bloqueio?"</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Cross-sell Playbook — 4 Plays</p>
+            <ul class="panel-list">
+              <li><strong>Play 1 — Martech → CPaaS:</strong> Trigger: volume crescente de Voz. Pitch: "Você está usando voz no Marketing Platform. Para escalar com PABX virtual e roteamento inteligente, precisamos falar de CPaaS."</li>
+              <li><strong>Play 2 — Martech → ADS:</strong> Trigger: cliente menciona gasto Google/Meta. Pitch: "Com ADS, você orquestra esse investimento junto com seus disparos diretos em um único funil."</li>
+              <li><strong>Play 3 — Cloud Bundle:</strong> Trigger: cliente mid-market de TI ou ISP. Pitch: "Sua infraestrutura + seus canais de comunicação, mesmo contrato, billing em BRL, SLA ponta a ponta assumido por nós."</li>
+              <li><strong>Play 4 — Full Stack:</strong> Trigger: NPS alto + 2 produtos ativos. Pitch: "Com Enterprise Bundle você tem <span class="panel-highlight">18% de desconto</span> e acesso ao portfólio completo."</li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Battlecards</p>
+            <table class="panel-table">
+              <thead><tr><th>vs.</th><th>Argumento Central</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Zenvia</strong></td><td>"Zenvia está em crise financeira. Quem assume o SLA quando o fornecedor está lutando para sobreviver? Solvefy foi construída unificada. Sem dívida técnica de M&amp;A."</td></tr>
+                <tr><td><strong>Infobip</strong></td><td>"Infobip cobre 190 países. Quanto do seu budget vai para suporte localizado, compliance LGPD, contrato em BRL? Solvefy é a capacidade técnica do Infobip para o mercado brasileiro."</td></tr>
+                <tr><td><strong>Sinch</strong></td><td>"Sinch está no Brasil. Solvefy é do Brasil. Diferença: time de produto pensa em reais, em ANATEL, em fuso horário, em português."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-section">
+            <p class="panel-section-title">Prioridade de Collateral</p>
+            <ul class="panel-list">
+              <li><strong>T1 (até 14/mai):</strong> Deck de lançamento, one-pager por produto, proposta template</li>
+              <li><strong>T2 (15–22/mai):</strong> Battlecards impressos, guia de objeções, channel partner kit</li>
+              <li><strong>T3 (mai–jun):</strong> Case studies por setor, ROI calculator, demo environment</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /.arsenal-panels-area -->
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- SECTION 7: MASTER TIMELINE                                   -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+
+  <section id="master-timeline" class="master-timeline" aria-labelledby="tl-heading">
+    <div class="container">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">07 — MASTER TIMELINE</span>
+        <span class="section-number" style="font-weight:400;">Mar 24 → Ago 2026</span>
+      </div>
+
+      <div class="education-header">
+        <p class="eyebrow">Cronograma Operacional</p>
+        <h2 class="section-headline fade-up" id="tl-heading">Todas as frentes.<br>Cada semana.</h2>
+      </div>
+
+      <div class="gantt-controls fade-up">
+        <button class="gantt-zoom-btn" onclick="ganttZoomOut()" aria-label="Diminuir zoom">&#8722;</button>
+        <span class="gantt-zoom-label" id="gantt-zoom-label">Médio</span>
+        <button class="gantt-zoom-btn" onclick="ganttZoomIn()" aria-label="Aumentar zoom">&#43;</button>
+      </div>
+
+      <div class="gantt-legend fade-up">
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#E8FF47;"></div>Brand &amp; Identidade</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#7B61FF;"></div>Tech &amp; Produto</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#00D4AA;"></div>Conteúdo &amp; Social</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#FF9B3A;"></div>Vendas &amp; CRM</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#0A84FF;"></div>Mídia Paga</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#FF4A6E;"></div>Interno</div>
+      </div>
+
+      <div class="gantt-wrapper fade-up" id="gantt-wrapper">
+        <!-- sidebar -->
+        <div class="gantt-sidebar">
+          <div class="gantt-sidebar-header">Frente</div>
+          <div class="gantt-sidebar-row"><div class="gantt-row-dot" style="background:#E8FF47;"></div><span class="gantt-row-label">Brand</span></div>
+          <div class="gantt-sidebar-row"><div class="gantt-row-dot" style="background:#7B61FF;"></div><span class="gantt-row-label">Tech</span></div>
+          <div class="gantt-sidebar-row"><div class="gantt-row-dot" style="background:#00D4AA;"></div><span class="gantt-row-label">Conteúdo</span></div>
+          <div class="gantt-sidebar-row"><div class="gantt-row-dot" style="background:#FF9B3A;"></div><span class="gantt-row-label">Vendas</span></div>
+          <div class="gantt-sidebar-row"><div class="gantt-row-dot" style="background:#0A84FF;"></div><span class="gantt-row-label">Mídia</span></div>
+          <div class="gantt-sidebar-row"><div class="gantt-row-dot" style="background:#FF4A6E;"></div><span class="gantt-row-label">Interno</span></div>
+        </div>
+        <!-- scrollable gantt grid -->
+        <div class="gantt-scroll" id="gantt-scroll">
+          <div class="gantt-inner" id="gantt-inner">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+  (function() {
+    /* ─── ARSENAL PANEL TOGGLE ──────────────────────────────────── */
+    window.togglePanel = function(id) {
+      var panels = document.querySelectorAll('.arsenal-panel');
+      var cards  = document.querySelectorAll('.arsenal-card');
+      var target = document.getElementById('panel-' + id);
+      var isOpen = target.classList.contains('is-visible');
+
+      panels.forEach(function(p) { p.classList.remove('is-visible'); });
+      cards.forEach(function(c)  { c.classList.remove('is-open'); });
+
+      if (!isOpen) {
+        target.classList.add('is-visible');
+        var cardIndex = parseInt(id, 10) - 1;
+        var cardEls   = document.querySelectorAll('.arsenal-card');
+        if (cardEls[cardIndex]) cardEls[cardIndex].classList.add('is-open');
+        setTimeout(function() {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 60);
+      }
+    };
+
+    window.closePanel = function(id) {
+      var target   = document.getElementById('panel-' + id);
+      var cardIndex = parseInt(id, 10) - 1;
+      var cardEls  = document.querySelectorAll('.arsenal-card');
+      target.classList.remove('is-visible');
+      if (cardEls[cardIndex]) cardEls[cardIndex].classList.remove('is-open');
+    };
+
+    /* ─── GANTT CHART ───────────────────────────────────────────── */
+    var COLS = [
+      { date: '24 Mar',    sub: '\u2192 28 Mar',    type: 'normal' },
+      { date: '31 Mar',    sub: '\u2192 7 Abr',     type: 'normal' },
+      { date: '8 Abr',     sub: '\u2192 14 Abr',    type: 'normal' },
+      { date: '15 Abr',    sub: '\u2192 21 Abr',    type: 'normal' },
+      { date: '22 Abr',    sub: '\u2192 28 Abr',    type: 'normal' },
+      { date: '29 Abr',    sub: '\u2192 7 Mai',     type: 'normal' },
+      { date: '8 Mai',     sub: '\u25C6 Teaser',    type: 'milestone' },
+      { date: '11\u201314 Mai', sub: 'Contagem',    type: 'normal' },
+      { date: '15 Mai',    sub: '\uD83D\uDE80 LAUNCH', type: 'launch' },
+      { date: '17\u201323 Mai', sub: 'Ativa\u00e7\u00e3o',   type: 'normal' },
+      { date: '24\u201330 Mai', sub: 'Consolida\u00e7\u00e3o', type: 'normal' },
+      { date: 'Jun S1',    sub: '\u2192 7 Jun',     type: 'normal' },
+      { date: 'Jun S2\u20134', sub: '\u2192 30 Jun', type: 'normal' },
+      { date: 'Jul',       sub: '2026',             type: 'normal' },
+      { date: '15 Ago',    sub: '\u25C6 Review',    type: 'milestone' }
+    ];
+
+    /* rows: [rowColor, [col-index (1-based), 'task text', isLaunchTask?], ...] */
+    var ROWS = [
+      { color: '#E8FF47', tasks: [
+        [1,  'Guia identidade visual'],
+        [4,  'Perfis LinkedIn atualizados'],
+        [6,  'Teaser Solvefy (1/mai)'],
+        [8,  'Posts encerramento + renomear'],
+        [9,  'Launch Day \u2605', true],
+        [15, 'Decis\u00e3o arquivar p\u00e1ginas']
+      ]},
+      { color: '#7B61FF', tasks: [
+        [1,  'Auditoria SEO + DNS'],
+        [2,  'Dev solvefy.com + plano SEO'],
+        [3,  'Briefing criativos PPC'],
+        [6,  'Site pronto \u2014 staging'],
+        [9,  'Go-live + redirects 301', true],
+        [11, 'SEO monitoring'],
+        [12, 'Content sprint SEO'],
+        [14, 'Avalia\u00e7\u00e3o SEO 90d']
+      ]},
+      { color: '#00D4AA', tasks: [
+        [2,  'Briefing design carross\u00e9is'],
+        [3,  'Produ\u00e7\u00e3o imagens + assets'],
+        [5,  'Finalizar posts LinkedIn'],
+        [7,  'Post 1 \u2014 Teaser'],
+        [8,  'Posts countdown'],
+        [9,  'Post 2 launch + Post 3 CEO', true],
+        [10, 'Post 4 + 5 \u2014 Spotlights'],
+        [11, 'Post 6 case + Post 7 TL'],
+        [12, 'Webinar RCS #1']
+      ]},
+      { color: '#FF9B3A', tasks: [
+        [1,  'Segmentar base A/B/C'],
+        [5,  'Win-back Grupo A'],
+        [6,  'Onboarding parceiros'],
+        [9,  'E-mail base ativa', true],
+        [10, 'Conquest Zenvia'],
+        [11, 'Revis\u00e3o pipeline'],
+        [12, 'Partner Program launch'],
+        [13, 'Meta 30\u201350 contas \u00b7 NRR'],
+        [14, 'Parceiros certificados'],
+        [15, 'Revis\u00e3o roadmap H2']
+      ]},
+      { color: '#0A84FF', tasks: [
+        [2,  'Setup contas de m\u00eddia'],
+        [3,  'Produ\u00e7\u00e3o 60+ assets'],
+        [5,  'Aprova\u00e7\u00e3o final criativos'],
+        [6,  'Campanhas configuradas \u23f8'],
+        [9,  'Ativar todas campanhas', true],
+        [10, 'Revis\u00e3o semana 1'],
+        [13, 'Revis\u00e3o m\u00eas 1 + escalar'],
+        [14, 'Dobrar budget ROAS >3x']
+      ]},
+      { color: '#FF4A6E', tasks: [
+        [3,  'Prep programa treinamento'],
+        [4,  'Brand Literacy \u2014 todo time'],
+        [5,  'Product Fluency \u2014 Vendas+CS'],
+        [6,  'Channel Enablement Cloud'],
+        [9,  'Evento interno lan\u00e7amento', true]
+      ]}
+    ];
+
+    function buildGantt() {
+      var inner = document.getElementById('gantt-inner');
+      if (!inner) return;
+      inner.innerHTML = '';
+
+      /* header row */
+      var headerRow = document.createElement('div');
+      headerRow.className = 'gantt-header-row';
+      COLS.forEach(function(col) {
+        var cell = document.createElement('div');
+        cell.className = 'gantt-col-header' + (col.type === 'milestone' ? ' is-milestone' : '') + (col.type === 'launch' ? ' is-launch' : '');
+        cell.innerHTML = '<span class="gantt-col-date">' + col.date + '</span><span class="gantt-col-sub">' + col.sub + '</span>';
+        headerRow.appendChild(cell);
+      });
+      inner.appendChild(headerRow);
+
+      /* data rows */
+      ROWS.forEach(function(row) {
+        var dataRow = document.createElement('div');
+        dataRow.className = 'gantt-data-row';
+        dataRow.style.setProperty('--row-color', row.color);
+
+        /* build a map of col → task for this row */
+        var taskMap = {};
+        row.tasks.forEach(function(t) { taskMap[t[0]] = t; });
+
+        COLS.forEach(function(col, ci) {
+          var cell = document.createElement('div');
+          cell.className = 'gantt-cell' + (col.type === 'launch' ? ' is-launch-col' : '');
+          var colNum = ci + 1;
+          if (taskMap[colNum]) {
+            var t = taskMap[colNum];
+            var task = document.createElement('div');
+            task.className = 'gantt-task' + (t[2] ? ' is-launch-task' : '');
+            task.style.borderLeftColor = row.color;
+            task.textContent = t[1];
+            task.title = t[1];
+            cell.appendChild(task);
+          }
+          dataRow.appendChild(cell);
+        });
+        inner.appendChild(dataRow);
+      });
+    }
+
+    /* ─── ZOOM ──────────────────────────────────────────────────── */
+    var ZOOM_LEVELS = [100, 140, 180, 220, 280, 320];
+    var ZOOM_LABELS = ['Mínimo', 'Compacto', 'Médio', 'Amplo', 'Grande', 'Máximo'];
+    var currentZoom = 2; /* default index → 180px */
+
+    function applyZoom() {
+      var wrapper = document.getElementById('gantt-wrapper');
+      if (wrapper) wrapper.style.setProperty('--gcw', ZOOM_LEVELS[currentZoom] + 'px');
+      var label = document.getElementById('gantt-zoom-label');
+      if (label) label.textContent = ZOOM_LABELS[currentZoom];
+    }
+
+    window.ganttZoomIn = function() {
+      if (currentZoom < ZOOM_LEVELS.length - 1) { currentZoom++; applyZoom(); }
+    };
+    window.ganttZoomOut = function() {
+      if (currentZoom > 0) { currentZoom--; applyZoom(); }
+    };
+
+    /* ─── DRAG TO SCROLL ────────────────────────────────────────── */
+    var scrollEl = document.getElementById('gantt-scroll');
+    if (scrollEl) {
+      var isDragging = false;
+      var startX = 0;
+      var scrollLeft = 0;
+
+      scrollEl.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        startX     = e.pageX - scrollEl.offsetLeft;
+        scrollLeft = scrollEl.scrollLeft;
+        scrollEl.classList.add('is-dragging');
+      });
+
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+        if (scrollEl) scrollEl.classList.remove('is-dragging');
+      });
+
+      scrollEl.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var x    = e.pageX - scrollEl.offsetLeft;
+        var walk = (x - startX) * 1.4;
+        scrollEl.scrollLeft = scrollLeft - walk;
+      });
+
+      scrollEl.addEventListener('mouseleave', function() {
+        isDragging = false;
+        scrollEl.classList.remove('is-dragging');
+      });
+    }
+
+    /* ─── INIT ──────────────────────────────────────────────────── */
+    buildGantt();
+    applyZoom();
+  })();
+  </script>
