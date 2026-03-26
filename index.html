@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -841,7 +843,99 @@
       line-height: 1.6;
     }
 
-    /* ─── SECTION 7: FOOTER ─────────────────────────────────────── */
+    /* ─── SECTION 7: CRONOGRAMA ─────────────────────────────────── */
+
+    .master-timeline {
+      background: #111;
+      padding: 80px 0 0;
+      border-top: 1px solid #1A1A1A;
+    }
+    .gantt-top { padding: 0 40px 40px; max-width: 1280px; margin: 0 auto; }
+    .gantt-controls {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: 40px; margin-bottom: 0;
+    }
+    .gantt-zoom-btn {
+      background: #1A1A1A; border: 1px solid #2A2A2A;
+      color: #AAA; width: 32px; height: 32px; border-radius: 4px;
+      cursor: pointer; font-size: 17px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; user-select: none; font-family: 'Inter',sans-serif;
+    }
+    .gantt-zoom-btn:hover { background: #222; border-color: #444; color: #DDD; }
+    .gantt-zoom-label {
+      font-size: 12px; color: #555; letter-spacing: 0.1em;
+      text-transform: uppercase; min-width: 70px; text-align: center;
+    }
+    .gantt-hint-drag { font-size: 11px; color: #333; letter-spacing: 0.08em; margin-left: auto; }
+    .gantt-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 24px; }
+    .gantt-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #666; }
+    .gantt-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .gantt-outer {
+      overflow-x: auto; overflow-y: visible; cursor: grab;
+      -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+      scrollbar-color: #2A2A2A #111; margin-top: 32px;
+    }
+    .gantt-outer:active { cursor: grabbing; }
+    .gantt-outer::-webkit-scrollbar { height: 5px; }
+    .gantt-outer::-webkit-scrollbar-track { background: #111; }
+    .gantt-outer::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .gantt-outer.is-dragging { cursor: grabbing; user-select: none; }
+    .gantt-tbl { display: inline-block; min-width: max-content; border-bottom: 1px solid #1E1E1E; }
+    .g-row {
+      display: grid;
+      grid-template-columns: 210px repeat(var(--gcols, 14), var(--gcw, 130px));
+      border-bottom: 1px solid #1A1A1A;
+    }
+    .g-row:nth-child(even) .g-cell { background: rgba(255,255,255,0.005); }
+    .g-row-months { border-bottom: 1px solid #1E1E1E; }
+    .g-month {
+      display: flex; align-items: center; justify-content: center;
+      border-right: 1px solid #1E1E1E; padding: 10px 0;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #666;
+    }
+    .g-month-corner { border-right: 1px solid #1E1E1E; }
+    .g-month:last-child { border-right: none; }
+    .g-row-weeks { border-bottom: 2px solid #1E1E1E; background: #0D0D0D; }
+    .g-week { border-right: 1px solid #1A1A1A; padding: 8px 0 6px; text-align: center; }
+    .g-week-corner {
+      display: flex; align-items: center; padding: 0 16px;
+      border-right: 1px solid #1E1E1E;
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #444;
+    }
+    .g-week-num { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #555; }
+    .g-week-date { display: block; font-size: 10px; color: #333; margin-top: 2px; letter-spacing: 0.04em; }
+    .g-week.is-launch { background: rgba(232,255,71,0.06); border-right: 2px solid rgba(232,255,71,0.4); }
+    .g-week.is-launch .g-week-num { color: #E8FF47; }
+    .g-week.is-launch .g-week-date { color: rgba(232,255,71,0.6); }
+    .g-label {
+      display: flex; align-items: center; padding: 0 0 0 16px;
+      border-right: 1px solid #1E1E1E; min-height: 56px;
+      position: sticky; left: 0; z-index: 4; background: #111;
+    }
+    .g-row:nth-child(even) .g-label { background: rgba(17,17,17,1); }
+    .g-row.g-launch-row .g-label { background: rgba(232,255,71,0.04); }
+    .g-label-text { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #777; line-height: 1.3; }
+    .g-label-dot { width: 6px; height: 6px; border-radius: 50%; margin-right: 10px; flex-shrink: 0; }
+    .g-cell { border-right: 1px solid #1A1A1A; min-height: 56px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .g-cell.is-launch-col { border-right: 2px solid rgba(232,255,71,0.25); background: rgba(232,255,71,0.025); }
+    .g-bar {
+      grid-row: 1; height: 26px; border-radius: 100px; margin: 0 6px;
+      display: flex; align-items: center; padding: 0 12px;
+      font-size: 11px; font-weight: 500; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; transition: opacity 0.15s;
+    }
+    .g-bar:hover { opacity: 0.85; }
+    .g-milestone { grid-row: 1; display: flex; align-items: center; justify-content: center; height: 56px; }
+    .g-badge { background: #E8FF47; color: #000; border-radius: 100px; padding: 5px 13px; font-size: 12px; font-weight: 700; white-space: nowrap; letter-spacing: 0.02em; }
+    .g-badge.g-badge-launch { background: #E8FF47; font-size: 13px; padding: 6px 16px; box-shadow: 0 0 20px rgba(232,255,71,0.3); }
+    .g-badge.g-badge-review { background: transparent; border: 2px solid #E8FF47; color: #E8FF47; }
+    .g-launch-row { background: rgba(232,255,71,0.03); }
+    .g-launch-row .g-cell { background: transparent; }
+    .g-launch-row .g-label-text { color: #E8FF47; font-size: 13px; }
+
+    /* ─── SECTION 8: FOOTER ─────────────────────────────────────── */
 
     .footer {
       background: var(--bg-dark);
@@ -1076,6 +1170,10 @@
       <li><a href="arsenal.html">Arsenal</a></li>
       <li><a href="cronograma.html">Cronograma</a></li>
     </ul>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema" title="Alternar tema">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
   </nav>
 
 
@@ -1121,6 +1219,36 @@
         <a href="arsenal.html" class="hub-card" style="--hc:#7B61FF;"><span class="hub-card-num">06</span><h3 class="hub-card-title">O Arsenal</h3><p class="hub-card-desc">8 documentos estratégicos prontos para usar</p><span class="hub-card-arrow">→</span></a>
         <a href="cronograma.html" class="hub-card" style="--hc:#E8FF47;"><span class="hub-card-num">07</span><h3 class="hub-card-title">Cronograma</h3><p class="hub-card-desc">Todas as frentes. Cada semana.</p><span class="hub-card-arrow">→</span></a>
       </div>
+    </div>
+  </section>
+
+  <section id="master-timeline" class="master-timeline" aria-labelledby="tl-heading">
+    <div class="gantt-top">
+      <div class="section-divider" style="padding-left:0; padding-right:0; margin-bottom: 48px;">
+        <span class="section-number">07 — CRONOGRAMA</span>
+        <span class="section-number" style="font-weight:400;">Mar 24 → Ago 2026</span>
+      </div>
+      <div class="education-header">
+        <p class="eyebrow">Master Timeline</p>
+        <h2 class="section-headline fade-up" id="tl-heading">Todas as frentes.<br>Cada semana.</h2>
+      </div>
+      <div class="gantt-controls fade-up">
+        <button class="gantt-zoom-btn" id="gZoomOutBtn" aria-label="Diminuir zoom">&#8722;</button>
+        <span class="gantt-zoom-label" id="gZoomLbl">Médio</span>
+        <button class="gantt-zoom-btn" id="gZoomInBtn" aria-label="Aumentar zoom">+</button>
+        <span class="gantt-hint-drag">&#8592; arraste para navegar &#8594;</span>
+      </div>
+      <div class="gantt-legend fade-up">
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#E8FF47;"></div>Brand &amp; Identidade</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#7B61FF;"></div>Tech &amp; Produto</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#00D4AA;"></div>Conteúdo &amp; Social</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#FF9B3A;"></div>Vendas &amp; CRM</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#0A84FF;"></div>Mídia Paga</div>
+        <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#FF4A6E;"></div>Habilitação Interna</div>
+      </div>
+    </div>
+    <div class="gantt-outer" id="ganttOuter">
+      <div class="gantt-tbl" id="ganttTbl"></div>
     </div>
   </section>
 
@@ -1182,6 +1310,175 @@
         el.classList.add('visible');
       });
     })();
+  </script>
+
+  <script>
+  (function() {
+    var COLS = 14;
+    var WEEKS = [
+      { num:'S01', date:'24 Mar', month:0, launch:false },
+      { num:'S02', date:'31 Mar', month:1, launch:false },
+      { num:'S03', date:'7 Abr',  month:1, launch:false },
+      { num:'S04', date:'14 Abr', month:1, launch:false },
+      { num:'S05', date:'21 Abr', month:1, launch:false },
+      { num:'S06', date:'28 Abr', month:1, launch:false },
+      { num:'S07', date:'5 Mai',  month:2, launch:false },
+      { num:'S08', date:'12 Mai', month:2, launch:true  },
+      { num:'S09', date:'19 Mai', month:2, launch:false },
+      { num:'S10', date:'26 Mai', month:2, launch:false },
+      { num:'S11', date:'2 Jun',  month:3, launch:false },
+      { num:'S12', date:'16 Jun', month:3, launch:false },
+      { num:'S13', date:'7 Jul',  month:4, launch:false },
+      { num:'S14', date:'15 Ago', month:5, launch:false }
+    ];
+    var MONTHS = [
+      { label:'MARÇO',    start:1,  span:1 },
+      { label:'ABRIL',    start:2,  span:5 },
+      { label:'MAIO',     start:7,  span:4 },
+      { label:'JUNHO',    start:11, span:2 },
+      { label:'JUL / AGO', start:13, span:2 }
+    ];
+    var ACTIVITIES = [
+      { label:'IDENTIDADE VISUAL', dot:'#E8FF47', bars:[{ s:1, e:4, label:'Guia de identidade + marcabook', color:'rgba(232,255,71,0.15)', textColor:'#C8E040' }], milestones:[{ col:8, badge:'15/05' }] },
+      { label:'ARQUITETURA DIGITAL', dot:'#7B61FF', bars:[{ s:1, e:6, label:'Dev solvefy.com + migração SEO', color:'rgba(123,97,255,0.2)', textColor:'#A090FF' }], milestones:[{ col:6, badge:'07/05' }, { col:8, badge:'Entrada no ar' }] },
+      { label:'ASSETS VISUAIS', dot:'#00D4AA', bars:[{ s:3, e:7, label:'Produção de materiais + carrosséis', color:'rgba(0,212,170,0.15)', textColor:'#00C49A' }], milestones:[{ col:7, badge:'08/05' }] },
+      { label:'TREINAMENTO INTERNO', dot:'#FF4A6E', bars:[{ s:4, e:7, label:'Letramento de Marca · Domínio de Produto · Channel', color:'rgba(255,74,110,0.15)', textColor:'#FF6080' }], milestones:[{ col:8, badge:'15/05' }] },
+      { label:'SETUP MÍDIA PAGA', dot:'#0A84FF', bars:[{ s:2, e:6, label:'Configuração + produção 60+ peças criativas', color:'rgba(10,132,255,0.15)', textColor:'#4AABFF' }], milestones:[{ col:8, badge:'Ativar' }] },
+      { label:'PRÉ-LANÇAMENTO', dot:'#00D4AA', bars:[{ s:6, e:8, label:'Contagem Regressiva LinkedIn + prévias', color:'rgba(0,212,170,0.12)', textColor:'#00C49A' }], milestones:[{ col:7, badge:'08/05' }] },
+      { label:'WIN-BACK CAMPAIGN', dot:'#FF9B3A', bars:[{ s:5, e:9, label:'Grupos A / B / C reativação', color:'rgba(255,155,58,0.15)', textColor:'#FFA040' }], milestones:[] },
+      { label:'✦  LANÇAMENTO SOLVEFY', dot:'#E8FF47', launch:true, bars:[], milestones:[{ col:8, badge:'15/05/2026', large:true }] },
+      { label:'CAMPANHAS PPC', dot:'#0A84FF', bars:[{ s:8, e:12, label:'LinkedIn · Google · Meta · Microsoft', color:'rgba(10,132,255,0.18)', textColor:'#4AABFF' }], milestones:[{ col:12, badge:'30/06' }] },
+      { label:'CONQUISTA ZENVIA', dot:'#FF9B3A', bars:[{ s:9, e:12, label:'Prospecção + migração sem fricção + landing page', color:'rgba(255,155,58,0.15)', textColor:'#FFA040' }], milestones:[{ col:12, badge:'50 contas' }] },
+      { label:'POSTS & CONTEÚDO', dot:'#00D4AA', bars:[{ s:8, e:10, label:'Posts lançamento + destaques + caso', color:'rgba(0,212,170,0.12)', textColor:'#00C49A' }, { s:11, e:13, label:'Webinário RCS · autoridade de mercado', color:'rgba(0,212,170,0.08)', textColor:'#009A7A' }], milestones:[] },
+      { label:'PROGRAMA DE PARCEIROS', dot:'#FF9B3A', bars:[{ s:11, e:14, label:'3 tiers · certificação · canal de revenda', color:'rgba(255,155,58,0.12)', textColor:'#CC7A20' }], milestones:[] },
+      { label:'SEO ORGÂNICO', dot:'#7B61FF', bars:[{ s:10, e:14, label:'Ciclo de conteúdo RCS · linkbuilding · monitoramento', color:'rgba(123,97,255,0.12)', textColor:'#9080E0' }], milestones:[] },
+      { label:'REVISÃO ESTRATÉGICA', dot:'#E8FF47', bars:[], milestones:[{ col:14, badge:'15/08', review:true }] }
+    ];
+
+    function buildGantt() {
+      var tbl = document.getElementById('ganttTbl');
+      if (!tbl) return;
+      tbl.innerHTML = '';
+      tbl.style.setProperty('--gcols', COLS);
+
+      var mRow = document.createElement('div');
+      mRow.className = 'g-row g-row-months';
+      var corner = document.createElement('div');
+      corner.className = 'g-month g-month-corner';
+      mRow.appendChild(corner);
+      MONTHS.forEach(function(m) {
+        var cell = document.createElement('div');
+        cell.className = 'g-month';
+        cell.style.gridColumn = 'span ' + m.span;
+        cell.textContent = m.label;
+        mRow.appendChild(cell);
+      });
+      tbl.appendChild(mRow);
+
+      var wRow = document.createElement('div');
+      wRow.className = 'g-row g-row-weeks';
+      var wCorner = document.createElement('div');
+      wCorner.className = 'g-week-corner';
+      wCorner.textContent = 'Frente / Semana';
+      wRow.appendChild(wCorner);
+      WEEKS.forEach(function(w) {
+        var cell = document.createElement('div');
+        cell.className = 'g-week' + (w.launch ? ' is-launch' : '');
+        cell.innerHTML = '<span class="g-week-num">' + w.num + '</span><span class="g-week-date">' + w.date + '</span>';
+        wRow.appendChild(cell);
+      });
+      tbl.appendChild(wRow);
+
+      ACTIVITIES.forEach(function(act) {
+        var row = document.createElement('div');
+        row.className = 'g-row' + (act.launch ? ' g-launch-row' : '');
+        var lbl = document.createElement('div');
+        lbl.className = 'g-label';
+        lbl.innerHTML = '<div class="g-label-dot" style="background:' + act.dot + '"></div><span class="g-label-text">' + act.label + '</span>';
+        row.appendChild(lbl);
+        var inner = document.createElement('div');
+        inner.style.gridColumn = '2 / ' + (COLS + 2);
+        inner.style.display = 'grid';
+        inner.style.gridTemplateColumns = 'repeat(' + COLS + ', var(--gcw, 130px))';
+        inner.style.alignItems = 'center';
+        inner.style.minHeight = '56px';
+        for (var ci = 0; ci < COLS; ci++) {
+          var bgCell = document.createElement('div');
+          bgCell.className = 'g-cell' + (WEEKS[ci].launch ? ' is-launch-col' : '');
+          bgCell.style.gridColumn = (ci+1) + ' / ' + (ci+2);
+          bgCell.style.gridRow = '1';
+          bgCell.style.height = '100%';
+          inner.appendChild(bgCell);
+        }
+        act.bars.forEach(function(b) {
+          var bar = document.createElement('div');
+          bar.className = 'g-bar';
+          bar.style.gridColumn = b.s + ' / ' + (b.e + 1);
+          bar.style.gridRow = '1';
+          bar.style.background = b.color;
+          bar.style.color = b.textColor;
+          bar.style.zIndex = '2';
+          bar.style.position = 'relative';
+          bar.textContent = b.label;
+          bar.title = b.label;
+          inner.appendChild(bar);
+        });
+        act.milestones.forEach(function(m) {
+          var ms = document.createElement('div');
+          ms.className = 'g-milestone';
+          ms.style.gridColumn = m.col + ' / ' + (m.col + 1);
+          ms.style.gridRow = '1';
+          ms.style.zIndex = '3';
+          ms.style.position = 'relative';
+          var badge = document.createElement('div');
+          badge.className = 'g-badge' + (m.large ? ' g-badge-launch' : '') + (m.review ? ' g-badge-review' : '');
+          badge.textContent = m.badge;
+          ms.appendChild(badge);
+          inner.appendChild(ms);
+        });
+        row.appendChild(inner);
+        tbl.appendChild(row);
+      });
+    }
+
+    var ZOOMS = [80, 105, 130, 160, 200, 250];
+    var ZLBLS = ['Mínimo','Compacto','Médio','Amplo','Grande','Máximo'];
+    var zi = 2;
+    function applyZoom() {
+      var tbl = document.getElementById('ganttTbl');
+      if (tbl) tbl.style.setProperty('--gcw', ZOOMS[zi] + 'px');
+      var lbl = document.getElementById('gZoomLbl');
+      if (lbl) lbl.textContent = ZLBLS[zi];
+    }
+    var btnIn  = document.getElementById('gZoomInBtn');
+    var btnOut = document.getElementById('gZoomOutBtn');
+    if (btnIn)  btnIn.addEventListener('click',  function() { if (zi < ZOOMS.length-1) { zi++; applyZoom(); } });
+    if (btnOut) btnOut.addEventListener('click', function() { if (zi > 0) { zi--; applyZoom(); } });
+
+    var outer = document.getElementById('ganttOuter');
+    if (outer) {
+      var drag = false, sx = 0, sl = 0;
+      outer.addEventListener('mousedown', function(e) {
+        drag = true; sx = e.pageX - outer.offsetLeft; sl = outer.scrollLeft;
+        outer.classList.add('is-dragging');
+      });
+      document.addEventListener('mouseup', function() {
+        drag = false;
+        if (outer) outer.classList.remove('is-dragging');
+      });
+      outer.addEventListener('mousemove', function(e) {
+        if (!drag) return;
+        e.preventDefault();
+        outer.scrollLeft = sl - (e.pageX - outer.offsetLeft - sx) * 1.4;
+      });
+      outer.addEventListener('mouseleave', function() {
+        drag = false; outer.classList.remove('is-dragging');
+      });
+    }
+
+    buildGantt();
+    applyZoom();
+  })();
   </script>
 
 

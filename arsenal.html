@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -1145,22 +1147,36 @@
 
     /* ─── ARSENAL PANELS ─────────────────────────────────────── */
     .arsenal-panels-area {
-      margin-top: 2px;
+      display: none;
     }
+
+    /* ─── MODAL OVERLAY ─────────────────────────────────────────── */
+    .arsenal-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 900;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .arsenal-modal-backdrop.is-visible { display: block; }
+
     .arsenal-panel {
       display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
       background: #0E0E0E;
       border-top: 3px solid var(--panel-color, #E8FF47);
-      padding: 56px 64px;
-      position: relative;
-      animation: panelSlideIn 0.3s ease;
+      overflow: hidden;
+      animation: panelFadeIn 0.25s ease;
     }
-    @keyframes panelSlideIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to   { opacity: 1; transform: translateY(0); }
+    @keyframes panelFadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to   { opacity: 1; transform: scale(1); }
     }
-    @media (max-width: 768px) { .arsenal-panel { padding: 40px 24px; } }
-    .arsenal-panel.is-visible { display: block; }
+    .arsenal-panel.is-visible { display: grid !important; }
     .arsenal-panel-close {
       position: absolute;
       top: 24px;
@@ -1380,9 +1396,9 @@
     }
     .panel-subnav {
       position: sticky;
-      top: 56px;
+      top: 0;
       align-self: start;
-      max-height: calc(100vh - 80px);
+      height: 100vh;
       overflow-y: auto;
       border-right: 1px solid #1E1E1E;
       padding: 40px 0 40px;
@@ -1424,7 +1440,7 @@
     .panel-body {
       padding: 56px 64px;
       overflow-y: auto;
-      min-height: 0;
+      height: 100vh;
     }
     @media (max-width: 900px) {
       .arsenal-panel.is-visible { grid-template-columns: 1fr; }
@@ -1666,6 +1682,10 @@
       <li><a href="arsenal.html" style="color: var(--text-primary);">Arsenal</a></li>
       <li><a href="cronograma.html">Cronograma</a></li>
     </ul>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema" title="Alternar tema">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
   </nav>
 
 
@@ -1902,6 +1922,8 @@
       </div>
 
       <!-- ARSENAL PANELS (full-width, below grid) -->
+      <div class="arsenal-modal-backdrop" id="arsenal-backdrop" onclick="closeAllPanels()"></div>
+
       <div class="arsenal-panels-area">
 
         <!-- Panel 01: Análise de Risco -->
@@ -2468,31 +2490,50 @@
       panel.querySelectorAll('.panel-section').forEach(function(s) { obs.observe(s); });
     }
 
+    window.closeAllPanels = function() {
+      document.querySelectorAll('.arsenal-panel').forEach(function(p) { p.classList.remove('is-visible'); });
+      document.querySelectorAll('.arsenal-card').forEach(function(c) { c.classList.remove('is-open'); });
+      var backdrop = document.getElementById('arsenal-backdrop');
+      if (backdrop) backdrop.classList.remove('is-visible');
+      document.body.style.overflow = '';
+    };
+
     window.togglePanel = function(id) {
       var panels = document.querySelectorAll('.arsenal-panel');
       var cards  = document.querySelectorAll('.arsenal-card');
       var target = document.getElementById('panel-' + id);
       var isOpen = target && target.classList.contains('is-visible');
+      var backdrop = document.getElementById('arsenal-backdrop');
 
       panels.forEach(function(p) { p.classList.remove('is-visible'); });
       cards.forEach(function(c)  { c.classList.remove('is-open'); });
 
       if (!isOpen && target) {
         target.classList.add('is-visible');
+        if (backdrop) backdrop.classList.add('is-visible');
+        document.body.style.overflow = 'hidden';
         var idx = parseInt(id, 10) - 1;
         if (cards[idx]) cards[idx].classList.add('is-open');
-        setTimeout(function() {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 60);
+      } else {
+        if (backdrop) backdrop.classList.remove('is-visible');
+        document.body.style.overflow = '';
       }
     };
+
     window.closePanel = function(id) {
       var t = document.getElementById('panel-' + id);
       var cards = document.querySelectorAll('.arsenal-card');
       var idx = parseInt(id, 10) - 1;
       if (t) t.classList.remove('is-visible');
       if (cards[idx]) cards[idx].classList.remove('is-open');
+      var backdrop = document.getElementById('arsenal-backdrop');
+      if (backdrop) backdrop.classList.remove('is-visible');
+      document.body.style.overflow = '';
     };
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') window.closeAllPanels();
+    });
 
     /* ─── GANTT DATA ─────────────────────────────────────────── */
 

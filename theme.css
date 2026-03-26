@@ -1,0 +1,72 @@
+/* ─── LIGHT THEME OVERRIDES ─────────────────────────────── */
+
+html[data-theme="light"] {
+  --bg-dark:        #F4F4EF;
+  --bg-card:        #FFFFFF;
+  --bg-muted:       #EAEAE5;
+  --bg-light:       #0A0A0A;
+  --text-primary:   #0A0A0A;
+  --text-dark:      #F4F4EF;
+  --text-muted:     #666660;
+  --text-muted-dark:#999994;
+  --accent:         #8B9900;
+  --violet:         #5030EE;
+  --rule:           #DDDDD8;
+  --rule-light:     #333330;
+}
+
+/* Nav hardcoded bg override */
+html[data-theme="light"] .nav {
+  background: rgba(244, 244, 239, 0.92) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Hero grid overlay needs lightening */
+html[data-theme="light"] .hero-grid-bg {
+  opacity: 0.06;
+  filter: invert(1);
+}
+
+html[data-theme="light"] .hero-gradient {
+  background: linear-gradient(to top, var(--bg-dark), transparent) !important;
+}
+
+/* ─── THEME TOGGLE BUTTON ────────────────────────────────── */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.theme-toggle:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Show correct icon per theme */
+.theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun  { display: none; }
+
+html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+html[data-theme="light"] .theme-toggle .icon-sun  { display: block; }
